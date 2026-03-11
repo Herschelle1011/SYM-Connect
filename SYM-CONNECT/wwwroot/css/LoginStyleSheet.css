@@ -1,0 +1,99 @@
+﻿body {
+    background: url('/images/bg.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+p {
+    font-size: 12px;
+}
+
+label, a {
+    font-size: 13px;
+}
+
+.logo-text {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-size: 30px;
+}
+
+.login-card {
+    width: 460px;
+    padding: 40px;
+    border-radius: 15px;
+    border: 3px solid #999999;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    margin: 0 auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.login-btn {
+    background: #0d6efd;
+    border: none;
+    border-radius: 25px;
+    padding: 10px;
+}
+    .login-btn:hover {
+        border: 2px solid white;
+    }
+
+.subtitle {
+    font-size: 13px;
+}
+
+.logo {
+    width: 100px;
+}
+
+/* Input styling */
+.custom-input {
+    background: rgba(255,255,255,0.25);
+    border: none;
+    border-radius: 14px;
+    padding: 14px 18px;
+    padding-left: 45px; /* space for icon */
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    color: #ffffff;
+    backdrop-filter: blur(10px);
+}
+    .custom-input:focus {
+        background: rgba(255,255,255,0.30);
+        border: none;
+        box-shadow: none;
+        color: white;
+    }
+
+    .custom-input::placeholder {
+        color: rgba(255,255,255,0.75);
+        font-weight: 300;
+    }
+
+.mb-3 {
+    margin-bottom: 18px;
+}
+
+/* wrapper for icon + input */
+.input-field {
+    position: relative;
+}
+
+/* icon inside input */
+.icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #b0b0b0;
+    font-size: 18px;
+    pointer-events: none;
+}
