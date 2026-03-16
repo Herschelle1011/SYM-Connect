@@ -1,6 +1,7 @@
 ﻿
 body {
     font-family: 'Poppins',sans-serif;
+    margin: 0;
     background: linear-gradient(to bottom,#ffffff,#b9d7e3);
 }
 
@@ -11,6 +12,10 @@ body {
     height: 100vh;
     background: #f8f9fa;
     border-right: 1px solid #e5e5e5;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
 }
 
     .sidebar .nav-link {
@@ -489,6 +494,27 @@ body {
         color: #fff;
         border-color: #00bcd4;
     }
+.layout{
+    display: flex;
+}
+
+.main-content {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    padding: 30px;
+}
+
+.badge-pending {
+    background: #fff8e1;
+    color: #f39c12;
+    border: 1px solid #f5d88a;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: .74rem;
+    font-weight: 600;
+}
+
+
 
 /* ── Responsive ──────────────────────────────── */
 @@media (max-width: 900px) {
@@ -500,4 +526,210 @@ body {
         margin-left: 0;
         padding: 24px 16px;
     }
+}
+
+/* ── Status Badges (matching User Management page) ── */
+.status-badge {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.badge-approved {
+    background-color: #e6f9f0;
+    color: #1a9e5c;
+    border: 1px solid #b6edcf;
+}
+
+.badge-pending {
+    background-color: #fff8e6;
+    color: #b07d00;
+    border: 1px solid #fde8a0;
+}
+
+.badge-inactive {
+    background-color: #fff3e6;
+    color: #c26a00;
+    border: 1px solid #fdd5a0;
+}
+
+/* ── Detail Labels ── */
+.detail-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding-top: 2px;
+}
+
+.detail-value {
+    font-size: 0.95rem;
+    color: #1a1a2e;
+    font-weight: 500;
+}
+
+/* ── Buttons ── */
+.btn-outline-edit {
+    border: 1.5px solid #0ab5c4;
+    color: #0ab5c4;
+    background: transparent;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: background 0.18s, color 0.18s;
+}
+
+    .btn-outline-edit:hover {
+        background: #0ab5c4;
+        color: #fff;
+    }
+
+.btn-back {
+    border: 1.5px solid #dee2e6;
+    color: #495057;
+    background: transparent;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: background 0.18s, color 0.18s;
+}
+
+    .btn-back:hover {
+        background: #f0f0f0;
+        color: #1a1a2e;
+    }
+
+/* ── Card ── */
+.card {
+    border-radius: 16px !important;
+}
+
+
+/* ── Field Labels ── */
+.field-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+}
+
+/* ── Inputs ── */
+.themed-input {
+    border: 1.5px solid #d6eef0;
+    border-radius: 10px;
+    background-color: #f7fdfe;
+    color: #1a1a2e;
+    font-size: 0.93rem;
+    padding: 9px 13px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+    .themed-input:focus {
+        border-color: #0ab5c4;
+        box-shadow: 0 0 0 3px rgba(10, 181, 196, 0.12);
+        background-color: #ffffff;
+        outline: none;
+    }
+
+    .themed-input::placeholder {
+        color: #adb5bd;
+        font-size: 0.88rem;
+    }
+
+/* ── Save Button ── */
+.btn-save {
+    background: linear-gradient(135deg, #0ab5c4, #07869b);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 8px 20px;
+    transition: opacity 0.18s, transform 0.15s;
+}
+
+    .btn-save:hover {
+        opacity: 0.9;
+        color: #fff;
+        transform: translateY(-1px);
+    }
+
+/* ── Back Button ── */
+.btn-back {
+    border: 1.5px solid #dee2e6;
+    color: #495057;
+    background: transparent;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 8px 18px;
+    transition: background 0.18s, color 0.18s;
+}
+
+    .btn-back:hover {
+        background: #f0f0f0;
+        color: #1a1a2e;
+    }
+
+/* ── Card ── */
+.card {
+    border-radius: 16px !important;
+}
+
+/* ── Validation summary hide when empty ── */
+[asp-validation-summary]:empty {
+    display: none;
+}
+
+/* ── Radio Buttons ── */
+.themed-radio .form-check-input {
+    border-color: #0ab5c4;
+    margin-top: 3px;
+    cursor: pointer;
+}
+
+    .themed-radio .form-check-input:checked {
+        background-color: #0ab5c4;
+        border-color: #0ab5c4;
+    }
+
+    .themed-radio .form-check-input:focus {
+        box-shadow: 0 0 0 3px rgba(10, 181, 196, 0.15);
+    }
+
+.themed-radio .form-check-label {
+    cursor: pointer;
+}
+
+.radio-badge {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.badge-approved {
+    background-color: #e6f9f0;
+    color: #1a9e5c;
+    border: 1px solid #b6edcf;
+}
+
+.badge-pending {
+    background-color: #fff8e6;
+    color: #b07d00;
+    border: 1px solid #fde8a0;
+}
+
+.badge-rejected {
+    background-color: #fdecea;
+    color: #c0392b;
+    border: 1px solid #f5b7b1;
 }

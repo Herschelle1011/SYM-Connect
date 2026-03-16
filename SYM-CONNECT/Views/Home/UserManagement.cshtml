@@ -1,12 +1,9 @@
-﻿
+﻿@model SYM_CONNECT.ViewModel.UserManagementViewModel
+
 @{
     ViewData["Title"] = "User Management";
     Layout = "_Layout";
 }
-
-    <!-- ═══════════════════════════════════════════════
-         MAIN CONTENT
-    ════════════════════════════════════════════════ -->
 
 
         <!-- Page Header -->
@@ -43,9 +40,10 @@
                 </button>
 
                 <!-- Add User -->
-                <button class="btn-add-user">
+                <button class="btn-add-user" data-bs-toggle="modal" data-bs-target="#addUserModal">
                     <i class="bi bi-plus-circle-fill"></i> Add User
                 </button>
+                
             </div>
 
             <!-- Table -->
@@ -60,99 +58,37 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody">
-
-                    <!-- Row 1 -->
-                    <tr>
-                        <td>
-                            <span class="user-name-cell">
-                                <img src="https://i.pravatar.cc/40?img=1" alt="" class="user-avatar" />
-                                Herschelle G. Libradilla
-                            </span>
-                        </td>
-                        <td>Anchill@gmail.com</td>
-                        <td>Leader</td>
-                        <td><span class="badge-active">Active</span></td>
-                        <td>30 February 2026, 5:00 pm</td>
-                        <td>
-                            <button class="btn-action btn-edit"><i class="bi bi-pencil"></i> Edit</button>
-                            <button class="btn-action btn-arc ms-1"><i class="bi bi-archive"></i> Archive</button>
-                        </td>
-                    </tr>
-
-                    <!-- Row 2 -->
-                    <tr>
-                        <td>
-                            <span class="user-name-cell">
-                                <img src="https://i.pravatar.cc/40?img=2" alt="" class="user-avatar" />
-                                Regil V. Sanchez
-                            </span>
-                        </td>
-                        <td>Regil@gmail.com</td>
-                        <td>Member</td>
-                        <td><span class="badge-inactive">Inactive</span></td>
-                        <td>30 February 2026, 5:00 pm</td>
-                        <td>
-                            <button class="btn-action btn-edit"><i class="bi bi-pencil"></i> Edit</button>
-                            <button class="btn-action btn-arc ms-1"><i class="bi bi-archive"></i> Archive</button>
-                        </td>
-                    </tr>
-
-                    <!-- Row 3 -->
-                    <tr>
-                        <td>
-                            <span class="user-name-cell">
-                                <img src="https://i.pravatar.cc/40?img=3" alt="" class="user-avatar" />
-                                Janicar Lepiten
-                            </span>
-                        </td>
-                        <td>Jani@gmail.com</td>
-                        <td>Leader</td>
-                        <td><span class="badge-inactive">Inactive</span></td>
-                        <td>30 February 2026, 5:00 pm</td>
-                        <td>
-                            <button class="btn-action btn-edit"><i class="bi bi-pencil"></i> Edit</button>
-                            <button class="btn-action btn-arc ms-1"><i class="bi bi-archive"></i> Archive</button>
-                        </td>
-                    </tr>
-
-                    <!-- Row 4 -->
-                    <tr>
-                        <td>
-                            <span class="user-name-cell">
-                                <img src="https://i.pravatar.cc/40?img=4" alt="" class="user-avatar" />
-                                Louis Vladimir E. Padigos
-                            </span>
-                        </td>
-                        <td>Louis12@gmail.com</td>
-                        <td>Leader</td>
-                        <td><span class="badge-active">Active</span></td>
-                        <td>30 February 2026, 5:00 pm</td>
-                        <td>
-                            <button class="btn-action btn-edit"><i class="bi bi-pencil"></i> Edit</button>
-                            <button class="btn-action btn-arc ms-1"><i class="bi bi-archive"></i> Archive</button>
-                        </td>
-                    </tr>
-
-                    <!-- Row 5 -->
-                    <tr>
-                        <td>
-                            <span class="user-name-cell">
-                                <img src="https://i.pravatar.cc/40?img=5" alt="" class="user-avatar" />
-                                Wind Say Ais D. Retasa
-                            </span>
-                        </td>
-                        <td>ais@gmail.com</td>
-                        <td>Member</td>
-                        <td><span class="badge-inactive">Inactive</span></td>
-                        <td>30 February 2026, 5:00 pm</td>
-                        <td>
-                            <button class="btn-action btn-edit"><i class="bi bi-pencil"></i> Edit</button>
-                            <button class="btn-action btn-arc ms-1"><i class="bi bi-archive"></i> Archive</button>
-                        </td>
-                    </tr>
-
-                </tbody>
+              <tbody id="tableBody">
+    @foreach (var user in Model.Users)
+    {
+        <tr>
+            <td>
+                <span class="user-name-cell">
+                    <img src="https://i.pravatar.cc/40" alt="" class="user-avatar" />
+                    @user.FullName
+                </span>
+            </td>
+            <td>@user.Email</td>
+            <td>@user.Role</td>
+            <td>
+                @if (user.Status == "Active")
+                {
+                    <span class="badge-active">Active</span>
+                }
+                else
+                {
+                    <span class="badge-inactive">Inactive</span>
+                }
+            </td>
+            <td>@user.CreatedAt.ToString("dd MMMM yyyy, h:mm tt")</td>
+            <td>
+                <button class="btn-action btn-edit"><i class="bi bi-pencil"></i> Edit</button>
+                <button class="btn-action btn-arc ms-1"><i class="bi bi-archive"></i> Archive</button>
+            </td>
+        </tr>
+    }
+</tbody>
+</table>    
             </table>
 
             <!-- Footer / Pagination -->
@@ -180,5 +116,113 @@
                 </div>
             </div>
 
+
+
+
         </div><!-- /.card-table -->
-   
+
+        @* STORE USERS METHOD POST  *@
+        <form asp-action="UserManagement" asp-controller="Home" method="post">
+    @Html.AntiForgeryToken();
+
+<!-- Add User Modal -->
+<div class="modal fade" id="addUserModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius:16px; padding:24px; border:none;">
+            
+            <!-- Header -->
+            <div class="modal-header border-0 p-0 mb-2">
+                <h5 class="modal-title fw-semibold" style="color:#00bcd4; font-size:1.3rem;">
+                    <i class="bi bi-plus-circle-fill"></i> Add User
+                </h5>
+            </div>
+            <p style="color:#888; font-size:.85rem;">Fill out the form below to add a new user to the system.</p>
+
+            <!-- Body -->
+            <div class="modal-body p-0">
+                <div class="row g-3">
+
+                <!-- Name -->
+<div class="col-6">
+    <input type="text" class="form-control" placeholder="First Name" asp-for="Form.FirstName" />
+    <span asp-validation-for="Form.FirstName" class="text-danger" style="font-size:.75rem;"></span>
+</div>
+<div class="col-6">
+    <input type="text" class="form-control" placeholder="Last Name" asp-for="Form.LastName" />
+    <span asp-validation-for="Form.LastName" class="text-danger" style="font-size:.75rem;"></span>
+</div>
+
+<!-- Email -->
+<div class="col-12">
+    <input type="email" class="form-control" placeholder="Email Address" asp-for="Form.Email" />
+    <span asp-validation-for="Form.Email" class="text-danger" style="font-size:.75rem;"></span>
+</div>
+
+<!-- Password -->
+<div class="col-6">
+    <div class="input-group">
+        <input type="password" class="form-control" placeholder="Password" id="password" asp-for="Form.Password" />
+        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('password', this)">
+            <i class="bi bi-eye"></i>
+        </button>
+    </div>
+    <span asp-validation-for="Form.Password" class="text-danger" style="font-size:.75rem;"></span>
+</div>
+
+<!-- Confirm Password -->
+<div class="col-6">
+    <div class="input-group">
+        <input type="password" class="form-control" placeholder="Confirm Password" id="confirmPassword" asp-for="Form.ConfirmPassword" />
+        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('confirmPassword', this)">
+            <i class="bi bi-eye"></i>
+        </button>
+    </div>
+    <span asp-validation-for="Form.ConfirmPassword" class="text-danger" style="font-size:.75rem;"></span>
+</div>
+
+<!-- Role & Status -->
+<div class="col-6">
+    <select class="form-select" asp-for="Form.Role">
+        <option value="" disabled selected>Role</option>
+        <option>Leader</option>
+        <option>Member</option>
+    </select>
+    <span asp-validation-for="Form.Role" class="text-danger" style="font-size:.75rem;"></span>
+</div>
+<div class="col-6">
+    <select class="form-select" asp-for="Form.Status">
+        <option value="" disabled selected>Status</option>
+        <option>Active</option>
+        <option>Inactive</option>
+    </select>
+    <span asp-validation-for="Form.Status" class="text-danger" style="font-size:.75rem;"></span>
+</div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer border-0 p-0 mt-4">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-info text-white px-4">
+                        Create
+                    </button>
+                </div>
+        </div>
+    </div>
+</div>
+      </form>
+
+@section Scripts{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            var hasErrors = document.querySelector(".field-validation-error");
+
+            if (hasErrors) {
+                var modal = new bootstrap.Modal(document.getElementById('addUserModal'));
+                modal.show();
+            }
+
+        });
+    </script>
+}

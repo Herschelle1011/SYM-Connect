@@ -2,75 +2,119 @@
     Layout = "_RegisterLayout";
 }
 
-<div class="register-card text-center">
+<div class="login-container">
 
-    @* <!-- Logo + System Name -->
-    <div class="d-flex justify-content-center align-items-center mb-1 logo-container">
+    <div class="login-form">
 
-        <img src="/images/Logo.png" class="logo me-2" />
+        <h2 class="login-title">Register</h2>
 
-        <h4 class="logo-text m-0">SYM Connect</h4>
+        <form asp-action="Register" method="post">
 
-    </div> *@
+            <!-- First / Last Name -->
+            <div class="name-row">
 
-    <h2 class="title mt-3">Sign Up</h2>
+                <div class="form-group">
+                    <label>First name</label>
+                    <input class="form-input" placeholder="Enter first name">
+                </div>
 
-    <p class="subtitle e">Enter your details</p>
+                <div class="form-group">
+                    <label>Last name</label>
+                    <input class="form-input" placeholder="Enter last name">
+                </div>
 
-    <form asp-action="Register" method="post">
-        <!-- Username -->
-        <div class="mb-3 input-field">
-            <i class="bi bi-envelope icon"></i>
-            <input class="form-control glass-input" placeholder="Email">
-        </div>
-
-
-        <!-- First Name / Last Name -->
-        <div class="fname row mb-3">
-
-            <div class="col">
-                <input class="form-control glass-input" placeholder="First Name">
             </div>
 
-            <div class="col">
-                <input class="form-control glass-input" placeholder="Last Name">
+
+            <!-- Email -->
+            <div class="form-group">
+                <label>Email</label>
+
+                <div class="input-wrapper">
+                    <input type="email"
+                           class="form-input"
+                           placeholder="Enter your email">
+
+                    <i class="bi bi-envelope"></i>
+                </div>
             </div>
 
-        </div>
 
-        <!-- Role -->
-        <div class="mb-3 input-field">
-            <i class="bi bi-person-badge icon"></i>
-            <select class="form-control glass-input text-dark">
-                <option>Select Role</option>
-                <option>Admin</option>
-                <option>Leader</option>
-                <option>Member</option>
-            </select>
-        </div>
+            <!-- Role -->
+            <div class="form-group">
+                <label>Role</label>
 
-        <!-- Password -->
-        <div class="mb-3 input-field">
-            <i class="bi bi-lock icon"></i>
-            <input type="password" class="form-control glass-input" placeholder="Password">
-        </div>
+                <div class="input-wrapper">
+                    <select class="form-input">
+                        <option>Select Role</option>
+                        <option>Admin</option>
+                        <option>Leader</option>
+                        <option>Member</option>
+                    </select>
+
+                    <i class="bi bi-chevron-down"></i>
+                </div>
+            </div>
 
 
-        <!-- Confirm Password -->
-        <div class="mb-3 input-field">
-            <i class="bi bi-lock-fill icon"></i>
-            <input type="password" class="form-control glass-input" placeholder="Confirm Password">
-        </div>
+            <!-- Password -->
+            <div class="form-group">
+                <label>Password</label>
+                <div class="input-wrapper">
+                    <input type="password"
+                           class="form-input"
+                           placeholder="Enter password">
+                    <i class="bi bi-eye-slash"></i>
+                </div>
+            </div>
 
-        <button type="submit" class="btn register-btn w-100 text-white btn-text">
-            Register
-        </button>
 
-        <p class="mt-3 register-link">
-            Already have an account?
-            <a asp-controller="Account" asp-action="Login">
-                Click here
-            </a>
-        </p>
-    </form>
+            <!-- Confirm Password -->
+            <div class="form-group">
+                <label>Confirm Password</label>
+
+                <div class="input-wrapper">
+                    <input type="password"
+                           class="form-input"
+                           placeholder="Confirm password">
+
+                    <i class="bi bi-eye-slash"></i>
+                </div>
+            </div>
+
+
+            <!-- Terms -->
+            <div class="terms">
+
+                <input type="checkbox">
+
+                <label>
+                    I agree to the
+                    <a href="#">Terms & Conditions</a>
+                </label>
+
+            </div>
+
+
+            <!-- Button -->
+            <button type="submit" class="login-btn">
+                Sign In
+            </button>
+
+
+            <!-- Login Link -->
+            <p class="signup-text">
+
+                Already have an account?
+
+                <a asp-controller="Account" asp-action="Login">
+                    Sign In.
+                </a>
+
+            </p>
+
+        </form>
+
+    </div>
+
 </div>
