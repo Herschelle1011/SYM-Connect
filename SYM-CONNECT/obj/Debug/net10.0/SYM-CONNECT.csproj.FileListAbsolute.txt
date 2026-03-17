@@ -207,6 +207,16 @@ C:\Users\Herschelle\source\repos\SYM-PROJECT ADWEB\SYM-CONNECT\SYM-CONNECT\obj\D
 C:\Users\Herschelle\source\repos\SYM-PROJECT ADWEB\SYM-CONNECT\SYM-CONNECT\obj\Debug\net10.0\compressed\b2kw4yargb-{0}-bfwlaj3yb2-bfwlaj3yb2.gz
 C:\Users\Herschelle\source\repos\SYM-PROJECT ADWEB\SYM-CONNECT\SYM-CONNECT\obj\Debug\net10.0\compressed\7sxjmlfdrz-{0}-eeoh114jgf-eeoh114jgf.gz
 C:\Users\Herschelle\source\repos\SYM-PROJECT ADWEB\SYM-CONNECT\SYM-CONNECT\bin\Debug\net10.0\BCrypt.Net-Next.dll
+C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\SYM-CONNECT.csproj.AssemblyReference.cache
+C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\rpswa.dswa.cache.json
+C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\SYM-CONNECT.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\SYM-CONNECT.AssemblyInfoInputs.cache
+C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\SYM-CONNECT.AssemblyInfo.cs
+C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\SYM-CONNECT.csproj.CoreCompileInputs.cache
+C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\SYM-CONNECT.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\SYM-CONNECT.RazorAssemblyInfo.cache
+C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\SYM-CONNECT.RazorAssemblyInfo.cs
+C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\SYM-CONNECT.sourcelink.json
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\bin\Debug\net10.0\appsettings.Development.json
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\bin\Debug\net10.0\appsettings.json
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\bin\Debug\net10.0\SYM-CONNECT.staticwebassets.runtime.json
@@ -439,16 +449,6 @@ C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\bin\Debug\net1
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\bin\Debug\net10.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\bin\Debug\net10.0\runtimes\win\lib\net7.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\bin\Debug\net10.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll
-C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\SYM-CONNECT.csproj.AssemblyReference.cache
-C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\rpswa.dswa.cache.json
-C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\SYM-CONNECT.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\SYM-CONNECT.AssemblyInfoInputs.cache
-C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\SYM-CONNECT.AssemblyInfo.cs
-C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\SYM-CONNECT.csproj.CoreCompileInputs.cache
-C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\SYM-CONNECT.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\SYM-CONNECT.RazorAssemblyInfo.cache
-C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\SYM-CONNECT.RazorAssemblyInfo.cs
-C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\SYM-CONNECT.sourcelink.json
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\rjimswa.dswa.cache.json
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json
@@ -526,11 +526,11 @@ C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net1
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\staticwebassets.development.json
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\staticwebassets.build.endpoints.json
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\swae.build.ex.cache
-C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\SYM-CONN.9143FF0D.Up2Date
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\SYM-CONNECT.dll
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\refint\SYM-CONNECT.dll
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\SYM-CONNECT.pdb
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\SYM-CONNECT.genruntimeconfig.cache
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\ref\SYM-CONNECT.dll
-C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\compressed\7sxjmlfdrz-{0}-g336fcbpf5-g336fcbpf5.gz
+C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\compressed\7sxjmlfdrz-{0}-08ff1cf9q0-08ff1cf9q0.gz
+C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

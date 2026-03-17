@@ -1,0 +1,101 @@
+@model SYM_CONNECT.Models.SYMGroup
+@{
+    ViewData["Title"] = "Group Details";
+    Layout = "_Layout";
+}
+
+<div class="container-fluid px-4 py-4">
+
+    <!-- Back -->
+    <a asp-action="Index" class="btn btn-back d-inline-flex align-items-center gap-1 mb-3">
+        <i class="bi bi-arrow-left"></i> Back to Groups
+    </a>
+
+    <!-- Leader Card -->
+    <div class="card border-0 rounded-4 shadow-sm mb-4" style="background:#fff;">
+        <div class="card-body p-4">
+            <div class="d-flex align-items-center gap-3">
+                <img src="https://i.pravatar.cc/60?u=@Model.LeaderId"
+                     style="width:60px;height:60px;border-radius:50%;object-fit:cover;" />
+                <div>
+                    <h5 class="fw-bold mb-0" style="color:#0ab5c4;">@Model.Name</h5>
+                    <div style="font-size:.85rem; color:#555;">
+                        Leader: <strong>@Model.Leader?.FullName</strong>
+                        — @Model.Leader?.Email
+                    </div>
+                    <div style="font-size:.8rem; color:#90adb8; margin-top:4px;">
+                        @Model.Region &nbsp;·&nbsp; @Model.SubRegion
+                    </div>
+                </div>
+                <div class="ms-auto">
+                    @if (Model.Status == "Active")
+                    {
+                        <span class="badge-active">Active</span>
+                    }
+                    else
+                    {
+                        <span class="badge-inactive">Inactive</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Members Table -->
+    <div class="card-table">
+        <div class="toolbar">
+            <h6 class="fw-bold mb-0" style="color:#2d3a3f;">
+                Members
+                <span style="color:#90adb8; font-weight:400; font-size:.85rem;">
+                    @Model.GroupMembers.Count total
+                </span>
+            </h6>
+            <div class="search-wrap ms-auto">
+                <i class="bi bi-search"></i>
+                <input type="text" placeholder="Search members"
+                       id="searchInput" oninput="filterTable()" />
+            </div>
+        </div>
+
+        <div style="overflow-x:auto;">
+            <table class="user-table" id="userTable">
+                <thead>
+                    <tr>
+                        <th><i class="bi bi-person"></i> Full Name</th>
+                        <th><i class="bi bi-envelope"></i> Email</th>
+                        <th><i class="bi bi-shield-check"></i> Role</th>
+                        <th><i class="bi bi-circle-half"></i> Status</th>
+                        <th><i class="bi bi-calendar3"></i> Joined Date</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    @foreach (var member in Model.GroupMembers)
+                    {
+                        <tr>
+                            <td>
+                                <span class="user-name-cell">
+                                    <img src="https://i.pravatar.cc/40?u=@member.UserId"
+                                         class="user-avatar" alt="" />
+                                    @member.User?.FullName
+                                </span>
+                            </td>
+                            <td>@member.User?.Email</td>
+                            <td>@member.User?.Role</td>
+                            <td>
+                                @if (member.User?.Status == "Active")
+                                {
+                                    <span class="badge-active">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge-inactive">Inactive</span>
+                                }
+                            </td>
+                            <td>@member.User?.CreatedAt.ToString("dd MMMM yyyy")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -78,10 +78,9 @@
                         <label asp-for="ApprovedBy" class="form-label field-label">
                             <i class="bi bi-person-check me-1 text-muted"></i>Approved By
                         </label>
-                        <input class="form-control"
+                        <input class="form-control" asp-for="ApprovedBy"
                                value="@(ViewBag.CurrentUserName ?? "Pending Approval")"
                                readonly />
-
                     </div>
 
                     <!-- Approval Status -->
@@ -124,9 +123,7 @@
                         <i class="bi bi-arrow-left"></i> Back to List
                     </a>
                 </div>
-
             </form>
-
         </div>
     </div>
 </div>

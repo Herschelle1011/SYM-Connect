@@ -1,0 +1,126 @@
+@model IEnumerable<SYM_CONNECT.Models.SYMGroup>
+@{
+    ViewData["Title"] = "Groups";
+    Layout = "_Layout";
+}
+
+<!-- Page Header -->
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <div>
+        <h1 class="page-title mb-0">
+            Groups
+            <span style="font-size:1rem; font-weight:400; color:#90adb8; margin-left:8px;">
+                @Model.Count()
+            </span>
+        </h1>
+    </div>
+    <a asp-action="Create" class="btn-add-user" style="text-decoration:none;">
+        <i class="bi bi-plus-circle-fill"></i> Add New Group
+    </a>
+</div>
+
+<!-- Card Grid -->
+<div class="row g-3">
+    @foreach (var group in Model)
+    {
+        <div class="col-md-3">
+            <a asp-action="Details" asp-route-id="@group.GroupId"
+               style="text-decoration:none; color:inherit;">
+                <div class="group-card">
+
+                    <!-- Card Header -->
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h6 class="fw-bold mb-0" style="font-size:.95rem;">@group.Name</h6>
+                        @if (group.Status == "Active")
+                        {
+                            <span class="badge-active">+ Active</span>
+                        }
+                        else
+                        {
+                            <span class="badge-inactive">+ Inactive</span>
+                        }
+                    </div>
+
+                    <!-- Leader -->
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <img src="https://i.pravatar.cc/40?u=@group.LeaderId"
+                             class="user-avatar" alt="" />
+                        <div>
+                            <div style="font-size:.85rem; font-weight:600;">
+                                @group.Leader?.FullName
+                            </div>
+                            <div style="font-size:.75rem; color:#90adb8;">
+                                @group.Leader?.Email
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr style="border-color:#f0f4f6; margin:10px 0;" />
+
+                    <!-- Region Info -->
+                    <div class="d-flex gap-4 mb-3">
+                        <div>
+                            <div style="font-size:.7rem; color:#90adb8;">Region</div>
+                            <div style="font-size:.8rem; font-weight:500;">@group.Region</div>
+                        </div>
+                        <div>
+                            <div style="font-size:.7rem; color:#90adb8;">Sub Region</div>
+                            <div style="font-size:.8rem; font-weight:500;">@group.SubRegion</div>
+                        </div>
+                    </div>
+
+                    <!-- Member Avatars + Actions -->
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex">
+                            @foreach (var member in group.GroupMembers.Take(4))
+                            {
+                                <img src="https://i.pravatar.cc/28?u=@member.UserId"
+                                     class="member-avatar" alt="" />
+                            }
+                            @if (group.GroupMembers.Count > 4)
+                            {
+                                <span class="member-avatar-extra">
+                                    +@(group.GroupMembers.Count - 4)8989898989898989898989898989898989
+                                </span>
+                            }
+                        </div>
+
+                        <!-- 3-dot menu -->
+                        <div class="dropdown" onclick="event.preventDefault();">
+                            <button class="btn p-0 border-0 bg-transparent"
+                                    data-bs-toggle="dropdown">
+                                <i class="bi bi-three-dots" style="color:#90adb8;"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0"
+                                style="border-radius:10px; font-size:.82rem;">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center gap-2"
+                                       asp-action="Details" asp-route-id="@group.GroupId">
+                                        <i class="bi bi-eye text-info"></i> View
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center gap-2"
+                                       asp-action="Edit" asp-route-id="@group.GroupId">
+                                        <i class="bi bi-pencil text-warning"></i> Edit
+                                    </a>
+                                </li>
+                                <li>
+                                    <form asp-action="Delete" asp-route-id="@group.GroupId"
+                                          method="post" style="display:inline;">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit"
+                                                class="dropdown-item d-flex align-items-center gap-2 text-danger">
+                                            <i class="bi bi-trash"></i> Delete
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </a>
+        </div>
+    }
+</div>

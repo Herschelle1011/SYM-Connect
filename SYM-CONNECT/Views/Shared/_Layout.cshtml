@@ -44,8 +44,8 @@
                     <i class="bi bi-grid-fill"></i> Dashboard
                 </a>
 
-                <a asp-controller="Home" asp-action="UserManagement"
-                   class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "UserManagement"
+                <a asp-controller="Users" asp-action="Index"
+                   class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Users"
                                                    ? "active" : "")">
                     <i class="bi bi-person-fill"></i> User
                 </a>

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 using SYM_CONNECT.Data;
 using SYM_CONNECT.Models;
 
@@ -73,7 +74,7 @@ namespace SYM_CONNECT.Controllers
         }
 
         // GET: Attendance/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, [Bind("AttendanceId,UserId,EventId,AttendanceDate,PointsEarned")] Edit edit)
         {
             if (id == null)
             {
@@ -81,10 +82,14 @@ namespace SYM_CONNECT.Controllers
             }
 
             var attendance = await _context.Attendances.FindAsync(id);
+
             if (attendance == null)
             {
                 return NotFound();
             }
+
+
+
             ViewData["EventId"] = new SelectList(_context.Events, "EventId", "Description", attendance.EventId);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Email", attendance.UserId);
             return View(attendance);

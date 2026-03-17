@@ -89,6 +89,63 @@ namespace SYM_CONNECT.Migrations
                     b.ToTable("Events");
                 });
 
+            modelBuilder.Entity("SYM_CONNECT.Models.GroupMember", b =>
+                {
+                    b.Property<int>("GroupMemberId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GroupMemberId"));
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GroupMemberId");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("GroupMembers");
+                });
+
+            modelBuilder.Entity("SYM_CONNECT.Models.SYMGroup", b =>
+                {
+                    b.Property<int>("GroupId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GroupId"));
+
+                    b.Property<int>("LeaderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Region")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SubRegion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("GroupId");
+
+                    b.HasIndex("LeaderId");
+
+                    b.ToTable("SYMGroup");
+                });
+
             modelBuilder.Entity("SYM_CONNECT.Models.Users", b =>
                 {
                     b.Property<int>("Id")
@@ -160,6 +217,41 @@ namespace SYM_CONNECT.Migrations
                     b.Navigation("ApprovedByUser");
 
                     b.Navigation("CreatedByUser");
+                });
+
+            modelBuilder.Entity("SYM_CONNECT.Models.GroupMember", b =>
+                {
+                    b.HasOne("SYM_CONNECT.Models.SYMGroup", "Group")
+                        .WithMany("GroupMembers")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SYM_CONNECT.Models.Users", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SYM_CONNECT.Models.SYMGroup", b =>
+                {
+                    b.HasOne("SYM_CONNECT.Models.Users", "Leader")
+                        .WithMany()
+                        .HasForeignKey("LeaderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Leader");
+                });
+
+            modelBuilder.Entity("SYM_CONNECT.Models.SYMGroup", b =>
+                {
+                    b.Navigation("GroupMembers");
                 });
 #pragma warning restore 612, 618
         }

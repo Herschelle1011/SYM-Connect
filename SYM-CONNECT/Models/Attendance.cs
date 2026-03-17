@@ -13,8 +13,8 @@
         public int PointsEarned { get; set; }
 
         // Navigation properties
-        public Users User { get; set; }
+        public Users? User { get; set; }
 
-        public Event Event { get; set; }
+        public Event? Event { get; set; }
     }
 }

@@ -86,7 +86,7 @@
                             @Html.DisplayFor(modelItem => item.Event.Description)
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.AttendanceId"
+                            <a asp-action="Edit" asp-route-id="@item.AttendanceId" asp-controller="Attendance"
                                class="btn-action btn-edit" style="text-decoration:none;">
                                 <i class="bi bi-pencil"></i> Edit
                             </a>

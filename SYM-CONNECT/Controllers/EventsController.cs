@@ -80,10 +80,6 @@ namespace SYM_CONNECT.Controllers
                 int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
                 string role = User.FindFirst(ClaimTypes.Role).Value;
 
-
-
-
-
                 if (role == "admin")
                 {
                     model.CreatedBy = userId; 

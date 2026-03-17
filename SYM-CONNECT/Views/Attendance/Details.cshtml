@@ -1,43 +1,96 @@
 @model SYM_CONNECT.Models.Attendance
-
 @{
     ViewData["Title"] = "Details";
     Layout = "_Layout";
 }
 
-<h1>Details</h1>
+<div class="container-fluid px-4 py-4">
+    <!-- Page Header -->
+    <div class="mb-4">
+        <h2 class="fw-bold" style="color: #0ab5c4;">Attendance Details</h2>
+        <p class="text-muted mb-0">Viewing detailed information for this attendance record.</p>
+    </div>
 
-<div>
-    <h4>Attendance</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AttendanceDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AttendanceDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PointsEarned)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PointsEarned)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Event)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Event.Description)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.AttendanceId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <!-- Card -->
+    <div class="card border-0 rounded-4 shadow-sm" style="background: #ffffff;">
+        <div class="card-body p-4">
+
+            <!-- Card Header Row -->
+            <div class="d-flex align-items-center gap-2 mb-4">
+                <span class="rounded-3 d-flex align-items-center justify-content-center"
+                      style="width:40px;height:40px;background:linear-gradient(135deg,#0ab5c4,#07869b);">
+                    <i class="bi bi-person-check-fill text-white fs-5"></i>
+                </span>
+                <div>
+                    <h5 class="mb-0 fw-bold text-dark">Attendance Information</h5>
+                    <small class="text-muted">Read-only view of this attendance record</small>
+                </div>
+            </div>
+
+            <hr style="border-color: #e8f7f8;" />
+
+            <div class="row g-3">
+
+                <!-- Attendance Date -->
+                <div class="col-md-6">
+                    <label class="form-label field-label">
+                        <i class="bi bi-calendar3 me-1 text-muted"></i>
+                        @Html.DisplayNameFor(model => model.AttendanceDate)
+                    </label>
+                    <div class="form-control themed-input bg-light" style="color:#444;">
+                        @Html.DisplayFor(model => model.AttendanceDate)
+                    </div>
+                </div>
+
+                <!-- Points Earned -->
+                <div class="col-md-6">
+                    <label class="form-label field-label">
+                        <i class="bi bi-star me-1 text-muted"></i>
+                        @Html.DisplayNameFor(model => model.PointsEarned)
+                    </label>
+                    <div class="form-control themed-input bg-light" style="color:#444;">
+                        @Html.DisplayFor(model => model.PointsEarned)
+                    </div>
+                </div>
+
+                <!-- User -->
+                <div class="col-md-6">
+                    <label class="form-label field-label">
+                        <i class="bi bi-person me-1 text-muted"></i>
+                        @Html.DisplayNameFor(model => model.User)
+                    </label>
+                    <div class="form-control themed-input bg-light" style="color:#444;">
+                        @Html.DisplayFor(model => model.User.Email)
+                    </div>
+                </div>
+
+                <!-- Event -->
+                <div class="col-md-6">
+                    <label class="form-label field-label">
+                        <i class="bi bi-calendar-event me-1 text-muted"></i>
+                        @Html.DisplayNameFor(model => model.Event)
+                    </label>
+                    <div class="form-control themed-input bg-light" style="color:#444;">
+                        @Html.DisplayFor(model => model.Event.Description)
+                    </div>
+                </div>
+
+            </div>
+
+            <hr style="border-color: #e8f7f8;" class="mt-4" />
+
+            <!-- Action Buttons -->
+            <div class="d-flex gap-2 pt-2">
+                <a asp-action="Edit" asp-route-id="@Model?.AttendanceId"
+                   class="btn btn-save d-flex align-items-center gap-1">
+                    <i class="bi bi-pencil"></i> Edit
+                </a>
+                <a asp-action="Index"
+                   class="btn btn-back d-flex align-items-center gap-1">
+                    <i class="bi bi-arrow-left"></i> Back to List
+                </a>
+            </div>
+
+        </div>
+    </div>
 </div>

@@ -1,0 +1,135 @@
+@model IEnumerable<SYM_CONNECT.Models.Users>
+@{
+    ViewData["Title"] = "User Management";
+    Layout = "_Layout";
+}
+
+<!-- Page Header -->
+<div class="mb-2">
+    <h1 class="page-title">User Management</h1>
+    <p class="page-subtitle">Manage your team members and their account permissions here.</p>
+</div>
+
+<!-- Card / Table -->
+<div class="card-table">
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+
+        <!-- Role filter -->
+        <button class="btn-role-filter">
+            <i class="bi bi-funnel-fill"></i> Role
+            <i class="bi bi-chevron-down" style="font-size:.65rem;opacity:.6;"></i>
+        </button>
+
+        <!-- Search -->
+        <div class="search-wrap">
+            <i class="bi bi-search"></i>
+            <input type="text" placeholder="Search" id="searchInput" oninput="filterTable()" />
+        </div>
+
+        <!-- Archive -->
+        <button class="btn-archive-outline">
+            <i class="bi bi-archive"></i> Archive
+        </button>
+
+        <!-- Export -->
+        <button class="btn-export">
+            <i class="bi bi-upload"></i> Export
+        </button>
+
+        <!-- Add User -->
+        <a asp-action="Create" class="btn-add-user" style="text-decoration:none;">
+            <i class="bi bi-plus-circle-fill"></i> Add User
+        </a>
+
+    </div>
+
+    <!-- Table -->
+    <div style="overflow-x:auto;">
+        <table class="user-table" id="userTable">
+            <thead>
+                <tr>
+                    <th><i class="bi bi-person"></i> Full Name</th>
+                    <th><i class="bi bi-envelope"></i> Email</th>
+                    <th><i class="bi bi-shield-check"></i> Role</th>
+                    <th><i class="bi bi-circle-half"></i> Status</th>
+                    <th><i class="bi bi-calendar3"></i> Joined Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <span class="user-name-cell">
+                                <img src="https://i.pravatar.cc/40?u=@item.Id" alt="" class="user-avatar" />
+                                @Html.DisplayFor(modelItem => item.FullName)
+                            </span>
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Role)</td>
+                        <td>
+                            @{
+                                var status = item.Status?.ToString() ?? "";
+                            }
+                            @if (status == "Active")
+                            {
+                                <span class="badge-active">Active</span>
+                            }
+                            else if (status == "Inactive")
+                            {
+                                <span class="badge-inactive">Inactive</span>
+                            }
+                            else
+                            {
+                                <span class="badge-pending">@status</span>
+                            }
+                        </td>
+                        <td>@item.CreatedAt.ToString("dd MMMM yyyy, h:mm tt")</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id"
+                               class="btn-action btn-edit" style="text-decoration:none;">
+                                <i class="bi bi-pencil"></i> Edit
+                            </a>
+                            <a asp-action="Details" asp-route-id="@item.Id"
+                               class="btn-action btn-arc ms-1" style="text-decoration:none;">
+                                <i class="bi bi-eye"></i> Details
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.Id"
+                               class="btn-action ms-1" style="text-decoration:none; color:#e74c3c; border-color:#f5c0b8; background:#fff5f5; border-radius:7px; padding:5px 12px; font-size:.75rem; font-weight:500; display:inline-flex; align-items:center; gap:4px;">
+                                <i class="bi bi-trash"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer / Pagination -->
+    <div class="table-footer">
+        <div class="rows-info">
+            Rows per page
+            <select>
+                <option>05</option>
+                <option>10</option>
+                <option>25</option>
+                <option>50</option>
+            </select>
+            &nbsp; 1–5 of @Model.Count() rows
+        </div>
+
+        <div class="pagination-btns">
+            <button class="pg-btn" title="First"><i class="bi bi-chevron-double-left"></i></button>
+            <button class="pg-btn" title="Prev"><i class="bi bi-chevron-left"></i></button>
+            <button class="pg-btn active">1</button>
+            <button class="pg-btn">2</button>
+            <span style="font-size:.78rem;color:#90adb8;padding:0 4px;">…</span>
+            <button class="pg-btn" title="Next"><i class="bi bi-chevron-right"></i></button>
+            <button class="pg-btn" title="Last"><i class="bi bi-chevron-double-right"></i></button>
+        </div>
+    </div>
+
+</div><!-- /.card-table -->

@@ -16,6 +16,11 @@ namespace SYM_CONNECT.Data
         public DbSet<Users> Users { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
+        public DbSet<SYMGroup> SYMGroup { get; set; } 
+
+        public DbSet<GroupMember> GroupMembers { get; set; }
+
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,6 +36,23 @@ namespace SYM_CONNECT.Data
                 .WithMany() //approver can approve many events 
                 .HasForeignKey(e => e.ApprovedBy) //approved by via foreignkey to usersID existed in the users table 
                 .OnDelete(DeleteBehavior.NoAction); //If administrator is deleted events approved will remain
+
+            modelBuilder.Entity<SYMGroup>()
+       .HasOne(g => g.Leader)
+       .WithMany()
+       .HasForeignKey(( g) => g.LeaderId)
+       .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<GroupMember>()
+                .HasOne(gm => gm.Group)
+                .WithMany(g => g.GroupMembers)
+                .HasForeignKey(( gm) => gm.GroupId);
+
+            modelBuilder.Entity<GroupMember>()
+                .HasOne(gm => gm.User)
+                .WithMany()
+                .HasForeignKey(gm => gm.UserId);
+
         }
     }
 }

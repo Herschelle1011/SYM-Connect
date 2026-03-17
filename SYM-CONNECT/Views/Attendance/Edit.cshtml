@@ -1,49 +1,101 @@
 @model SYM_CONNECT.Models.Attendance
-
 @{
     ViewData["Title"] = "Edit";
+    Layout = "_Layout";
 }
 
-<h1>Edit</h1>
+<div class="container-fluid px-4 py-4">
+    <!-- Page Header -->
+    <div class="mb-4">
+        <h2 class="fw-bold" style="color: #0ab5c4;">Edit Attendance</h2>
+        <p class="text-muted mb-0">Update the attendance record details below.</p>
+    </div>
 
-<h4>Attendance</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="AttendanceId" />
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
-                <span asp-validation-for="UserId" class="text-danger"></span>
+    <!-- Card -->
+    <div class="card border-0 rounded-4 shadow-sm" style="background: #ffffff;">
+        <div class="card-body p-4">
+
+            <!-- Card Header Row -->
+            <div class="d-flex align-items-center gap-2 mb-4">
+                <span class="rounded-3 d-flex align-items-center justify-content-center"
+                      style="width:40px;height:40px;background:linear-gradient(135deg,#0ab5c4,#07869b);">
+                    <i class="bi bi-pencil-square text-white fs-5"></i>
+                </span>
+                <div>
+                    <h5 class="mb-0 fw-bold text-dark">Attendance Information</h5>
+                    <small class="text-muted">Fields marked with <span class="text-danger">*</span> are required</small>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="EventId" class="control-label"></label>
-                <select asp-for="EventId" class="form-control" asp-items="ViewBag.EventId"></select>
-                <span asp-validation-for="EventId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AttendanceDate" class="control-label"></label>
-                <input asp-for="AttendanceDate" class="form-control" />
-                <span asp-validation-for="AttendanceDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PointsEarned" class="control-label"></label>
-                <input asp-for="PointsEarned" class="form-control" />
-                <span asp-validation-for="PointsEarned" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+
+            <hr style="border-color: #e8f7f8;" />
+
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small mb-3 rounded-3" role="alert"></div>
+                <input type="hidden" asp-for="AttendanceId" />
+
+                <div class="row g-3">
+
+                    <!-- User -->
+                    <div class="col-md-6">
+                        <label asp-for="UserId" class="form-label field-label">
+                            <i class="bi bi-person me-1 text-muted"></i>User <span class="text-danger">*</span>
+                        </label>
+                        <select asp-for="UserId" class="form-select themed-input" asp-items="ViewBag.UserId">
+                            <option value="" disabled>-- Select User --</option>
+                        </select>
+                        <span asp-validation-for="UserId" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Event -->
+                    <div class="col-md-6">
+                        <label asp-for="EventId" class="form-label field-label">
+                            <i class="bi bi-calendar-event me-1 text-muted"></i>Event <span class="text-danger">*</span>
+                        </label>
+                        <select asp-for="EventId" class="form-select themed-input" asp-items="ViewBag.EventId">
+                            <option value="" disabled>-- Select Event --</option>
+                        </select>
+                        <span asp-validation-for="EventId" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Attendance Date -->
+                    <div class="col-md-6">
+                        <label asp-for="AttendanceDate" class="form-label field-label">
+                            <i class="bi bi-calendar3 me-1 text-muted"></i>Attendance Date <span class="text-danger">*</span>
+                        </label>
+                        <input asp-for="AttendanceDate" class="form-control themed-input" />
+                        <span asp-validation-for="AttendanceDate" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Points Earned -->
+                    <div class="col-md-6">
+                        <label asp-for="PointsEarned" class="form-label field-label">
+                            <i class="bi bi-star me-1 text-muted"></i>Points Earned <span class="text-danger">*</span>
+                        </label>
+                        <input asp-for="PointsEarned" class="form-control themed-input" placeholder="Enter points earned" />
+                        <span asp-validation-for="PointsEarned" class="text-danger small"></span>
+                    </div>
+
+                </div>
+
+                <hr style="border-color: #e8f7f8;" class="mt-4" />
+
+                <!-- Action Buttons -->
+                <div class="d-flex gap-2 pt-2">
+                    <button type="submit" class="btn btn-save d-flex align-items-center gap-1">
+                        <i class="bi bi-floppy"></i> Save Changes
+                    </button>
+                    <a asp-action="Index" class="btn btn-back d-flex align-items-center gap-1">
+                        <i class="bi bi-arrow-left"></i> Back to List
+                    </a>
+                </div>
+            </form>
+
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
