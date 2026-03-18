@@ -73,15 +73,16 @@ namespace SYM_CONNECT.Controllers
         // GET: SYMGroups/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            var ifLeader = _context.Users.Where(u => u.Role == "Leader");
             if (id == null) return NotFound();
 
             var sYMGroup = await _context.SYMGroup
                 .Include(s => s.Leader)
-                .FirstOrDefaultAsync(m => m.GroupId == id); // 👈 changed from FindAsync
+                .FirstOrDefaultAsync(m => m.GroupId == id);
 
             if (sYMGroup == null) return NotFound();
 
-            ViewData["LeaderId"] = new SelectList(_context.Users, "Id", "FullName", sYMGroup.LeaderId); 
+            ViewData["LeaderId"] = new SelectList(ifLeader, "Id", "FullName");
             return View(sYMGroup);
         }
 
@@ -92,6 +93,8 @@ namespace SYM_CONNECT.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("GroupId,Name,Region,SubRegion,Status,LeaderId")] SYMGroup sYMGroup)
         {
+            var ifLeader = _context.Users.Where(u => u.Role == "Leader");
+
             if (id != sYMGroup.GroupId)
             {
                 return NotFound();
@@ -126,7 +129,7 @@ namespace SYM_CONNECT.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LeaderId"] = new SelectList(_context.Users, "Id", "FullName", sYMGroup.LeaderId);
+            ViewData["LeaderId"] = new SelectList(ifLeader, "Id", "FullName");
             return View(sYMGroup);
         }
 

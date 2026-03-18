@@ -1,39 +1,83 @@
 @model SYM_CONNECT.Models.GroupMember
-
 @{
     ViewData["Title"] = "Edit";
+    Layout = "_Layout";
 }
 
-<h1>Edit</h1>
+<div class="container-fluid px-4 py-4">
+    <!-- Page Header -->
+    <div class="mb-4">
+        <h2 class="fw-bold" style="color: #0ab5c4;">Edit Group Member</h2>
+        <p class="text-muted mb-0">Update the details of this group member.</p>
+    </div>
 
-<h4>GroupMember</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="GroupMemberId" />
-            <div class="form-group">
-                <label asp-for="GroupId" class="control-label"></label>
-                <select asp-for="GroupId" class="form-control" asp-items="ViewBag.GroupId"></select>
-                <span asp-validation-for="GroupId" class="text-danger"></span>
+    <!-- Card -->
+    <div class="card border-0 rounded-4 shadow-sm" style="background: #ffffff;">
+        <div class="card-body p-4">
+
+            <!-- Card Header Row -->
+            <div class="d-flex align-items-center gap-2 mb-4">
+                <span class="rounded-3 d-flex align-items-center justify-content-center"
+                      style="width:40px;height:40px;background:linear-gradient(135deg,#0ab5c4,#07869b);">
+                    <i class="bi bi-pencil-square text-white fs-5"></i>
+                </span>
+                <div>
+                    <h5 class="mb-0 fw-bold text-dark">Group Member Information</h5>
+                    <small class="text-muted">Fields marked with <span class="text-danger">*</span> are required</small>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+
+            <hr style="border-color: #e8f7f8;" />
+
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small mb-3 rounded-3" role="alert"></div>
+                <input type="hidden" asp-for="GroupMemberId" />
+
+                <div class="row g-3">
+
+                    <!-- Group -->
+                    <div class="col-md-6">
+                        <label asp-for="GroupId" class="form-label field-label">
+                            <i class="bi bi-people me-1 text-muted"></i>Group <span class="text-danger">*</span>
+                        </label>
+                        <select asp-for="GroupId" class="form-select themed-input" asp-items="ViewBag.GroupId">
+                            <option value="">-- Select Group --</option>
+                        </select>
+                        <span asp-validation-for="GroupId" class="text-danger small"></span>
+                    </div>
+
+                    <!-- User -->
+                    <div class="col-md-6">
+                        <label asp-for="UserId" class="form-label field-label">
+                            <i class="bi bi-person me-1 text-muted"></i>User <span class="text-danger">*</span>
+                        </label>
+                        <select asp-for="UserId" class="form-select themed-input" asp-items="ViewBag.UserId">
+                            <option value="">-- Select User --</option>
+                        </select>
+                        <span asp-validation-for="UserId" class="text-danger small"></span>
+                    </div>
+
+                </div>
+
+                <hr style="border-color: #e8f7f8;" class="mt-4" />
+
+                <!-- Action Buttons -->
+                <div class="d-flex gap-2 pt-2">
+                    <button type="submit" class="btn btn-save d-flex align-items-center gap-1">
+                        <i class="bi bi-floppy"></i> Save Changes
+                    </button>
+                    <a asp-action="Index" class="btn btn-back d-flex align-items-center gap-1">
+                        <i class="bi bi-arrow-left"></i> Back to List
+                    </a>
+                </div>
+            </form>
+
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
