@@ -72,15 +72,15 @@
                     <!-- Member Avatars + Actions -->
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex">
-                            @foreach (var member in group.GroupMembers.Take(4))
+                            @foreach (var member in group.GroupMembers?.Take(4) ?? Enumerable.Empty<GroupMember>())
                             {
                                 <img src="https://i.pravatar.cc/28?u=@member.UserId"
                                      class="member-avatar" alt="" />
                             }
-                            @if (group.GroupMembers.Count > 4)
+                            @if ((group.GroupMembers?.Count ?? 0) > 4)
                             {
                                 <span class="member-avatar-extra">
-                                    +@(group.GroupMembers.Count - 4)8989898989898989898989898989898989
+                                    +@(group.GroupMembers.Count - 4)
                                 </span>
                             }
                         </div>

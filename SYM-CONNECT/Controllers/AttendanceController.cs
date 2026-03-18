@@ -50,7 +50,7 @@ namespace SYM_CONNECT.Controllers
         // GET: Attendance/Create
         public IActionResult Create()
         {
-            ViewData["EventId"] = new SelectList(_context.Events, "EventId", "Description");
+            ViewData["EventId"] = new SelectList(_context.Events, "EventId", "Title");
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Email");
             return View();
         }

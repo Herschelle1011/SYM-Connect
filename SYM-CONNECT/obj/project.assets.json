@@ -5870,23 +5870,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Herschelle\\.nuget\\packages\\": {},
+    "C:\\Users\\ACT-STUDENT\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\SYM-CONNECT.csproj",
+      "projectUniqueName": "C:\\Users\\ACT-STUDENT\\source\\repos\\SYM-Connect\\SYM-CONNECT\\SYM-CONNECT.csproj",
       "projectName": "SYM-CONNECT",
-      "projectPath": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\SYM-CONNECT.csproj",
-      "packagesPath": "C:\\Users\\Herschelle\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\obj\\",
+      "projectPath": "C:\\Users\\ACT-STUDENT\\source\\repos\\SYM-Connect\\SYM-CONNECT\\SYM-CONNECT.csproj",
+      "packagesPath": "C:\\Users\\ACT-STUDENT\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ACT-STUDENT\\source\\repos\\SYM-Connect\\SYM-CONNECT\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Herschelle\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ACT-STUDENT\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -5970,7 +5970,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
