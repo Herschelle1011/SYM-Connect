@@ -1,52 +1,124 @@
 @model SYM_CONNECT.Models.SYMGroup
-
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Group";
+    Layout = "_Layout";
 }
 
-<h1>Create</h1>
+<div class="container-fluid px-4 py-4">
 
-<h4>SYMGroup</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+    <!-- Page Header -->
+    <div class="mb-4">
+        <h2 class="fw-bold" style="color: #0ab5c4;">Create Group</h2>
+        <p class="text-muted mb-0">Fill out the form below to add a new group.</p>
+    </div>
+
+    <!-- Card -->
+    <div class="card border-0 rounded-4 shadow-sm" style="background: #ffffff;">
+        <div class="card-body p-4">
+
+            <!-- Card Header Row -->
+            <div class="d-flex align-items-center gap-2 mb-4">
+                <span class="rounded-3 d-flex align-items-center justify-content-center"
+                      style="width:40px;height:40px;background:linear-gradient(135deg,#0ab5c4,#07869b);">
+                    <i class="bi bi-diagram-3-fill text-white fs-5"></i>
+                </span>
+                <div>
+                    <h5 class="mb-0 fw-bold text-dark">Group Information</h5>
+                    <small class="text-muted">Fields marked with <span class="text-danger">*</span> are required</small>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Region" class="control-label"></label>
-                <input asp-for="Region" class="form-control" />
-                <span asp-validation-for="Region" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SubRegion" class="control-label"></label>
-                <input asp-for="SubRegion" class="form-control" />
-                <span asp-validation-for="SubRegion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LeaderId" class="control-label"></label>
-                <select asp-for="LeaderId" class ="form-control" asp-items="ViewBag.LeaderId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+
+            <hr style="border-color: #e8f7f8;" />
+
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small mb-3 rounded-3" role="alert"></div>
+
+                <div class="row g-3">
+
+                    <!-- Group Name -->
+                    <div class="col-md-6">
+                        <label asp-for="Name" class="form-label field-label">
+                            <i class="bi bi-people me-1 text-muted"></i>Group Name <span class="text-danger">*</span>
+                        </label>
+                        <input asp-for="Name" class="form-control themed-input" placeholder="Enter group name" />
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Leader -->
+                    <div class="col-md-6">
+                        <label asp-for="LeaderId" class="form-label field-label">
+                            <i class="bi bi-person-badge me-1 text-muted"></i>Leader <span class="text-danger">*</span>
+                        </label>
+                        <select asp-for="LeaderId" class="form-select themed-input"
+                                asp-items="ViewBag.LeaderId">
+                            <option value="">-- Select Leader --</option>
+                        </select>
+                        <span asp-validation-for="LeaderId" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Region -->
+                    <div class="col-md-6">
+                        <label asp-for="Region" class="form-label field-label">
+                            <i class="bi bi-geo-alt me-1 text-muted"></i>Region <span class="text-danger">*</span>
+                        </label>
+                        <input asp-for="Region" class="form-control themed-input" placeholder="Enter region" />
+                        <span asp-validation-for="Region" class="text-danger small"></span>
+                    </div>
+
+                    <!-- SubRegion -->
+                    <div class="col-md-6">
+                        <label asp-for="SubRegion" class="form-label field-label">
+                            <i class="bi bi-geo me-1 text-muted"></i>Sub-Region
+                        </label>
+                        <input asp-for="SubRegion" class="form-control themed-input" placeholder="Enter sub-region" />
+                        <span asp-validation-for="SubRegion" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Status -->
+                    <div class="col-md-6">
+                        <label class="form-label field-label">
+                            <i class="bi bi-circle-half me-1 text-muted"></i>Status <span class="text-danger">*</span>
+                        </label>
+                        <div class="d-flex gap-3 pt-1">
+                            <div class="form-check themed-radio">
+                                <input class="form-check-input" type="radio" asp-for="Status"
+                                       value="Active" id="statusActive" />
+                                <label class="form-check-label" for="statusActive">
+                                    <span class="radio-badge badge-approved">Active</span>
+                                </label>
+                            </div>
+                            <div class="form-check themed-radio">
+                                <input class="form-check-input" type="radio" asp-for="Status"
+                                       value="Inactive" id="statusInactive" />
+                                <label class="form-check-label" for="statusInactive">
+                                    <span class="radio-badge badge-rejected">Inactive</span>
+                                </label>
+                            </div>
+                        </div>
+                        <span asp-validation-for="Status" class="text-danger small"></span>
+                    </div>
+
+                </div>
+
+                <hr style="border-color: #e8f7f8;" class="mt-4" />
+
+                <!-- Action Buttons -->
+                <div class="d-flex gap-2 pt-2">
+                    <button type="submit" class="btn btn-save d-flex align-items-center gap-1">
+                        <i class="bi bi-diagram-3-fill"></i> Create Group
+                    </button>
+                    <a asp-action="Index" class="btn btn-back d-flex align-items-center gap-1">
+                        <i class="bi bi-arrow-left"></i> Back to List
+                    </a>
+                </div>
+            </form>
+
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

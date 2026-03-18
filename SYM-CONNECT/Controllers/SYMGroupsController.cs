@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,18 +29,15 @@ namespace SYM_CONNECT.Controllers
         // GET: SYMGroups/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var sYMGroup = await _context.SYMGroup
                 .Include(s => s.Leader)
+                .Include(s => s.GroupMembers)       // load members
+                    .ThenInclude(m => m.User)       //load each member's User
                 .FirstOrDefaultAsync(m => m.GroupId == id);
-            if (sYMGroup == null)
-            {
-                return NotFound();
-            }
+
+            if (sYMGroup == null) return NotFound();
 
             return View(sYMGroup);
         }
@@ -48,7 +45,9 @@ namespace SYM_CONNECT.Controllers
         // GET: SYMGroups/Create
         public IActionResult Create()
         {
-            ViewData["LeaderId"] = new SelectList(_context.Users, "Id", "Email");
+            var ifLeader = _context.Users.Where(u => u.Role == "Leader");
+
+            ViewData["LeaderId"] = new SelectList(ifLeader, "Id", "FullName");
             return View();
         }
 
@@ -59,30 +58,30 @@ namespace SYM_CONNECT.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("GroupId,Name,Region,SubRegion,Status,LeaderId")] SYMGroup sYMGroup)
         {
+            var ifLeader =  _context.Users.Where(u => u.Role == "Leader");
             if (ModelState.IsValid)
             {
+
                 _context.Add(sYMGroup);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LeaderId"] = new SelectList(_context.Users, "Id", "Email", sYMGroup.LeaderId);
+            ViewData["LeaderId"] = new SelectList(ifLeader, "Id", "FullName");
             return View(sYMGroup);
         }
 
         // GET: SYMGroups/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var sYMGroup = await _context.SYMGroup.FindAsync(id);
-            if (sYMGroup == null)
-            {
-                return NotFound();
-            }
-            ViewData["LeaderId"] = new SelectList(_context.Users, "Id", "Email", sYMGroup.LeaderId);
+            var sYMGroup = await _context.SYMGroup
+                .Include(s => s.Leader)
+                .FirstOrDefaultAsync(m => m.GroupId == id); // 👈 changed from FindAsync
+
+            if (sYMGroup == null) return NotFound();
+
+            ViewData["LeaderId"] = new SelectList(_context.Users, "Id", "FullName", sYMGroup.LeaderId); 
             return View(sYMGroup);
         }
 
@@ -102,6 +101,15 @@ namespace SYM_CONNECT.Controllers
             {
                 try
                 {
+                    var existing = await _context.SYMGroup.FindAsync(id); //update existing data 
+                    if (existing == null) return NotFound();
+
+                    existing.Name = sYMGroup.Name;
+                    existing.Region = sYMGroup.Region;
+                    existing.SubRegion = sYMGroup.SubRegion;
+                    existing.Status = sYMGroup.Status;
+                    existing.LeaderId = sYMGroup.LeaderId;
+
                     _context.Update(sYMGroup);
                     await _context.SaveChangesAsync();
                 }
@@ -118,7 +126,7 @@ namespace SYM_CONNECT.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LeaderId"] = new SelectList(_context.Users, "Id", "Email", sYMGroup.LeaderId);
+            ViewData["LeaderId"] = new SelectList(_context.Users, "Id", "FullName", sYMGroup.LeaderId);
             return View(sYMGroup);
         }
 

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -47,10 +47,24 @@ namespace SYM_CONNECT.Controllers
         }
 
         // GET: GroupMembers/Create
+
         public IActionResult Create()
         {
+            var members = _context.Users
+       .Where(u => u.Role == "Member")
+       .Select(u => new { u.Id, u.FullName, u.Email })
+       .ToList();
+
             ViewData["GroupId"] = new SelectList(_context.SYMGroup, "GroupId", "Name");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Email");
+            ViewData["UserId"] = new SelectList(members, "Id", "Email"); // 👈 show Email in dropdown
+
+
+            var options = new System.Text.Json.JsonSerializerOptions
+            {
+                PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase
+            };
+            ViewData["UsersJson"] = System.Text.Json.JsonSerializer.Serialize(members, options);
+
             return View();
         }
 
@@ -61,6 +75,7 @@ namespace SYM_CONNECT.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("GroupMemberId,GroupId,UserId")] GroupMember groupMember)
         {
+            var IfMember = _context.Users.Where(u => u.Role == "Member");
             if (ModelState.IsValid)
             {
                 _context.Add(groupMember);
@@ -68,7 +83,7 @@ namespace SYM_CONNECT.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["GroupId"] = new SelectList(_context.SYMGroup, "GroupId", "Name", groupMember.GroupId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Email", groupMember.UserId);
+            ViewData["UserId"] = new SelectList(IfMember, "Id", "Email", groupMember.UserId);
             return View(groupMember);
         }
 

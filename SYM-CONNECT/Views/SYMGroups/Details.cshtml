@@ -50,12 +50,22 @@
                     @Model.GroupMembers.Count total
                 </span>
             </h6>
+
+            <!-- 👇 Add Member Button -->
+            <a asp-action="AddMember" asp-route-id="@Model.GroupId"
+               class="btn d-inline-flex align-items-center gap-1"
+               style="background:#0ab5c4; color:#fff; border-radius:8px; font-size:.85rem; padding:6px 16px;">
+                <i class="bi bi-person-plus-fill"></i> Add Member
+            </a>
+
             <div class="search-wrap ms-auto">
                 <i class="bi bi-search"></i>
                 <input type="text" placeholder="Search members"
                        id="searchInput" oninput="filterTable()" />
             </div>
         </div>
+       
+
 
         <div style="overflow-x:auto;">
             <table class="user-table" id="userTable">
@@ -91,7 +101,7 @@
                                     <span class="badge-inactive">Inactive</span>
                                 }
                             </td>
-                            <td>@member.User?.CreatedAt.ToString("dd MMMM yyyy")</td>
+                            <td>@(member.User?.CreatedAt.ToString("dd MMMM yyyy")  ?? "—")</td>
                         </tr>
                     }
                 </tbody>

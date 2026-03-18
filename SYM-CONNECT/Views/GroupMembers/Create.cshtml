@@ -1,36 +1,123 @@
-@model SYM_CONNECT.Models.GroupMember
-
+﻿@model SYM_CONNECT.Models.GroupMember
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Add Member";
+    Layout = "_Layout";
 }
 
-<h1>Create</h1>
+<div class="container-fluid px-4 py-4">
 
-<h4>GroupMember</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="GroupId" class="control-label"></label>
-                <select asp-for="GroupId" class ="form-control" asp-items="ViewBag.GroupId"></select>
+    <!-- Page Header -->
+    <div class="mb-4">
+        <h2 class="fw-bold" style="color: #0ab5c4;">Add Member</h2>
+        <p class="text-muted mb-0">Assign a user to a group.</p>
+    </div>
+
+    <!-- Card -->
+    <div class="card border-0 rounded-4 shadow-sm" style="background: #ffffff;">
+        <div class="card-body p-4">
+
+            <!-- Card Header Row -->
+            <div class="d-flex align-items-center gap-2 mb-4">
+                <span class="rounded-3 d-flex align-items-center justify-content-center"
+                      style="width:40px;height:40px;background:linear-gradient(135deg,#0ab5c4,#07869b);">
+                    <i class="bi bi-person-plus-fill text-white fs-5"></i>
+                </span>
+                <div>
+                    <h5 class="mb-0 fw-bold text-dark">Member Assignment</h5>
+                    <small class="text-muted">Fields marked with <span class="text-danger">*</span> are required</small>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+
+            <hr style="border-color: #e8f7f8;" />
+
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly"
+                     class="alert alert-danger py-2 small mb-3 rounded-3" role="alert"></div>
+
+                <div class="row g-3">
+
+                    <!-- Group -->
+                    <div class="col-md-6">
+                        <label asp-for="GroupId" class="form-label field-label">
+                            <i class="bi bi-people me-1 text-muted"></i>Group <span class="text-danger">*</span>
+                        </label>
+                        <select asp-for="GroupId" class="form-select themed-input"
+                                asp-items="ViewBag.GroupId">
+                            <option value="">-- Select Group --</option>
+                        </select>
+                        <span asp-validation-for="GroupId" class="text-danger small"></span>
+                    </div>
+
+                    <!-- User -->
+                    <div class="col-md-6">
+                        <label asp-for="UserId" class="form-label field-label">
+                            <i class="bi bi-person me-1 text-muted"></i>Member <span class="text-danger">*</span>
+                        </label>
+                        <select asp-for="UserId" class="form-select themed-input"
+                                asp-items="ViewBag.UserId"
+                                onchange="showFullName(this)">
+                            <option value="">-- Select Member --</option>
+                        </select>
+                        <span asp-validation-for="UserId" class="text-danger small"></span>
+
+                        <!-- 👇 Auto-filled FullName label -->
+                        <div id="fullNameDisplay" class="mt-2" style="display:none;">
+                            <label class="form-label field-label">
+                                <i class="bi bi-person-badge me-1 text-muted"></i>Full Name
+                            </label>
+                            <input type="text" id="fullNameInput" class="form-control themed-input"
+                                   readonly style="background:#f0f9fa; color:#2d3a3f; font-weight:600;" />
+                        </div>
+                    </div>
+
+
+                
+                </div>
+
+                <hr style="border-color: #e8f7f8;" class="mt-4" />
+
+                <!-- Action Buttons -->
+                <div class="d-flex gap-2 pt-2">
+                    <button type="submit" class="btn btn-save d-flex align-items-center gap-1">
+                        <i class="bi bi-person-plus-fill"></i> Add Member
+                    </button>
+                    <a asp-action="Index" class="btn btn-back d-flex align-items-center gap-1">
+                        <i class="bi bi-arrow-left"></i> Back to List
+                    </a>
+                </div>
+            </form>
+
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        // 👇 Null check to prevent crash if ViewData is empty
+        const users = @Html.Raw(ViewData["UsersJson"] ?? "[]");
+
+        function showFullName(select) {
+            const selectedId = parseInt(select.value);
+            const display = document.getElementById('fullNameDisplay');
+            const input = document.getElementById('fullNameInput');
+
+            if (!selectedId) {
+                display.style.display = 'none';
+                input.value = '';
+                return;
+            }
+
+            // 👇 camelCase matches the serialized JSON
+            const user = users.find(u => u.id === selectedId);
+            if (user) {
+                input.value = user.fullName;
+                display.style.display = 'block';
+            }
+        }
+    </script>
 }

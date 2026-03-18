@@ -62,6 +62,18 @@
                     <i class="bi bi-check-circle-fill"></i> Attendance
                 </a>
 
+                   <a asp-controller="SYMGroups" asp-action="Index"
+                   class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "SYMGroups"
+                                                   ? "active" : "")">
+                    <i class="bi bi-people-fill"></i> Groups
+                </a>
+
+                <a asp-controller="GroupMembers" asp-action="Index"
+                   class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "GroupMembers"
+                                                                      ? "active" : "")">
+                    <i class="bi bi-heart-pulse-fill"></i> Members
+                </a>
+
             </nav>
 
         </aside>

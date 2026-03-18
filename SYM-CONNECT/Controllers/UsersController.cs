@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -68,17 +68,19 @@ namespace SYM_CONNECT.Controllers
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
+            
 
-            var users = await _context.Users.FindAsync(id);
-            if (users == null)
+
+            var Users = await _context.Users
+                .FirstOrDefaultAsync(m => m.Id == id); // 👈 changed from FindAsync
+
+
+            if (Users == null)
             {
                 return NotFound();
             }
-            return View(users);
+            return View(Users);
         }
 
         // POST: Users/Edit/5
@@ -86,7 +88,7 @@ namespace SYM_CONNECT.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,Email,PasswordHash,Role,Status,CreatedAt")] Users users)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,Email,Role,Status,CreatedAt")] Users users)
         {
             if (id != users.Id)
             {
@@ -97,8 +99,15 @@ namespace SYM_CONNECT.Controllers
             {
                 try
                 {
-                    _context.Update(users);
+                    var existing = await _context.Users.FindAsync(id);
+                    if (existing == null) return NotFound();
+                    existing.FullName = users.FullName;
+                    existing.Email = users.Email;
+                    existing.Status = users.Status;
+                    existing.Role = users.Role;
+                    existing.CreatedAt = users.CreatedAt;
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -111,8 +120,19 @@ namespace SYM_CONNECT.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
+
+            // 👇 Add this to see exactly what's still failing
+            var errors = ModelState
+                .Where(x => x.Value.Errors.Count > 0)
+                .Select(x => new { Field = x.Key, Errors = x.Value.Errors.Select(e => e.ErrorMessage) });
+
+            foreach (var error in errors)
+            {
+                Console.WriteLine($"Field: {error.Field} → {string.Join(", ", error.Errors)}");
+            }
+
+
             return View(users);
         }
 
