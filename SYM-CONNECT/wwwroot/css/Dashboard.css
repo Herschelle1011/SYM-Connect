@@ -811,3 +811,384 @@ body {
     border: 2px solid #fff;
     margin-left: 2px;
 }
+
+
+:root {
+    --teal: #0ab5c4;
+    --teal-dark: #07869b;
+    --teal-light: #e8f7f8;
+    --teal-mid: #c2edf1;
+    --text-dark: #1a2e35;
+    --text-muted: #6c757d;
+    --white: #ffffff;
+    --bg: #f0f9fa;
+}
+
+/* ── Page Header (matches User Management) ── */
+.page-title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--teal);
+    margin-bottom: 2px;
+}
+
+.page-subtitle {
+    color: var(--text-muted);
+    font-size: .875rem;
+    margin: 0;
+}
+
+/* ── Section divider label ── */
+.section-label {
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--teal-dark);
+    font-weight: 700;
+    margin: 22px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+    .section-label::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--teal-mid);
+    }
+
+/* ── Summary stat cards ── */
+.stat-card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 18px 20px;
+    height: 100%;
+    box-shadow: 0 2px 12px rgba(10,181,196,.08);
+    border: 1px solid var(--teal-light);
+    transition: transform .2s, box-shadow .2s;
+}
+
+    .stat-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(10,181,196,.15);
+    }
+
+    .stat-card .icon-wrap {
+        width: 40px;
+        height: 40px;
+        border-radius: 11px;
+        background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 12px;
+    }
+
+        .stat-card .icon-wrap i {
+            color: #fff;
+            font-size: 1.05rem;
+        }
+
+.stat-label {
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.stat-value {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    line-height: 1.1;
+}
+
+.stat-sub {
+    font-size: .72rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-top: 6px;
+}
+
+.sub-teal {
+    background: var(--teal-light);
+    color: var(--teal-dark);
+}
+
+.sub-green {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.sub-yellow {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+/* ── card-table (same class used in User Management) ── */
+.card-table {
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: 0 2px 14px rgba(10,181,196,.08);
+    border: 1px solid var(--teal-light);
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+/* ── card-table inner header row ── */
+.ct-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--teal-light);
+}
+
+    .ct-header .icon-sm {
+        width: 34px;
+        height: 34px;
+        border-radius: 9px;
+        flex-shrink: 0;
+        background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .ct-header .icon-sm i {
+            color: #fff;
+            font-size: .9rem;
+        }
+
+    .ct-header h6 {
+        margin: 0;
+        font-weight: 700;
+        color: var(--text-dark);
+        font-size: .9rem;
+    }
+
+    .ct-header small {
+        color: var(--text-muted);
+        font-size: .73rem;
+    }
+
+/* ── user-table (same class as User Management) ── */
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .84rem;
+}
+
+    .user-table thead tr {
+        background: var(--teal-light);
+    }
+
+    .user-table th {
+        padding: 10px 16px;
+        text-align: left;
+        font-size: .72rem;
+        text-transform: uppercase;
+        letter-spacing: .5px;
+        color: var(--teal-dark);
+        font-weight: 700;
+        white-space: nowrap;
+        border-bottom: 2px solid var(--teal-mid);
+    }
+
+    .user-table td {
+        padding: 10px 16px;
+        color: var(--text-dark);
+        border-bottom: 1px solid #f1f5f9;
+        vertical-align: middle;
+    }
+
+    .user-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .user-table tbody tr:hover td {
+        background: #f7fdfe;
+    }
+
+/* ── user-avatar / user-name-cell (same as User Management) ── */
+.user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--teal-mid);
+}
+
+.user-name-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+}
+
+.avatar-initials {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .65rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+/* ── badges (same as User Management) ── */
+.badge-active {
+    background: #d1fae5;
+    color: #065f46;
+    font-size: .72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.badge-inactive {
+    background: #fee2e2;
+    color: #991b1b;
+    font-size: .72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.badge-done {
+    background: #dbeafe;
+    color: #1e40af;
+    font-size: .72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.badge-upcoming {
+    background: #fef3c7;
+    color: #92400e;
+    font-size: .72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+/* ── table footer (same as User Management) ── */
+.table-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 20px;
+    border-top: 1px solid var(--teal-light);
+    font-size: .77rem;
+    color: var(--text-muted);
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+/* ── Progress bar ── */
+.progress-wrap {
+    min-width: 88px;
+}
+
+.progress-track {
+    height: 7px;
+    border-radius: 10px;
+    background: var(--teal-light);
+    overflow: hidden;
+    margin-top: 3px;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 10px;
+    background: linear-gradient(90deg, var(--teal), var(--teal-dark));
+}
+
+/* ── Chart ── */
+.chart-body {
+    padding: 16px 20px;
+}
+
+.chart-wrap {
+    position: relative;
+    height: 195px;
+}
+
+/* ── Donut ── */
+.donut-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    flex-wrap: wrap;
+    padding: 6px 0 0;
+}
+
+.legend-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    .legend-list li {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: .8rem;
+        color: var(--text-dark);
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+.legend-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* ── Export buttons ── */
+.btn-rpt-export {
+    background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+    color: #fff;
+    border: none;
+    border-radius: 9px;
+    padding: 7px 16px;
+    font-size: .78rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: opacity .2s;
+    text-decoration: none;
+}
+
+    .btn-rpt-export:hover {
+        opacity: .85;
+        color: #fff;
+    }
+
+    .btn-rpt-export.outline {
+        background: transparent;
+        border: 1.5px solid var(--teal);
+        color: var(--teal);
+    }
+
+        .btn-rpt-export.outline:hover {
+            background: var(--teal-light);
+        }

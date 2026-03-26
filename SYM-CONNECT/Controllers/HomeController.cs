@@ -28,6 +28,9 @@ namespace SYM_CONNECT.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult UserManagement()
         {
+
+
+
             var viewModel = new UserManagementViewModel
             {
                 Users = _db.Users.ToList(),
@@ -108,6 +111,20 @@ namespace SYM_CONNECT.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel());
+        }
+
+
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> Report()
+        {
+            ViewBag.TotalMembers = await _db.Users.CountAsync();
+            ViewBag.ActiveMembers = await _db.Users.CountAsync(u => u.Status == "Active");
+            ViewBag.TotalLeaders = await _db.Users.CountAsync(u => u.Role == "Leader");
+            ViewBag.TotalGroups = await _db.SYMGroup.CountAsync();
+            ViewBag.TotalEvents = await _db.Events.CountAsync();
+            ViewBag.UpcomingEvents = await _db.Events.CountAsync(e => e.EventDate > DateTime.Now);
+
+            return View();
         }
     }
 }

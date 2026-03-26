@@ -52,13 +52,13 @@ namespace SYM_CONNECT.Controllers
         public IActionResult Create()
         {
             var members = _context.Users
-       .Where(u => u.Role == "Member")
-       .Select(u => new { u.Id, u.FullName, u.Email })
-       .ToList();
+               .Where(u => u.Role == "Member")
+               .Select(u => new { u.Id, u.FullName, u.Email })
+               .ToList();
 
 
             ViewData["GroupId"] = new SelectList(_context.SYMGroup, "GroupId", "Name");
-            ViewData["UserId"] = new SelectList(members, "Id", "Email"); // 👈 show Email in dropdown
+            ViewData["UserId"] = new SelectList(members, "Id", "Email"); 
 
 
             var options = new System.Text.Json.JsonSerializerOptions
@@ -77,32 +77,27 @@ namespace SYM_CONNECT.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("GroupMemberId,GroupId,UserId")] GroupMember groupMember)
         {
-
-            var hasGroup = _context.GroupMembers
-    .Include(m => m.Group)
-    .Include(m => m.User)
-    .FirstOrDefaultAsync(m => m.GroupMemberId == groupMember.GroupMemberId);
+            var hasGroup = await _context.GroupMembers
+                .FirstOrDefaultAsync(m => m.UserId == groupMember.UserId);
 
             if (hasGroup != null)
             {
-
                 TempData["Error"] = "This member is already assigned to a group.";
                 return RedirectToAction(nameof(Index));
             }
 
-
-            var IfMember = _context.Users.Where(u => u.Role == "Member");
             if (ModelState.IsValid)
             {
                 _context.Add(groupMember);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            var members = _context.Users.Where(u => u.Role == "Member");
             ViewData["GroupId"] = new SelectList(_context.SYMGroup, "GroupId", "Name", groupMember.GroupId);
-            ViewData["UserId"] = new SelectList(IfMember, "Id", "Email", groupMember.UserId);
+            ViewData["UserId"] = new SelectList(members, "Id", "Email", groupMember.UserId);
             return View(groupMember);
         }
-
         // GET: GroupMembers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

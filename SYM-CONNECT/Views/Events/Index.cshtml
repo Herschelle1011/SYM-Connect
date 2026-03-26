@@ -39,10 +39,10 @@
             <i class="bi bi-upload"></i> Export
         </button>
 
-        <button class="btn-add-user" style="text-decoration:none" id="openCreateModal">
-            <i class="bi bi-plus-circle-fill"></i>
-            Create Event
-        </button>
+       <a asp-action="Create"
+                               class="btn-action btn-edit" style="text-decoration:none;">
+                                            <i class="bi bi-plus-circle-fill"></i>Create
+                            </a>
 
         <div class="modal fade" id="createModal">
             <div class="modal-dialog">

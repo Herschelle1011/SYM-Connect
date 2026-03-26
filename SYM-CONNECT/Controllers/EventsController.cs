@@ -55,18 +55,20 @@ namespace SYM_CONNECT.Controllers
             ViewData["ApprovedBy"] = new SelectList(_context.Users, "Id", "Email");
             ViewData["CreatedBy"] = new SelectList(_context.Users, "Id", "Email");
 
-            return View();
-        }
-
-
-        public IActionResult CreateModal()
-        {
             var fullName = User.FindFirst(ClaimTypes.Name)?.Value;
 
             ViewBag.CurrentUserName = fullName;
 
-            return PartialView("_CreateEventModal", new Event());
+            return View();
         }
+
+
+        //public IActionResult CreateModal()
+        //{
+           
+
+        //    return PartialView("Create", new Event());
+        //}
 
 
         // POST: Events/Create

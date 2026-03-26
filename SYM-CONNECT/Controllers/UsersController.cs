@@ -22,6 +22,12 @@ namespace SYM_CONNECT.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
+            //ViewBag.TotalMembers = await _context.Users.CountAsync();
+            //ViewBag.ActiveMembers = await _context.Users.CountAsync(u => u.Status == "Active");
+            //ViewBag.TotalLeaders = await _context.Users.CountAsync(u => u.Role == "Leader");
+            //ViewBag.TotalGroups = await _context.SYMGroup.CountAsync();
+            //ViewBag.TotalEvents = await _context.Events.CountAsync();
+            //ViewBag.UpcomingEvents = await _context.Events.CountAsync(e => e.EventDate > DateTime.Now);
             return View(await _context.Users.ToListAsync());
         }
 
