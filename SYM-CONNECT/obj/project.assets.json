@@ -7815,23 +7815,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ACT-STUDENT\\.nuget\\packages\\": {},
+    "C:\\Users\\Herschelle\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ACT-STUDENT\\Source\\Repos\\SYM-Connect\\SYM-CONNECT\\SYM-CONNECT.csproj",
+      "projectUniqueName": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\SYM-CONNECT.csproj",
       "projectName": "SYM-CONNECT",
-      "projectPath": "C:\\Users\\ACT-STUDENT\\Source\\Repos\\SYM-Connect\\SYM-CONNECT\\SYM-CONNECT.csproj",
-      "packagesPath": "C:\\Users\\ACT-STUDENT\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ACT-STUDENT\\Source\\Repos\\SYM-Connect\\SYM-CONNECT\\obj\\",
+      "projectPath": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\SYM-CONNECT.csproj",
+      "packagesPath": "C:\\Users\\Herschelle\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\ACT-STUDENT\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Herschelle\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -7859,7 +7859,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.300"
+      "SdkAnalysisLevel": "10.0.100"
     },
     "frameworks": {
       "net9.0": {
@@ -7913,6 +7913,24 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[9.0.13, 9.0.13]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[9.0.13, 9.0.13]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[9.0.13, 9.0.13]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[9.0.13, 9.0.13]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -7921,7 +7939,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json"
       }
     }
   },
