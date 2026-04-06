@@ -22,6 +22,21 @@ namespace SYM_CONNECT.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("EventSYMGroup", b =>
+                {
+                    b.Property<int>("AssignedGroupsGroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EventsEventId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AssignedGroupsGroupId", "EventsEventId");
+
+                    b.HasIndex("EventsEventId");
+
+                    b.ToTable("EventSYMGroup");
+                });
+
             modelBuilder.Entity("SYM_CONNECT.Models.Attendance", b =>
                 {
                     b.Property<int>("AttendanceId")
@@ -66,6 +81,15 @@ namespace SYM_CONNECT.Migrations
                     b.Property<int?>("ApprovedBy")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("CancelledAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CancelledBy")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CancelledByUserId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CreatedBy")
                         .HasColumnType("int");
 
@@ -73,8 +97,14 @@ namespace SYM_CONNECT.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("EventDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool?>("IsCancelled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -83,6 +113,8 @@ namespace SYM_CONNECT.Migrations
                     b.HasKey("EventId");
 
                     b.HasIndex("ApprovedBy");
+
+                    b.HasIndex("CancelledByUserId");
 
                     b.HasIndex("CreatedBy");
 
@@ -98,6 +130,9 @@ namespace SYM_CONNECT.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GroupMemberId"));
 
                     b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalEarnedPoints")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
@@ -165,8 +200,10 @@ namespace SYM_CONNECT.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("InactiveAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("PasswordHash")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Role")
@@ -180,6 +217,21 @@ namespace SYM_CONNECT.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("EventSYMGroup", b =>
+                {
+                    b.HasOne("SYM_CONNECT.Models.SYMGroup", null)
+                        .WithMany()
+                        .HasForeignKey("AssignedGroupsGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SYM_CONNECT.Models.Event", null)
+                        .WithMany()
+                        .HasForeignKey("EventsEventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SYM_CONNECT.Models.Attendance", b =>
@@ -208,6 +260,10 @@ namespace SYM_CONNECT.Migrations
                         .HasForeignKey("ApprovedBy")
                         .OnDelete(DeleteBehavior.NoAction);
 
+                    b.HasOne("SYM_CONNECT.Models.Users", "CancelledByUser")
+                        .WithMany()
+                        .HasForeignKey("CancelledByUserId");
+
                     b.HasOne("SYM_CONNECT.Models.Users", "CreatedByUser")
                         .WithMany()
                         .HasForeignKey("CreatedBy")
@@ -215,6 +271,8 @@ namespace SYM_CONNECT.Migrations
                         .IsRequired();
 
                     b.Navigation("ApprovedByUser");
+
+                    b.Navigation("CancelledByUser");
 
                     b.Navigation("CreatedByUser");
                 });

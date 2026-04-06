@@ -1,0 +1,123 @@
+﻿@model List<SYM_CONNECT.Models.Users>
+@{
+    Layout = null; @* No layout for PDF *@
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+
+        h2 {
+            color: #0ab5c4;
+            margin-bottom: 4px;
+        }
+
+        p {
+            color: #888;
+            font-size: 11px;
+            margin-top: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        thead {
+            background: #0ab5c4;
+            color: white;
+        }
+
+        th {
+            padding: 8px 10px;
+            text-align: left;
+            font-size: 11px;
+        }
+
+        td {
+            padding: 7px 10px;
+            border-bottom: 1px solid #e8f7f8;
+            font-size: 11px;
+        }
+
+        tr:nth-child(even) {
+            background: #f5fbfd;
+        }
+
+        .badge-active {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+        }
+
+        .badge-inactive {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 10px;
+            color: #aaa;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>SYM Connect — User List</h2>
+    <p>Generated on: @DateTime.Now.ToString("MMMM dd, yyyy hh:mm tt")</p>
+    <p>Total Users: @Model.Count</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Joined Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var user = Model[i];
+                <tr>
+                    <td>@(i + 1)</td>
+                    <td>@user.FullName</td>
+                    <td>@user.Email</td>
+                    <td>@user.Role</td>
+                    <td>
+                        <span class="@(user.Status == "Active"
+                                                                     ? "badge-active"
+                                                                     : "badge-inactive")">
+                        @user.Status
+                    </span>
+                </td>
+                <td>
+                    @user.CreatedAt.ToString("MMM dd, yyyy hh:mm tt")
+                </td>
+            </tr>
+                        }
+        </tbody>
+    </table>
+
+    <div class="footer">
+        SYM Connect System — Confidential
+    </div>
+
+</body>
+</html>

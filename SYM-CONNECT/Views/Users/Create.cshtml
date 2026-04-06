@@ -48,24 +48,90 @@
                         <label asp-for="Email" class="form-label field-label">
                             <i class="bi bi-envelope me-1 text-muted"></i>Email <span class="text-danger">*</span>
                         </label>
-                        <input asp-for="Email" type="email" class="form-control themed-input" placeholder="Enter email address" />
+                        <input asp-for="Email" type="email" id="emailInput"
+                                 class="form-control themed-input" placeholder="Enter email address" />
+
+                        <span id="emailError"
+                              class="text-danger small"
+                              style="display:none;">
+                            <i class="bi bi-exclamation-circle me-1"></i>
+                            This email is already taken.
+                        </span>
+
                         <span asp-validation-for="Email" class="text-danger small"></span>
                     </div>
 
                     <!-- Password -->
                     <div class="col-md-6">
                         <label asp-for="PasswordHash" class="form-label field-label">
-                            <i class="bi bi-lock me-1 text-muted"></i>Password <span class="text-danger">*</span>
+                            <i class="bi bi-lock me-1 text-muted"></i>
+                            Password <span class="text-danger">*</span>
                         </label>
+
                         <div class="input-group">
-                            <input asp-for="PasswordHash" type="password" class="form-control themed-input"
-                                   placeholder="Enter password" id="createPassword" />
-                            <button class="btn btn-outline-secondary" type="button"
-                                    onclick="togglePassword('createPassword', this)">
-                                <i class="bi bi-eye"></i>
+                            <input name="PasswordHash"
+                                   id="createPassword"
+                                   type="password"
+                                   class="form-control themed-input"
+                                   placeholder="Enter password"
+                                   value="@(ViewBag.GeneratedPassword ?? string.Empty)" />
+
+                            <button class="btn"
+                                    type="button"
+                                    onclick="togglePassword()"
+                                    style="border:1.5px solid var(--teal-mid);
+                       border-left:none;
+                       background:#f7fdfe;
+                       color:var(--text-muted);">
+                                <i class="bi bi-eye" id="eyeIcon"></i>
                             </button>
                         </div>
-                        <span asp-validation-for="PasswordHash" class="text-danger small"></span>
+
+                        <input type="hidden" name="generate" id="generateFlag" value="false" />
+
+
+                        <!-- Generate  -->
+                        <button type="submit"
+                                formnovalidate
+                                onclick="document.getElementById('generateFlag').value='true';"
+                                style="margin-top:8px;
+               display:inline-flex;
+               align-items:center;
+               gap:5px;
+               background:var(--teal-light);
+               color:var(--teal-dark);
+               border:1.5px solid var(--teal-mid);
+               border-radius:8px;
+               padding:5px 14px;
+               font-size:.78rem;
+               font-weight:600;
+               cursor:pointer;">
+                            <i class="bi bi-magic"></i> Generate Password
+                        </button>
+
+                        <!-- Generated password display -->
+                        @if (TempData["GeneratedPassword"] != null)
+                        {
+                            <div style="margin-top:8px;
+                        padding:8px 12px;
+                        background:var(--teal-light);
+                        border:1px solid var(--teal-mid);
+                        border-radius:8px;
+                        font-size:.78rem;
+                        color:var(--teal-dark);
+                        font-weight:600;">
+                                <i class="bi bi-check-circle me-1"></i>
+                                Generated: @TempData["GeneratedPassword"]
+                                <small style="color:var(--text-muted);
+                              font-weight:400;
+                              margin-left:6px;">
+                                    (copy this before submitting)
+                                </small>
+                            </div>
+                        }
+
+                        <span asp-validation-for="PasswordHash"
+                              class="text-danger small"></span>
                     </div>
 
                     <!-- Joined Date -->
@@ -73,7 +139,13 @@
                         <label asp-for="CreatedAt" class="form-label field-label">
                             <i class="bi bi-calendar3 me-1 text-muted"></i>Joined Date
                         </label>
-                        <input asp-for="CreatedAt" class="form-control themed-input" />
+                        <input asp-for="CreatedAt"
+                               type="datetime-local"
+                               class="form-control themed-input"
+                               readonly
+                               style="background:#f0f9fa;
+                  color:var(--text-muted);
+                  cursor:not-allowed;" />
                         <span asp-validation-for="CreatedAt" class="text-danger small"></span>
                     </div>
 
@@ -95,23 +167,25 @@
                     <!-- Status -->
                     <div class="col-md-6">
                         <label class="form-label field-label">
-                            <i class="bi bi-circle-half me-1 text-muted"></i>Status <span class="text-danger">*</span>
+                            <i class="bi bi-circle-half me-1 text-muted"></i>Status (default to Active)<span class="text-danger">*</span>
                         </label>
                         <div class="d-flex gap-3 pt-1">
                             <div class="form-check themed-radio">
-                                <input class="form-check-input" type="radio" asp-for="Status"
+
+                                <input class="form-check-input" type="radio" asp-for="Status" checked
                                        value="Active" id="statusActive" />
+
                                 <label class="form-check-label" for="statusActive">
                                     <span class="radio-badge badge-approved">Active</span>
                                 </label>
                             </div>
-                            <div class="form-check themed-radio">
+                            @* <div class="form-check themed-radio">
                                 <input class="form-check-input" type="radio" asp-for="Status"
                                        value="Inactive" id="statusInactive" />
                                 <label class="form-check-label" for="statusInactive">
                                     <span class="radio-badge badge-rejected">Inactive</span>
                                 </label>
-                            </div>
+                            </div> *@
                         </div>
                         <span asp-validation-for="Status" class="text-danger small"></span>
                     </div>
@@ -125,6 +199,7 @@
                     <button type="submit" class="btn btn-save d-flex align-items-center gap-1">
                         <i class="bi bi-person-plus"></i> Create User
                     </button>
+
                     <a asp-action="Index" class="btn btn-back d-flex align-items-center gap-1">
                         <i class="bi bi-arrow-left"></i> Back to List
                     </a>
@@ -139,4 +214,20 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script>
+        // ── Toggle Password Visibility ─────────────────
+        function togglePassword() {
+            var input   = document.getElementById('createPassword');
+            var eyeIcon = document.getElementById('eyeIcon');
+
+            if (input.type === 'password') {
+                input.type        = 'text';
+                eyeIcon.className = 'bi bi-eye-slash';
+            } else {
+                input.type        = 'password';
+                eyeIcon.className = 'bi bi-eye';
+            }
+        }
+    </script>
 }

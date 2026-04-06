@@ -87,20 +87,18 @@
                             </td>
                         </tr>
                     }
+
+                    <tr id="noSearchResults" style="display:none;">
+                        <td colspan="6"
+                            style="text-align:center;padding:20px;
+                        color:#888;font-size:13px;">
+                            <i class="bi bi-search me-1"></i>
+                            No users found matching your search.
+                        </td>
+                    </tr>
+
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-
-@section Scripts {
-    <script>
-        function filterTable() {
-            const input = document.getElementById('searchInput').value.toLowerCase();
-            const rows = document.querySelectorAll('#tableBody tr');
-            rows.forEach(row => {
-                row.style.display = row.innerText.toLowerCase().includes(input) ? '' : 'none';
-            });
-        }
-    </script>
-}

@@ -1192,3 +1192,44 @@ body {
         .btn-rpt-export.outline:hover {
             background: var(--teal-light);
         }
+
+.role-option:hover {
+    background: #f0fbf7;
+}
+
+.ts-wrapper .ts-control {
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 6px 10px;
+    min-height: 42px;
+}
+
+.ts-wrapper.focus .ts-control {
+    border-color: #0ab5c4;
+    box-shadow: 0 0 0 3px rgba(10, 181, 196, 0.15);
+}
+
+.ts-dropdown {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+}
+
+    .ts-dropdown .option:hover,
+    .ts-dropdown .option.active {
+        background: #e1f5ee;
+        color: #085041;
+    }
+
+.ts-control .item {
+    background: #e1f5ee !important;
+    color: #085041 !important;
+    border-radius: 6px !important;
+    font-size: 13px !important;
+    border: none !important;
+    padding: 3px 10px !important;
+}
+
+    .ts-control .item .remove {
+        color: #0F6E56 !important;
+        border-left: none !important;
+    }

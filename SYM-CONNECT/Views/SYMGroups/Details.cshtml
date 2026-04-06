@@ -11,6 +11,16 @@
         <i class="bi bi-arrow-left"></i> Back to Groups
     </a>
 
+    <!-- Success/Error Toasts -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
     <!-- Leader Card -->
     <div class="card border-0 rounded-4 shadow-sm mb-4" style="background:#fff;">
         <div class="card-body p-4">
@@ -38,6 +48,25 @@
                     }
                 </div>
             </div>
+
+            <!-- Total Points Summary -->
+            <div class="mt-3 d-flex gap-3">
+                <div style="background:#f0feff;border:1px solid #b2eaf0;
+                            border-radius:10px;padding:10px 20px;font-size:.85rem;">
+                    <span style="color:#90adb8;">Total Members</span><br />
+                    <strong style="color:#0ab5c4;font-size:1.2rem;">
+                        @Model.GroupMembers.Count
+                    </strong>
+                </div>
+                <div style="background:#e8f4ff;border:1px solid #b8d4f8;
+                            border-radius:10px;padding:10px 20px;font-size:.85rem;">
+                    <span style="color:#90adb8;">Group Total Points</span><br />
+                    <strong style="color:#3a7bd5;font-size:1.2rem;">
+                        <i class="bi bi-star-fill" style="font-size:.9rem;"></i>
+                        @Model.GroupMembers.Sum(m => m.TotalEarnedPoints) pts
+                    </strong>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -46,17 +75,19 @@
         <div class="toolbar">
             <h6 class="fw-bold mb-0" style="color:#2d3a3f;">
                 Members
-                <span style="color:#90adb8; font-weight:400; font-size:.85rem;">
+                <span style="color:#90adb8;font-weight:400;font-size:.85rem;">
                     @Model.GroupMembers.Count total
                 </span>
             </h6>
 
-            <!-- 👇 Add Member Button -->
-            <a asp-action="Index" asp-controller="GroupMembers"
-               class="btn d-inline-flex align-items-center gap-1"
-               style="background:#0ab5c4; color:#fff; border-radius:8px; font-size:.85rem; padding:6px 16px;">
+            <!-- Add Member Button → triggers modal -->
+            <button type="button"
+                    onclick="openAddMemberModal(@Model.GroupId)"
+                    class="btn d-inline-flex align-items-center gap-1"
+                    style="background:#0ab5c4;color:#fff;border-radius:8px;
+                           font-size:.85rem;padding:6px 16px;border:none;cursor:pointer;">
                 <i class="bi bi-person-plus-fill"></i> Add Member
-            </a>
+            </button>
 
             <div class="search-wrap ms-auto">
                 <i class="bi bi-search"></i>
@@ -64,8 +95,6 @@
                        id="searchInput" oninput="filterTable()" />
             </div>
         </div>
-       
-
 
         <div style="overflow-x:auto;">
             <table class="user-table" id="userTable">
@@ -74,8 +103,10 @@
                         <th><i class="bi bi-person"></i> Full Name</th>
                         <th><i class="bi bi-envelope"></i> Email</th>
                         <th><i class="bi bi-shield-check"></i> Role</th>
+                        <th><i class="bi bi-star"></i> Total Points</th>
                         <th><i class="bi bi-circle-half"></i> Status</th>
                         <th><i class="bi bi-calendar3"></i> Joined Date</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
@@ -92,6 +123,14 @@
                             <td>@member.User?.Email</td>
                             <td>@member.User?.Role</td>
                             <td>
+                                <span style="background:#e8f4ff;color:#3a7bd5;
+                                                border:1px solid #b8d4f8;border-radius:20px;
+                                                padding:4px 14px;font-size:.74rem;font-weight:600;">
+                                    <i class="bi bi-star-fill" style="font-size:.65rem;"></i>
+                                    @member.TotalEarnedPoints pts
+                                </span>
+                            </td>
+                            <td>
                                 @if (member.User?.Status == "Active")
                                 {
                                     <span class="badge-active">Active</span>
@@ -101,7 +140,24 @@
                                     <span class="badge-inactive">Inactive</span>
                                 }
                             </td>
-                            <td>@(member.User?.CreatedAt.ToString("dd MMMM yyyy")  ?? "—")</td>
+                            <td>@(member.User?.CreatedAt.ToString("dd MMMM yyyy") ?? "—")</td>
+                            <td>
+                                <!-- Transfer Button -->
+                                <button type="button"
+                                        onclick="openTransferModal(
+                                                @member.GroupMemberId,
+                                                '@member.User?.FullName',
+                                                @Model.GroupId)"
+                                        class="btn-action ms-1"
+                                        style="color:#f39c12;border-color:#fde8b0;
+                                                   background:#fffbf0;border-radius:7px;
+                                                   padding:5px 12px;font-size:.75rem;
+                                                   font-weight:500;display:inline-flex;
+                                                   align-items:center;gap:4px;
+                                                   border:1px solid #fde8b0;cursor:pointer;">
+                                    <i class="bi bi-arrow-left-right"></i> Transfer
+                                </button>
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -109,3 +165,285 @@
         </div>
     </div>
 </div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--           ADD MEMBER MODAL                  -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="modal fade" id="addMemberModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow">
+
+            <div class="modal-header" style="background:#0ab5c4;">
+                <h5 class="modal-title text-white">
+                    <i class="bi bi-person-plus-fill me-2"></i> Add Member to Group
+                </h5>
+                <button type="button" class="btn-close btn-close-white"
+                        data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <!-- Search inside modal -->
+                <input type="text" id="memberSearch"
+                       placeholder="Search by name or email..."
+                       oninput="filterModalList()"
+                       class="form-control mb-3" />
+
+                <!-- Loading state -->
+                <div id="memberLoadingSpinner" class="text-center py-3">
+                    <div class="spinner-border text-info" role="status"></div>
+                    <p class="mt-2 text-muted">Loading available members...</p>
+                </div>
+
+                <!-- No members found -->
+                <div id="noMembersMsg" class="text-center text-muted py-3" style="display:none;">
+                    <i class="bi bi-person-x" style="font-size:2rem;"></i>
+                    <p class="mt-2">All members are already assigned to a group.</p>
+                </div>
+
+                <!-- Members list table -->
+                <div id="memberListWrapper" style="display:none;">
+                    <table class="user-table w-100" id="modalMemberTable">
+                        <thead>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="modalMemberBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden form for Add Member POST -->
+<form id="addMemberForm" method="post" asp-action="AddMember" asp-controller="SYMGroup">
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="addGroupId" name="groupId" />
+    <input type="hidden" id="addUserId" name="userId" />
+</form>
+
+
+<!-- ═══════════════════════════════════════════ -->
+<!--         TRANSFER MEMBER MODAL               -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="modal fade" id="transferModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+
+            <div class="modal-header" style="background:#f39c12;">
+                <h5 class="modal-title text-white">
+                    <i class="bi bi-arrow-left-right me-2"></i> Transfer Member
+                </h5>
+                <button type="button" class="btn-close btn-close-white"
+                        data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <p class="text-muted mb-1">Transferring member:</p>
+                <h6 class="fw-bold mb-3" id="transferMemberName">—</h6>
+
+                <label class="form-label fw-semibold">Select Destination Group</label>
+
+                <!-- Loading -->
+                <div id="groupLoadingSpinner" class="text-center py-2">
+                    <div class="spinner-border text-warning" role="status"></div>
+                </div>
+
+                <select id="targetGroupSelect" class="form-select" style="display:none;">
+                    <option value="">— Choose a group —</option>
+                </select>
+
+                <div id="noGroupsMsg" class="text-muted text-center py-2" style="display:none;">
+                    No other active groups available.
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-warning text-white fw-bold"
+                        onclick="confirmTransfer()">
+                    <i class="bi bi-arrow-left-right me-1"></i> Confirm Transfer
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden form for Transfer POST -->
+<form id="transferForm" method="post"
+      asp-action="TransferMember" asp-controller="SYMGroup">
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="transferGroupMemberId" name="groupMemberId" />
+    <input type="hidden" id="transferTargetGroupId" name="targetGroupId" />
+    <input type="hidden" name="currentGroupId" value="@Model.GroupId" />
+</form>
+
+
+@section Scripts {
+    <script>
+        // ─── State variables ───────────────────────────
+        let currentGroupId   = @Model.GroupId;
+        let selectedMemberId = null;   // for transfer
+
+        // ══════════════════════════════════════════════
+        //  ADD MEMBER MODAL
+        // ══════════════════════════════════════════════
+        function openAddMemberModal(groupId) {
+            currentGroupId = groupId;
+
+            // Reset modal state
+            document.getElementById('memberSearch').value  = '';
+            document.getElementById('modalMemberBody').innerHTML = '';
+            document.getElementById('memberListWrapper').style.display  = 'none';
+            document.getElementById('noMembersMsg').style.display       = 'none';
+            document.getElementById('memberLoadingSpinner').style.display = 'block';
+
+            // Show modal
+            new bootstrap.Modal(document.getElementById('addMemberModal')).show();
+
+            // Fetch available members from controller
+            fetch('/SYMGroup/GetAvailableMembers')
+                .then(res => res.json())
+                .then(members => {
+                    document.getElementById('memberLoadingSpinner').style.display = 'none';
+
+                    if (members.length === 0) {
+                        document.getElementById('noMembersMsg').style.display = 'block';
+                        return;
+                    }
+
+                    // Build table rows
+                    const tbody = document.getElementById('modalMemberBody');
+                    tbody.innerHTML = '';
+
+                    members.forEach(m => {
+                        const tr = document.createElement('tr');
+                        tr.setAttribute('data-search',
+                            (m.fullName + ' ' + m.email).toLowerCase());
+                        tr.innerHTML = `
+                            <td>
+                                <span class="user-name-cell" style="gap:8px;">
+                                    <img src="https://i.pravatar.cc/32?u=${m.id}"
+                                         class="user-avatar" />
+                                    ${m.fullName}
+                                </span>
+                            </td>
+                            <td>${m.email}</td>
+                            <td>
+                                <button type="button"
+                                        onclick="confirmAddMember(${m.id}, '${m.fullName}')"
+                                        class="btn-action"
+                                        style="background:#e8fff8;color:#0ab5c4;
+                                               border:1px solid #b2eaf0;border-radius:7px;
+                                               padding:4px 12px;font-size:.75rem;
+                                               font-weight:500;cursor:pointer;">
+                                    <i class="bi bi-person-check-fill"></i> Add
+                                </button>
+                            </td>`;
+                        tbody.appendChild(tr);
+                    });
+
+                    document.getElementById('memberListWrapper').style.display = 'block';
+                })
+                .catch(() => {
+                    document.getElementById('memberLoadingSpinner').style.display = 'none';
+                    document.getElementById('noMembersMsg').style.display = 'block';
+                });
+        }
+
+        // Search filter inside Add Member modal
+        function filterModalList() {
+            const query = document.getElementById('memberSearch')
+                                   .value.toLowerCase();
+            document.querySelectorAll('#modalMemberBody tr').forEach(row => {
+                const text = row.getAttribute('data-search') || '';
+                row.style.display = text.includes(query) ? '' : 'none';
+            });
+        }
+
+        // Submit Add Member form
+        function confirmAddMember(userId, userName) {
+            if (!confirm(`Add "${userName}" to this group?`)) return;
+
+            document.getElementById('addGroupId').value = currentGroupId;
+            document.getElementById('addUserId').value  = userId;
+            document.getElementById('addMemberForm').submit();
+        }
+
+
+        // ══════════════════════════════════════════════
+        //  TRANSFER MEMBER MODAL
+        // ══════════════════════════════════════════════
+        function openTransferModal(groupMemberId, memberName, groupId) {
+            selectedMemberId = groupMemberId;
+            currentGroupId   = groupId;
+
+            // Set member name
+            document.getElementById('transferMemberName').innerText = memberName;
+
+            // Reset select
+            const select = document.getElementById('targetGroupSelect');
+            select.innerHTML = '<option value="">— Choose a group —</option>';
+            select.style.display = 'none';
+
+            document.getElementById('noGroupsMsg').style.display       = 'none';
+            document.getElementById('groupLoadingSpinner').style.display = 'block';
+
+            // Show modal
+            new bootstrap.Modal(document.getElementById('transferModal')).show();
+
+            // Fetch other groups
+            fetch(`/SYMGroup/GetOtherGroups?currentGroupId=${groupId}`)
+                .then(res => res.json())
+                .then(groups => {
+                    document.getElementById('groupLoadingSpinner').style.display = 'none';
+
+                    if (groups.length === 0) {
+                        document.getElementById('noGroupsMsg').style.display = 'block';
+                        return;
+                    }
+
+                    groups.forEach(g => {
+                        const opt = document.createElement('option');
+                        opt.value       = g.groupId;
+                        opt.textContent = g.name;
+                        select.appendChild(opt);
+                    });
+
+                    select.style.display = 'block';
+                })
+                .catch(() => {
+                    document.getElementById('groupLoadingSpinner').style.display = 'none';
+                    document.getElementById('noGroupsMsg').style.display = 'block';
+                });
+        }
+
+        // Submit Transfer form
+        function confirmTransfer() {
+            const targetGroupId = document.getElementById('targetGroupSelect').value;
+
+            if (!targetGroupId) {
+                alert('Please select a destination group.');
+                return;
+            }
+
+            document.getElementById('transferGroupMemberId').value = selectedMemberId;
+            document.getElementById('transferTargetGroupId').value = targetGroupId;
+            document.getElementById('transferForm').submit();
+        }
+    </script>
+}

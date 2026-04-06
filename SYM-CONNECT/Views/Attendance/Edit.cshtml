@@ -40,18 +40,19 @@
                         <label asp-for="UserId" class="form-label field-label">
                             <i class="bi bi-person me-1 text-muted"></i>User <span class="text-danger">*</span>
                         </label>
-                        <select asp-for="UserId" class="form-select themed-input" asp-items="ViewBag.UserId">
+                        <select asp-for="UserId" class="form-select themed-input" asp-items="ViewBag.MemberId">
                             <option value="" disabled>-- Select User --</option>
                         </select>
                         <span asp-validation-for="UserId" class="text-danger small"></span>
                     </div>
+
 
                     <!-- Event -->
                     <div class="col-md-6">
                         <label asp-for="EventId" class="form-label field-label">
                             <i class="bi bi-calendar-event me-1 text-muted"></i>Event <span class="text-danger">*</span>
                         </label>
-                        <select asp-for="EventId" class="form-select themed-input" asp-items="ViewBag.EventId">
+                        <select asp-for="EventId" class="form-select themed-input" asp-items="ViewBag.EventList">
                             <option value="" disabled>-- Select Event --</option>
                         </select>
                         <span asp-validation-for="EventId" class="text-danger small"></span>

@@ -44,13 +44,32 @@
                         <span asp-validation-for="Title" class="text-danger small"></span>
                     </div>
 
-                    <!-- EventDate -->
-                    <div class="col-md-6">
+                    <!-- Event Date -->
+                    <div class="col-md-3">
                         <label asp-for="EventDate" class="form-label field-label">
-                            <i class="bi bi-calendar3 me-1 text-muted"></i>Event Date <span class="text-danger">*</span>
+                            <i class="bi bi-calendar3 me-1 text-muted"></i>
+                            Event Date <span class="text-danger">*</span>
                         </label>
-                        <input asp-for="EventDate" class="form-control themed-input" />
-                        <span asp-validation-for="EventDate" class="text-danger small"></span>
+                        <input asp-for="EventDate"
+                               type="datetime-local"
+                               id="eventDateInput"
+                               class="form-control themed-input" />
+                        <span asp-validation-for="EventDate"
+                              class="text-danger small"></span>
+                    </div>
+
+                    <!-- End Date -->
+                    <div class="col-md-3">
+                        <label asp-for="EndDate" class="form-label field-label">
+                            <i class="bi bi-calendar-x me-1 text-muted"></i>
+                            End Date
+                        </label>
+                        <input asp-for="EndDate"
+                               type="datetime-local"
+                               id="endDateInput"
+                               class="form-control themed-input" />
+                        <span asp-validation-for="EndDate"
+                              class="text-danger small"></span>
                     </div>
 
                     <!-- Description -->
@@ -62,15 +81,24 @@
                         <span asp-validation-for="Description" class="text-danger small"></span>
                     </div>
 
-                    <!-- Created By -->
+
+                    <!-- Created By (readonly) -->
                     <div class="col-md-6">
                         <label asp-for="CreatedBy" class="form-label field-label">
-                            <i class="bi bi-person me-1 text-muted"></i>Created By
+                            <i class="bi bi-person me-1 text-muted"></i>
+                            Created By
                         </label>
-                        <select asp-for="CreatedBy" class="form-select themed-input" asp-items="ViewBag.CreatedBy">
-                            <option value="">-- Select User --</option>
-                        </select>
-                        <span asp-validation-for="CreatedBy" class="text-danger small"></span>
+                        <input type="text" asp-for="CreatedByUser"
+                               class="form-control themed-input"
+                               value="@ViewBag.CurrentUser"
+                               readonly
+                               style="background:#f0f9fa;
+                                      color:var(--text-muted);
+                                      cursor:not-allowed;" />
+
+                        <input type="hidden"
+                               asp-for="CreatedBy"
+                               value="@ViewBag.CurrentUserId" />
                     </div>
 
                     <!-- Approved By -->
@@ -78,9 +106,35 @@
                         <label asp-for="ApprovedBy" class="form-label field-label">
                             <i class="bi bi-person-check me-1 text-muted"></i>Approved By
                         </label>
-                        <input class="form-control" asp-for="ApprovedBy"
-                               value="@(ViewBag.CurrentUserName ?? "Pending Approval")"
-                               readonly />
+
+                              @{
+                                var isAdmin = User.IsInRole("admin");
+                            }
+
+                            @if (isAdmin)
+                            {
+                      <input type="text"
+                                   class="form-control themed-input"
+                                   value="@ViewBag.CurrentUser"
+                                   readonly
+                                   style="background:#f0f9fa;
+                                          color:var(--text-muted);
+                                          cursor:not-allowed;" />
+
+                                <input type="hidden"
+                                   asp-for="ApprovedBy"
+                                   value="@ViewBag.CurrentUserId" />
+                            }
+                            else
+                            {
+                                    <input type="text" class="form-control" asp-for="ApprovedByUser"
+                                           value="Pending Approval"
+                                           readonly />
+
+                                    <input type="hidden"
+                                           asp-for="ApprovedBy" />
+                            }
+
                     </div>
 
                     <!-- Approval Status -->
@@ -110,6 +164,41 @@
                         </div>
                         <span asp-validation-for="ApprovalStatus" class="text-danger small"></span>
                     </div>
+
+                    @* GROUP ASSIGNED SECTION *@
+                    <div class="col-md-6">
+                        <label class="form-label field-label">
+                            <i class="bi bi-person-badge me-1 text-muted"></i>
+                            Groups <span class="text-danger">*</span>
+                        </label>
+
+                        @{
+                            var selectedIds = Model.AssignedGroups?
+                            .Select(g => g.GroupId)
+                            .ToList() ?? new List<int>();
+                        }
+
+                        <select name="AssignedGroupIds"
+                                id="groupsSelect"
+                                class="form-select themed-input"
+                                multiple
+                                placeholder="-- Select Groups --">
+                            @if (ViewBag.AssignedGroup != null)
+                            {
+                                @foreach (var group in ViewBag.AssignedGroup as List<SelectListItem>)
+                                {
+                                    var isChecked = selectedIds.Contains(int.Parse(group.Value));
+                                    <option value="@group.Value"
+                                            selected="@(isChecked ? "selected" : null)">
+                                        @group.Text
+                                    </option>
+                                }
+                            }
+                        </select>
+                        <span class="text-danger small">
+                       </span>
+                    </div>
+
                 </div>
 
                 <hr style="border-color: #e8f7f8;" class="mt-4" />
@@ -134,4 +223,58 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+
+
+<style>
+    .ts-wrapper .ts-control {
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        padding: 6px 10px;
+        min-height: 42px;
+    }
+
+    .ts-wrapper.focus .ts-control {
+        border-color: #0ab5c4;
+        box-shadow: 0 0 0 3px rgba(10, 181, 196, 0.15);
+    }
+
+    .ts-dropdown {
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+    }
+
+        .ts-dropdown .option:hover,
+        .ts-dropdown .option.active {
+            background: #e1f5ee;
+            color: #085041;
+        }
+
+    .ts-control .item {
+        background: #e1f5ee !important;
+        color: #085041 !important;
+        border-radius: 6px !important;
+        font-size: 13px !important;
+        border: none !important;
+        padding: 3px 10px !important;
+    }
+
+        .ts-control .item .remove {
+            color: #0F6E56 !important;
+            border-left: none !important;
+        }
+</style>
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.default.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+
+    <script>
+        new TomSelect('#groupsSelect', {
+            plugins: ['remove_button'],
+            placeholder: '-- Select Groups --',
+            maxOptions: 50
+        });
+    </script>
 }

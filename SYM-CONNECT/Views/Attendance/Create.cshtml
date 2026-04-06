@@ -35,36 +35,52 @@
 
                 <div class="row g-3">
 
+
+
                     <!-- User -->
                     <div class="col-md-6">
                         <label asp-for="UserId" class="form-label field-label">
                             <i class="bi bi-person me-1 text-muted"></i>Username <span class="text-danger">*</span>
                         </label>
-                        <select asp-for="UserId" class="form-select themed-input" asp-items="ViewBag.UserId">
+                        <select asp-for="UserId" class="form-select themed-input" asp-items="ViewBag.MemberId">
                             <option value="" disabled>-- Select User --</option>
                         </select>
                         <span asp-validation-for="UserId" class="text-danger small"></span>
                     </div>
+
+
 
                     <!-- Event -->
                     <div class="col-md-6">
                         <label asp-for="EventId" class="form-label field-label">
                             <i class="bi bi-calendar-event me-1 text-muted"></i>Event Name <span class="text-danger">*</span>
                         </label>
-                        <select asp-for="EventId" class="form-select themed-input" asp-items="ViewBag.EventId">
+                        <select asp-for="EventId" class="form-select themed-input" asp-items="@ViewBag.EventList">
                             <option value="" disabled>-- Select Event --</option>
                         </select>
                         <span asp-validation-for="EventId" class="text-danger small"></span>
                     </div>
 
                     <!-- Attendance Date -->
+                    <!-- Attendance Date - Display Only (no asp-for) -->
                     <div class="col-md-6">
-                        <label asp-for="AttendanceDate" class="form-label field-label">
-                            <i class="bi bi-calendar3 me-1 text-muted"></i>Attendance Date <span class="text-danger">*</span>
+                        <label class="form-label field-label">
+                            <i class="bi bi-calendar3 me-1 text-muted"></i>
+                            Current Time
                         </label>
-                        <input asp-for="AttendanceDate" class="form-control themed-input" />
+                        <input type="text"
+                               id="currentTimeDisplay"
+                               class="form-control themed-input"
+                               readonly
+                               style="background:#f0f9fa;
+                  color:var(--text-muted);
+                  cursor:not-allowed;" />
                         <span asp-validation-for="AttendanceDate" class="text-danger small"></span>
                     </div>
+
+                    <!-- ✅ Only this one submits to controller -->
+                    <input type="hidden" asp-for="AttendanceDate" id="attendanceDateHidden" />
+
 
                     <!-- Points Earned -->
                     <div class="col-md-6">
@@ -99,4 +115,36 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+
+    <script>
+    function updateClock() {
+        const now = new Date();
+
+        // Format: 04/06/2026 08:35:50.895 PM
+        const date = now.toLocaleDateString('en-US', {
+            month: '2-digit',
+            day:   '2-digit',
+            year:  'numeric'
+        });
+
+        const time = now.toLocaleTimeString('en-US', {
+            hour:   '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: true
+        });
+
+        const ms = String(now.getMilliseconds()).padStart(3, '0');
+
+        // Combine: 04/06/2026 08:35:50.895 PM
+        const [timePart, period] = time.split(' ');
+        document.getElementById('currentTimeDisplay').value =
+            `${date} ${timePart} ${period}`;
+    }
+
+    // ✅ Run immediately + every 1 second
+    updateClock();
+    setInterval(updateClock, 1);  // 1ms for smooth milliseconds
+</script>
 }

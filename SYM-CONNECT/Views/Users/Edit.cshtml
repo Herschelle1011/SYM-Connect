@@ -29,8 +29,9 @@
 
             <hr style="border-color: #e8f7f8;" />
 
-            <form asp-action="Edit">
+            <form id="editUserForm" asp-action="Edit" method="post">
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small mb-3 rounded-3" role="alert"></div>
+                @Html.AntiForgeryToken()
                 <input type="hidden" asp-for="Id" />
 
                 <div class="row g-3">
@@ -59,7 +60,13 @@
                         <label asp-for="CreatedAt" class="form-label field-label">
                             <i class="bi bi-calendar3 me-1 text-muted"></i>Joined Date
                         </label>
-                        <input asp-for="CreatedAt" class="form-control themed-input" />
+                        <input asp-for="CreatedAt"
+                               type="datetime-local"
+                               class="form-control themed-input"
+                               readonly
+                               style="background:#f0f9fa;
+                  color:var(--text-muted);
+                  cursor:not-allowed;" />
                         <span asp-validation-for="CreatedAt" class="text-danger small"></span>
                     </div>
 
@@ -104,11 +111,16 @@
 
                 <hr style="border-color: #e8f7f8;" class="mt-4" />
 
+         
+
                 <!-- Action Buttons -->
                 <div class="d-flex gap-2 pt-2">
-                    <button type="submit" class="btn btn-save d-flex align-items-center gap-1">
+                    <button type="button"
+                            id="saveChangesBtn"
+                            class="btn btn-save d-flex align-items-center gap-1">
                         <i class="bi bi-floppy"></i> Save Changes
                     </button>
+
                     <a asp-action="Index" class="btn btn-back d-flex align-items-center gap-1">
                         <i class="bi bi-arrow-left"></i> Back to List
                     </a>
@@ -119,8 +131,96 @@
     </div>
 </div>
 
+
+
+<!-- Inactive Confirmation Modal — needed on Edit page -->
+<div class="modal fade" id="inactiveModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content"
+             style="border-radius:14px;
+                    border:1px solid var(--teal-light);
+                    overflow:hidden;">
+
+            <div class="modal-header"
+                 style="background:var(--teal-light);
+                        border-bottom:1px solid var(--teal-mid);">
+                <h5 class="modal-title"
+                    style="color:var(--teal-dark);font-weight:700;">
+                    <i class="bi bi-exclamation-triangle-fill
+                               text-warning me-2"></i>
+                    Confirm Inactive User
+                </h5>
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+            </div>
+
+            <div class="modal-body" style="padding:20px 24px;">
+                <p style="color:var(--text-dark);font-size:.9rem;">
+                    Are you sure you want to set
+                </p>
+                <p style="color:#e53e3e;font-weight:700;
+                           font-size:1rem;margin-top:4px;">
+                    "<span id="InactiveUsersName"></span>"
+                    to Inactive?
+                </p>
+                <p style="color:var(--text-muted);font-size:.8rem;
+                           margin-top:8px;">
+                    This user will lose access to the system.
+                </p>
+            </div>
+
+            <div class="modal-footer"
+                 style="border-top:1px solid var(--teal-light);
+                        background:#fafeff;">
+                <button type="button"
+                        data-bs-dismiss="modal"
+                        style="background:#f1f5f9;
+                               color:var(--text-dark);
+                               border:1px solid #cdd6df;
+                               border-radius:8px;padding:7px 18px;
+                               font-size:.83rem;font-weight:600;
+                               cursor:pointer;">
+                    Go Back
+                </button>
+                <form id="inactiveForm" method="post"
+                      style="display:inline;">
+                    @Html.AntiForgeryToken()
+                    <button type="submit"
+                            style="background:#f59e0b;color:#fff;
+                                   border:none;border-radius:8px;
+                                   padding:7px 18px;font-size:.83rem;
+                                   font-weight:600;cursor:pointer;">
+                        <i class="bi bi-x-circle me-1"></i>
+                        Yes, Set Inactive
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
+<script>
+    document.getElementById('saveChangesBtn')
+        .addEventListener('click', function () {
+
+        var inactiveSelected = document
+            .getElementById('statusInactive').checked;
+
+        if (inactiveSelected) {
+            //Show modal BEFORE submits
+            openInactiveModal(@Model.Id, '@Model.Email');
+        } else {
+            document.getElementById('editUserForm').submit();
+        }
+    });
+</script>

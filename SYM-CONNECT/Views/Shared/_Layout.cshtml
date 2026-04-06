@@ -8,6 +8,10 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
+    @* TOAST NOTIFICATION CSS *@
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="~/css/Dashboard.css" asp-append-version="true" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -91,21 +95,55 @@
 
     <!-- Scripts -->
     @section Scripts {
-        <script>
+        @* <script>
             function filterTable() {
                 const input = document.getElementById('searchInput').value.toLowerCase();
                 const rows = document.querySelectorAll('#tableBody tr');
                 rows.forEach(row => {
                     row.style.display = row.innerText.toLowerCase().includes(input) ? '' : 'none';
-                });
+                }); 
             }
-        </script>
+
+
+        </script> *@
     }
 
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site-modals.js"></script>
+
+
+    <script>
+        toastr.options = {
+            positionClass: "toast-top-right",
+            timeOut: 3000,          // disappears after 3 seconds
+            closeButton: true,
+            progressBar: true,      // shows a timer bar
+        };
+
+        // check if controller have a message
+        @if (TempData["Success"] != null)
+        {
+                <text>toastr.success("@TempData["Success"]");</text>
+        }
+        @if (TempData["Error"] != null)
+        {
+                <text>toastr.error("@TempData["Error"]");</text>
+        }
+        @if (TempData["Warning"] != null)
+        {
+                <text>toastr.warning("@TempData["Warning"]");</text>
+        }
+        @if (TempData["Info"] != null)
+        {
+                <text>toastr.info("@TempData["Info"]");</text>
+        }
+    </script>
+
 
     @await RenderSectionAsync("Scripts", required: false)
 

@@ -63,9 +63,47 @@
                     <i class="bi bi-calendar3 me-1 text-muted"></i>
                     @Html.DisplayNameFor(model => model.EventDate)
                 </dt>
+
                 <dd class="col-sm-9 col-lg-10 detail-value">
                     @Html.DisplayFor(model => model.EventDate)
+
+
+                    @{
+                        if (Model.ApprovalStatus == "Approved")
+                        {
+                            if (Model.EventDate > DateTime.Now)
+                            {
+                                <span class="badge-upcoming ms-2">
+                                    <i class="bi bi-clock me-1"></i>Upcoming
+                                </span>
+                            }
+
+                            else if (Model.EventDate == DateTime.Now)
+                            {
+                                <span class="badge-active ms-2">
+                                    <i class="bi bi-circle-fill me-1" style="font-size:7px;"></i>Ongoing
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge-done ms-2">
+                                    <i class="bi bi-check-circle me-1"></i>Done
+                                </span>
+                            }
+                        }
+
+                    }
+
                 </dd>
+
+                <dt class="col-sm-3 col-lg-2 detail-label">
+                    <i class="bi bi-calendar3 me-1 text-muted"></i>
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </dt>
+                <dd class="col-sm-9 col-lg-10 detail-value">
+                    @Html.DisplayFor(model => model.EndDate)
+                </dd>
+
 
                 <dt class="col-sm-3 col-lg-2 detail-label">
                     <i class="bi bi-shield-check me-1 text-muted"></i>
@@ -89,6 +127,30 @@
                 </dt>
                 <dd class="col-sm-9 col-lg-10 detail-value">
                     @Html.DisplayFor(model => model.ApprovedByUser.Email)
+                </dd>
+
+                <dt class="col-sm-3 col-lg-2 detail-label">
+                    <i class="bi bi-person-badge me-1 text-muted"></i>
+                    Assigned Groups
+                </dt>
+                <dd class="col-sm-9 col-lg-10 detail-value">
+                    @if (Model.AssignedGroups != null && Model.AssignedGroups.Any())
+                    {
+                        @foreach (var group in Model.AssignedGroups)
+                        {
+                            <span class="badge rounded-pill"
+                                  style="background:#e1f5ee; color:#085041;
+                                 font-size:13px; padding:5px 12px;
+                                 margin-right:4px; margin-bottom:4px;
+                                 display:inline-block;">
+                                @group.Name — @(group.Leader?.FullName ?? "No Leader")
+                            </span>
+                        }
+                    }
+                    else
+                    {
+                        <span class="text-muted">No groups assigned</span>
+                    }
                 </dd>
 
             </dl>

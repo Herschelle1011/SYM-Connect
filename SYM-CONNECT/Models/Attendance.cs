@@ -16,5 +16,7 @@
         public Users? User { get; set; }
 
         public Event? Event { get; set; }
+
+        //public bool IsArchived { get; set; } = false;
     }
 }

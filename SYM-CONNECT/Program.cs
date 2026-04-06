@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using SYM_CONNECT.Data;
+using Rotativa.AspNetCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +36,11 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSession();   // ADD THIS
 
 var app = builder.Build();
+
+RotativaConfiguration.Setup(
+    app.Environment.WebRootPath,
+    "Rotativa\\bin"
+);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

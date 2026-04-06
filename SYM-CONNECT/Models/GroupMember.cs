@@ -16,5 +16,7 @@ namespace SYM_CONNECT.Models
         public int UserId { get; set; }
         [ValidateNever]
         public Users? User { get; set; }
+
+        public int TotalEarnedPoints { get; set; } 
     }
 }

@@ -17,22 +17,13 @@
     <!-- Toolbar -->
     <div class="toolbar">
 
-        <!-- Filter -->
-        <button class="btn-role-filter">
-            <i class="bi bi-funnel-fill"></i> Filter
-            <i class="bi bi-chevron-down" style="font-size:.65rem;opacity:.6;"></i>
-        </button>
-
         <!-- Search -->
         <div class="search-wrap">
             <i class="bi bi-search"></i>
             <input type="text" placeholder="Search" id="searchInput" oninput="filterTable()" />
         </div>
 
-        <!-- Archive -->
-        <button class="btn-archive-outline">
-            <i class="bi bi-archive"></i> Archive
-        </button>
+
 
         <!-- Export -->
         <button class="btn-export">
@@ -58,6 +49,7 @@
                     <th>Actions</th>
                 </tr>
             </thead>
+
             <tbody id="tableBody">
                 @foreach (var item in Model)
                 {
@@ -83,7 +75,7 @@
                             </span>
                         </td>
                         <td style="max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
-                            @Html.DisplayFor(modelItem => item.Event.Description)
+                            @Html.DisplayFor(modelItem => item.Event.Title)
                         </td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.AttendanceId" asp-controller="Attendance"
@@ -94,14 +86,31 @@
                                class="btn-action btn-arc ms-1" style="text-decoration:none;">
                                 <i class="bi bi-eye"></i> Details
                             </a>
-                            <a asp-action="Delete" asp-route-id="@item.AttendanceId"
-                               class="btn-action ms-1"
-                               style="text-decoration:none;color:#e74c3c;border-color:#f5c0b8;background:#fff5f5;border-radius:7px;padding:5px 12px;font-size:.75rem;font-weight:500;display:inline-flex;align-items:center;gap:4px;">
-                                <i class="bi bi-trash"></i> Delete
-                            </a>
+
+                            <button type="button"
+                                    onclick="openDeleteArchiveModal(@item.AttendanceId, '@item.User?.FullName', '@item.Event?.Title', @item.PointsEarned)"
+                                    class="btn-action ms-1"
+                                    style="text-decoration:none;color:#e74c3c;border-color:#f5c0b8;
+                   background:#fff5f5;border-radius:7px;padding:5px 12px;
+                   font-size:.75rem;font-weight:500;display:inline-flex;
+                   align-items:center;gap:4px;border:1px solid #f5c0b8;cursor:pointer;">
+                                <i class="bi bi-archive"></i> Delete
+                            </button>
+
                         </td>
                     </tr>
                 }
+
+                <tr id="noSearchResults" style="display:none;">
+                    <td colspan="6"
+                        style="text-align:center;padding:20px;
+                        color:#888;font-size:13px;">
+                        <i class="bi bi-search me-1"></i>
+                        No users found matching your search.
+                    </td>
+                </tr>
+
+
             </tbody>
         </table>
     </div>
@@ -131,3 +140,53 @@
     </div>
 
 
+
+
+    <!-- Archive/Delete Confirmation Modal -->
+    <div class="modal fade" id="archiveDeleteModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-archive me-2"></i>Delete Attendance Record
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <p class="mb-1">You are about to delete the attendance of:</p>
+                    <h6 class="fw-bold" id="modalUserName">—</h6>
+
+                    <p class="mb-1 mt-2">Event:</p>
+                    <h6 class="fw-bold" id="modalEventTitle">—</h6>
+
+                    <!-- Points deduction warning -->
+                    <div class="alert alert-warning mt-3 mb-0 d-flex align-items-center gap-2">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <span>
+                            <strong id="modalPoints">0</strong> points will be
+                            deducted from this member's total.
+                        </span>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+
+                    <!-- This form posts to your DeleteConfirmed action -->
+                    <form id="archiveDeleteForm" method="post">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash me-1"></i>Confirm Delete
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>

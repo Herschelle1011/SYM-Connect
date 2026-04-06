@@ -8,6 +8,7 @@ wwwroot\images\bglogin.png
 wwwroot\images\LOGIN PAGE.png
 wwwroot\images\Logo.png
 wwwroot\images\Register Page.png
+wwwroot\js\site-modals.js
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
@@ -69,7 +70,10 @@ wwwroot\lib\jquery\dist\jquery.slim.js
 wwwroot\lib\jquery\dist\jquery.slim.min.js
 wwwroot\lib\jquery\dist\jquery.slim.min.map
 wwwroot\lib\jquery\LICENSE.txt
-C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\wwwroot\css\site.css
+wwwroot\Rotativa\bin\wkhtmltoimage.exe
+wwwroot\Rotativa\bin\wkhtmltopdf.exe
+wwwroot\Rotativa\bin\wkhtmltox.dll
+C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\wwwroot\favicon.ico
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\wwwroot\lib\jquery\LICENSE.txt
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\wwwroot\lib\jquery\dist\jquery.slim.min.map
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\wwwroot\lib\jquery\dist\jquery.slim.min.js
@@ -131,6 +135,8 @@ C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\wwwroot\lib\bo
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\wwwroot\js\site.js
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\wwwroot\css\Dashboard.css
-C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\wwwroot\favicon.ico
+C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\wwwroot\js\site-modals.js
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\wwwroot\css\LoginStyleSheet.css
+C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\wwwroot\css\site.css
+C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\wwwroot\Rotativa\bin\wkhtmltox.dll
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\wwwroot\css\RegisterStyleSheet.css

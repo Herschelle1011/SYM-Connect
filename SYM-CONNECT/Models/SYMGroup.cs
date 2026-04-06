@@ -23,5 +23,7 @@ namespace SYM_CONNECT.Models
 
         [ValidateNever]
         public ICollection<GroupMember> GroupMembers { get; set; }
+
+        public ICollection<Event> Events { get; set; } = new List<Event>();  
     }
 }

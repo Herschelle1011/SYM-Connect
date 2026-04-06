@@ -1,5 +1,4 @@
-@model IEnumerable<SYM_CONNECT.Models.Event>
-
+@model SYM_CONNECT.ViewModels.EventViewModel
 @{
     ViewData["Title"] = "Event Management";
     Layout = "_Layout";
@@ -13,15 +12,74 @@
 
 <!-- Card / Table -->
 <div class="card-table">
-
     <!-- Toolbar -->
     <div class="toolbar">
 
-        <!-- Status filter -->
-        <button class="btn-role-filter">
-            <i class="bi bi-funnel-fill"></i> Status
-            <i class="bi bi-chevron-down" style="font-size:.65rem;opacity:.6;"></i>
-        </button>
+        <!-- Status Filter Dropdown -->
+        <div style="position:relative; display:inline-block;">
+
+            <!-- Trigger Button -->
+            <button class="btn-role-filter"
+                    id="statusFilterBtn"
+                    onclick="toggleStatusDropdown()"
+                    type="button">
+                <i class="bi bi-funnel-fill"></i>
+                <span id="roleFilterLabel">Status</span>
+                <i class="bi bi-chevron-down"
+                   style="font-size:.65rem;opacity:.6;"></i>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div id="statusDropdown"
+                 style="display:none;
+                position:absolute;
+                top:calc(100% + 6px);
+                left:0;
+                background:#fff;
+                border:1px solid #d1f0e8;
+                border-radius:10px;
+                box-shadow:0 4px 16px rgba(10,181,196,.12);
+                min-width:150px;
+                z-index:999;
+                overflow:hidden;">
+
+                <!-- Each option -->
+                <div onclick="applyStatusFilter('All')"
+                     class="status-option"
+                     style="padding:9px 16px; cursor:pointer;
+                    font-size:13px; color:#085041;
+                    display:flex; align-items:center; gap:8px;
+                    border-bottom:1px solid #f0fbf7;">
+                    <i class="bi bi-people"></i> All
+                </div>
+                <div onclick="applyStatusFilter('Approved')"
+                     class="status-option"
+                     style="padding:9px 16px; cursor:pointer;
+                    font-size:13px; color:#085041;
+                    display:flex; align-items:center; gap:8px;
+                    border-bottom:1px solid #f0fbf7;">
+                    <i class="bi bi-shield-check"></i> Approved
+                </div>
+                <div onclick="applyStatusFilter('Pending')"
+                     class="status-option"
+                     style="padding:9px 16px; cursor:pointer;
+                    font-size:13px; color:#085041;
+                    display:flex; align-items:center; gap:8px;
+                    border-bottom:1px solid #f0fbf7;">
+                    <i class="bi bi-person-badge"></i> Pending
+                </div>
+                <div onclick="applyStatusFilter('Rejected')"
+                     class="status-option"
+                     style="padding:9px 16px; cursor:pointer;
+                    font-size:13px; color:#085041;
+                    display:flex; align-items:center; gap:8px;">
+                    <i class="bi bi-person"></i> Rejected
+                </div>
+
+            </div>
+
+
+        </div>
 
         <!-- Search -->
         <div class="search-wrap">
@@ -30,19 +88,26 @@
         </div>
 
         <!-- Archive -->
-        <button class="btn-archive-outline">
-            <i class="bi bi-archive"></i> Archive
+        <button class="btn-archive-outline"
+        data-bs-toggle="modal"
+        data-bs-target="#cancelledModal">
+            <i class="bi bi-archive"></i> View Cancelled Events
         </button>
+
+
 
         <!-- Export -->
-        <button class="btn-export">
-            <i class="bi bi-upload"></i> Export
-        </button>
+        <a asp-action="ExportPDF"
+        asp-controller="Events"
+        class="btn-export">
+            <i class="bi bi-upload"></i> Export as PDF
+        </a>
 
-       <a asp-action="Create"
-                               class="btn-action btn-edit" style="text-decoration:none;">
-                                            <i class="bi bi-plus-circle-fill"></i>Create
-                            </a>
+
+        <a asp-action="Create"
+        class="btn-action btn-edit" style="text-decoration:none;">
+            <i class="bi bi-plus-circle-fill"></i>Create
+        </a>
 
         <div class="modal fade" id="createModal">
             <div class="modal-dialog">
@@ -60,25 +125,31 @@
                 <tr>
                     <th><i class="bi bi-calendar-event"></i> Title</th>
                     <th><i class="bi bi-text-left"></i> Description</th>
-                    <th><i class="bi bi-calendar3"></i> Event Date</th>
+                    <th><i class="bi bi-calendar3"></i> Event Start</th>
                     <th><i class="bi bi-circle-half"></i> Status</th>
                     <th><i class="bi bi-person"></i> Created By</th>
                     <th><i class="bi bi-shield-check"></i> Approved By</th>
+                    <th><i class="bi bi-calendar3"></i> End Date</th>
+
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody id="tableBody">
-                @foreach (var item in Model)
+                @foreach (var item in Model.Events)
                 {
+                   
+
                     <tr>
                         <td>
                             <span class="user-name-cell" style="gap:0;">
                                 @Html.DisplayFor(modelItem => item.Title)
                             </span>
                         </td>
+
                         <td style="max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
                             @Html.DisplayFor(modelItem => item.Description)
                         </td>
+
                         <td>@Html.DisplayFor(modelItem => item.EventDate)</td>
                         <td>
                             @{
@@ -99,6 +170,8 @@
                         </td>
                         <td>@Html.DisplayFor(modelItem => item.CreatedByUser.Email)</td>
                         <td>@Html.DisplayFor(modelItem => item.ApprovedByUser.Email)</td>
+                        <td>@Html.DisplayFor(modelItem => item.EndDate)</td>
+
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.EventId"
                                class="btn-action btn-edit" style="text-decoration:none;">
@@ -108,13 +181,26 @@
                                class="btn-action btn-arc ms-1" style="text-decoration:none;">
                                 <i class="bi bi-eye"></i> Details
                             </a>
-                            <a asp-action="Delete" asp-route-id="@item.EventId"
-                               class="btn-action ms-1" style="text-decoration:none; color:#e74c3c; border-color:#f5c0b8; background:#fff5f5; border-radius:7px; padding:5px 12px; font-size:.75rem; font-weight:500; display:inline-flex; align-items:center; gap:4px;">
-                                <i class="bi bi-trash"></i> Delete
-                            </a>
+
+                            <button class="btn btn-warning btn-sm ms-1" style="text-decoration:none"
+                                    onclick="openCancelModal(@item.EventId, '@item.Title')">
+                                Cancel
+                            </button>
+
                         </td>
                     </tr>
+                    
                 }
+
+                <tr id="noSearchResults" style="display:none;">
+                    <td colspan="6"
+                        style="text-align:center;padding:20px;
+                               color:#888;font-size:13px;">
+                        <i class="bi bi-search me-1"></i>
+                        No events found matching your search.
+                    </td>
+                </tr>
+
             </tbody>
         </table>
     </div>
@@ -129,7 +215,7 @@
                 <option>25</option>
                 <option>50</option>
             </select>
-            &nbsp; 1–5 of @Model.Count() rows
+            &nbsp; 1–5 of @Model.Events.Count() rows
         </div>
 
         <div class="pagination-btns">
@@ -143,44 +229,388 @@
         </div>
     </div>
 
-</div><!-- /.card-table -->
+</div>
+
+
+<!-- ── CANCELLED EVENTS MODAL ────────────────────────────── -->
+<div class="modal fade" id="cancelledModal" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content"
+             style="border-radius:14px;overflow:hidden;
+                    border:1px solid var(--teal-light);
+                    box-shadow:0 8px 32px rgba(10,181,196,.15);">
+
+            <!-- HEADER -->
+            <div class="modal-header"
+                 style="background:var(--teal-light);
+                        border-bottom:1px solid var(--teal-mid);
+                        padding:14px 20px;flex-direction:column;
+                        align-items:stretch;gap:10px;">
+
+                <!-- Title row -->
+                <div class="d-flex align-items-center
+                            justify-content-between">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-archive"
+                           style="color:var(--teal-dark);
+                                  font-size:15px;"></i>
+                        <h5 class="modal-title mb-0"
+                            style="font-size:15px;font-weight:700;
+                                   color:var(--teal-dark);">
+                            Cancelled events
+                        </h5>
+                        <span style="background:#e53e3e;color:#fff;
+                                     font-size:11px;font-weight:700;
+                                     padding:2px 8px;
+                                     border-radius:12px;">
+                            @(Model.CancelledEvents?.Count() ?? 0)
+                        </span>
+                    </div>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal">
+                    </button>
+                </div>
+
+                <!-- Search bar -->
+                <div style="position:relative;">
+                    <i class="bi bi-search"
+                       style="position:absolute;left:10px;top:50%;
+                              transform:translateY(-50%);
+                              color:var(--teal-dark);
+                              font-size:12px;"></i>
+                    <input type="text"
+                           id="cancelSearch"
+                           placeholder="Search cancelled events..."
+                           oninput="filterCancelledRows(this.value)"
+                           style="width:100%;box-sizing:border-box;
+                                  padding:7px 12px 7px 30px;
+                                  border:1px solid var(--teal-mid);
+                                  border-radius:8px;font-size:13px;
+                                  background:#f0fbf7;
+                                  color:var(--teal-dark);outline:none;">
+                </div>
+            </div>
+
+            <!-- LEGEND -->
+            <div style="display:flex;gap:20px;padding:9px 20px;
+                        border-bottom:1px solid var(--teal-light);
+                        background:#f5fbfd;">
+                <div class="d-flex align-items-center gap-2">
+                    <div style="width:9px;height:9px;border-radius:50%;
+                                background:#22c55e;flex-shrink:0;">
+                    </div>
+                    <small style="color:var(--text-muted);font-weight:500;">
+                        Reactivate — soft delete restore
+
+                    </small>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <div style="width:9px;height:9px;border-radius:50%;
+                                background:#ef4444;flex-shrink:0;">
+                    </div>
+                    <small style="color:var(--text-muted);font-weight:500;">
+                        Delete — permanent hard delete
+                    </small>
+                </div>
+            </div>
+
+            <!-- BODY -->
+            <div class="modal-body" style="padding:12px 16px;">
+
+                @if (Model.CancelledEvents == null
+                                || !Model.CancelledEvents.Any())
+                {
+                    <p class="text-muted text-center py-3">
+                        No cancelled events found.
+                    </p>
+                }
+                else
+                {
+                    <div class="d-flex flex-column gap-2"
+                         id="cancelledEventList">
+
+                        @foreach (var ev in Model.CancelledEvents)
+                        {
+                            <div class="cancelled-row"
+                                 data-title="@ev.Title.ToLower()"
+                                 style="display:flex;align-items:center;
+                                                justify-content:space-between;
+                                                padding:11px 14px;
+                                                border:1px solid var(--teal-mid);
+                                                border-radius:10px;
+                                                background:var(--teal-light);
+                                                gap:10px;">
+
+                                <!-- Left: info -->
+                                <div style="flex:1;min-width:0;">
+                                    <div style="font-size:13.5px;
+                                                        font-weight:700;
+                                                        color:var(--teal-dark);
+                                                        white-space:nowrap;
+                                                        overflow:hidden;
+                                                        text-overflow:ellipsis;">
+                                        @ev.Title
+                                    </div>
+
+                                    <!-- Event date -->
+                                    <div class="d-flex align-items-center
+                                                        gap-1 mt-1">
+                                        <i class="bi bi-calendar3"
+                                           style="font-size:10px;
+                                                          color:var(--teal-dark);">
+                                        </i>
+                                        <span style="font-size:11px;
+                                                             color:var(--teal-dark);
+                                                             font-weight:500;">
+                                            Event:
+                                            @ev.EventDate.ToString("M/d/yyyy h:mm:ss tt")
+                                        </span>
+                                    </div>
+
+                                    <!-- Cancelled date -->
+                                    <div class="d-flex align-items-center
+                                                        gap-1 mt-1">
+                                        <i class="bi bi-clock-history"
+                                           style="font-size:10px;
+                                                          color:#e53e3e;">
+                                        </i>
+                                        <span style="font-size:11px;
+                                                             color:#e53e3e;
+                                                             font-weight:500;">
+                                            Cancelled:
+                                            @(ev.CancelledAt.HasValue
+                                         ? ev.CancelledAt.Value
+                                        .ToString("MMM dd, yyyy h:mm tt")
+                                      : "Date not recorded")
+
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Right: buttons -->
+                                <div class="d-flex align-items-center
+                                                    gap-2 flex-shrink-0">
+
+                                    <!-- Reactivate -->
+                                    <form asp-action="Reactivate"
+                                          asp-route-id="@ev.EventId"
+                                          method="post"
+                                          style="display:inline;">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit"
+                                                title="Reactivate"
+                                                style="width:33px;height:33px;
+                                                               border-radius:8px;
+                                                               background:#16a34a;
+                                                               border:none;
+                                                               cursor:pointer;
+                                                               display:flex;
+                                                               align-items:center;
+                                                               justify-content:center;">
+                                            <i class="bi bi-arrow-counterclockwise"
+                                               style="color:#fff;
+                                                              font-size:14px;">
+                                            </i>
+                                        </button>
+                                    </form>
+
+                                    <!-- Delete -->
+                                    <button onclick="openDeleteModal(
+                                                        @ev.EventId,
+                                                        '@Html.Raw(ev.Title
+                                                                                                .Replace("'", "\\'"))')"
+                                    style="display:flex;
+                                                   align-items:center;
+                                                   gap:5px;
+                                                   padding:7px 13px;
+                                                   background:#ef4444;
+                                                   color:#fff;border:none;
+                                                   border-radius:8px;
+                                                   font-size:12px;
+                                                   font-weight:600;
+                                                   cursor:pointer;">
+                                <i class="bi bi-trash"
+                                   style="font-size:12px;"></i>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                                        }
+
+                        <!-- No search results -->
+                        <p id="noCancelResults"
+                           style="display:none;text-align:center;
+                                      font-size:13px;color:#888;
+                                      padding:16px 0;margin:0;">
+                            No cancelled events match your search.
+                        </p>
+                    </div>
+                }
+            </div>
+
+            <!-- FOOTER -->
+            <div class="modal-footer"
+                 style="border-top:1px solid var(--teal-light);
+                        padding:11px 20px;background:#fafeff;">
+                <button type="button"
+                        data-bs-dismiss="modal"
+                        style="background:#5f6b7a;color:#fff;
+                               border:none;padding:7px 20px;
+                               border-radius:8px;font-size:13px;
+                               font-weight:600;cursor:pointer;">
+                    Close
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 
 
-<script>
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content"
+             style="border-radius:14px; border:2px solid var(--teal-dark);
+                    overflow:hidden;">
 
-    $("#openCreateModal").click(function () {
+            <!-- HEADER -->
+            <div class="modal-header"
+                 style="background:var(--teal-light);
+                        border-bottom:1px solid var(--teal-mid);">
+                <h5 class="modal-title"
+                    style="color:var(--teal-dark); font-weight:700;">
+                    <i class="bi bi-exclamation-triangle-fill
+                               text-warning me-2"></i>
+                    Confirm Delete
+                </h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+            </div>
 
-        $.get("/Events/CreateModal", function (data) {
+            <!-- BODY -->
+            <div class="modal-body" style="padding:20px 24px;">
+                <p style="color:var(--text-dark); font-size:.9rem;">
+                    Are you sure you want to delete
+                </p>
 
-            $("#modalContent").html(data);
+                <!-- THIS IS WHERE THE TITLE WILL APPEAR -->
+                <p style="color:#e53e3e; font-weight:700;
+                           font-size:1rem; margin-top:4px;">
+                    "<span id="deleteEventTitle"></span>"?
+                </p>
 
-            $("#createModal").modal("show");
+                <p style="color:var(--text-muted); font-size:.8rem;
+                           margin-top:8px;">
+                    This action cannot be undone.
+                </p>
+            </div>
 
-        });
+            <!-- FOOTER -->
+            <div class="modal-footer"
+                 style="border-top:1px solid var(--teal-light);
+                        background:#fafeff;">
 
-    });
+                <!-- Go Back button -->
+                <button type="button"
+                        data-bs-dismiss="modal"
+                        style="background:#f1f5f9; color:var(--text-dark);
+                               border:1px solid #cdd6df; border-radius:8px;
+                               padding:7px 18px; font-size:.83rem;
+                               font-weight:600; cursor:pointer;">
+                    Go Back
+                </button>
 
-</script>
+                <!-- YES confirm button — this submits the form -->
+                <form id="deleteForm" method="post" style="display:inline;" >
+                    @Html.AntiForgeryToken()
+                    <button type="submit"
+                            style="background:#ef4444; color:#fff;
+                                   border:none; border-radius:8px;
+                                   padding:7px 18px; font-size:.83rem;
+                                   font-weight:600; cursor:pointer;">
+                        <i class="bi bi-trash me-1"></i> Yes, Delete It
+                    </button>
+                </form>
 
-<script>
+            </div>
+        </div>
+    </div>
+</div>
 
-    $(document).on("submit", "#createEventForm", function (e) {
 
-        e.preventDefault();
 
-        $.post("/Events/Create", $(this).serialize(), function (result) {
+<!-- Cancel Confirmation Modal -->
+<div class="modal fade" id="cancelModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content"
+             style="border-radius:14px; border:1px solid var(--teal-light);
+                    overflow:hidden;">
 
-            if (result.success) {
+            <!-- HEADER -->
+            <div class="modal-header"
+                 style="background:var(--teal-light);
+                        border-bottom:1px solid var(--teal-mid);">
+                <h5 class="modal-title"
+                    style="color:var(--teal-dark); font-weight:700;">
+                    <i class="bi bi-exclamation-triangle-fill
+                               text-warning me-2"></i>
+                    Confirm Cancel
+                </h5>
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+            </div>
 
-                $("#createModal").modal("hide");
+            <!-- BODY -->
+            <div class="modal-body" style="padding:20px 24px;">
+                <p style="color:var(--text-dark); font-size:.9rem;">
+                    Are you sure you want to cancel
+                </p>
 
-                location.reload();
+                <!-- ✅ UNIQUE id — cancelEventTitle -->
+                <p style="color:#e53e3e; font-weight:700;
+                           font-size:1rem; margin-top:4px;">
+                    "<span id="cancelEventTitle"></span>"?
+                </p>
 
-            }
+                <p style="color:var(--text-muted); font-size:.8rem;
+                           margin-top:8px;">
+                    This will mark the event as cancelled.
+                </p>
+            </div>
 
-        });
+            <!-- FOOTER -->
+            <div class="modal-footer"
+                 style="border-top:1px solid var(--teal-light);
+                        background:#fafeff;">
 
-    });
+                <!-- Go Back -->
+                <button type="button" data-bs-dismiss="modal"
+                        style="background:#f1f5f9; color:var(--text-dark);
+                               border:1px solid #cdd6df; border-radius:8px;
+                               padding:7px 18px; font-size:.83rem;
+                               font-weight:600; cursor:pointer;">
+                    Go Back
+                </button>
 
-</script>
+                <!-- ✅ form with unique id — cancelForm -->
+                <form id="cancelForm" method="post" style="display:inline;">
+                    @Html.AntiForgeryToken()
+                    <button type="submit"
+                            style="background:#f59e0b; color:#fff;
+                                   border:none; border-radius:8px;
+                                   padding:7px 18px; font-size:.83rem;
+                                   font-weight:600; cursor:pointer;">
+                        <i class="bi bi-x-circle me-1"></i> Yes, Cancel It
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

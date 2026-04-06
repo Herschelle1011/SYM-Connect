@@ -44,11 +44,11 @@ namespace SYM_CONNECT.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UserManagement(UserManagementViewModel viewModel)
         {
-            var model = viewModel.Form; // ← extract the form from viewModel
+            var model = viewModel.Form; 
 
             if (!ModelState.IsValid)
             {
-                viewModel.Users = await _db.Users.ToListAsync(); // ← reload users
+                viewModel.Users = await _db.Users.ToListAsync(); // reload users
                 return View(viewModel);
             }
 
