@@ -5,7 +5,7 @@ namespace SYM_CONNECT.ViewModel
 {
     public class UserManagementViewModel
     {
-        public List<Users> Users { get; set; } = new List<Users>();
-        public RegisterViewModel Form { get; set; } = new RegisterViewModel();
+        public List<Users> Users { get; set; } = new List<Users>(); //get lists of users
+        public RegisterViewModel Form { get; set; } = new RegisterViewModel(); //get viewmodel inputs
     }
 }

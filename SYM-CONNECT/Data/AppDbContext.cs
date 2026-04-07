@@ -53,6 +53,11 @@ namespace SYM_CONNECT.Data
                 .WithMany()
                 .HasForeignKey(gm => gm.UserId);
 
+            modelBuilder.Entity<Event>()
+    .HasMany(e => e.AssignedGroups)
+    .WithMany(g => g.Events)
+    .UsingEntity(j => j.ToTable("EventGroups"));
+
         }
     }
 }

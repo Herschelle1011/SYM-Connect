@@ -227,7 +227,7 @@
 </div>
 
 <!-- Hidden form for Add Member POST -->
-<form id="addMemberForm" method="post" asp-action="AddMember" asp-controller="SYMGroup">
+<form id="addMemberForm" method="post" asp-action="AddMember" asp-controller="SYMGroups">
     @Html.AntiForgeryToken()
     <input type="hidden" id="addGroupId" name="groupId" />
     <input type="hidden" id="addUserId" name="userId" />
@@ -285,7 +285,7 @@
 
 <!-- Hidden form for Transfer POST -->
 <form id="transferForm" method="post"
-      asp-action="TransferMember" asp-controller="SYMGroup">
+      asp-action="TransferMember" asp-controller="SYMGroups">
     @Html.AntiForgeryToken()
     <input type="hidden" id="transferGroupMemberId" name="groupMemberId" />
     <input type="hidden" id="transferTargetGroupId" name="targetGroupId" />
@@ -316,7 +316,7 @@
             new bootstrap.Modal(document.getElementById('addMemberModal')).show();
 
             // Fetch available members from controller
-            fetch('/SYMGroup/GetAvailableMembers')
+            fetch('/SYMGroups/GetAvailableMembers')
                 .then(res => res.json())
                 .then(members => {
                     document.getElementById('memberLoadingSpinner').style.display = 'none';
@@ -407,7 +407,7 @@
             new bootstrap.Modal(document.getElementById('transferModal')).show();
 
             // Fetch other groups
-            fetch(`/SYMGroup/GetOtherGroups?currentGroupId=${groupId}`)
+            fetch(`/SYMGroups/GetOtherGroups?currentGroupId=${groupId}`)
                 .then(res => res.json())
                 .then(groups => {
                     document.getElementById('groupLoadingSpinner').style.display = 'none';

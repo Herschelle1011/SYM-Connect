@@ -25,10 +25,13 @@
 
 
 
+     
         <!-- Export -->
-        <button class="btn-export">
-            <i class="bi bi-upload"></i> Export
-        </button>
+        <a asp-action="ExportPDF"
+        asp-controller="Attendance"
+        class="btn-export">
+            <i class="bi bi-upload"></i> Export as PDF
+        </a>
 
         <!-- Add Attendance -->
         <a asp-action="Create" class="btn-add-user" style="text-decoration:none;">

@@ -37,9 +37,10 @@ builder.Services.AddSession();   // ADD THIS
 
 var app = builder.Build();
 
+//for pdf
 RotativaConfiguration.Setup(
     app.Environment.WebRootPath,
-    "Rotativa\\bin"
+    "Rotativa/bin"
 );
 
 // Configure the HTTP request pipeline.

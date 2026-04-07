@@ -34,7 +34,7 @@ namespace SYM_CONNECT.Migrations
 
                     b.HasIndex("EventsEventId");
 
-                    b.ToTable("EventSYMGroup");
+                    b.ToTable("EventGroups", (string)null);
                 });
 
             modelBuilder.Entity("SYM_CONNECT.Models.Attendance", b =>

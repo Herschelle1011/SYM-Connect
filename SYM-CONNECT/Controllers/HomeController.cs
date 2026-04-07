@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Rotativa.AspNetCore;
 using SYM_CONNECT.Data;
 using SYM_CONNECT.Models;
 using SYM_CONNECT.ViewModel;
@@ -20,9 +21,117 @@ namespace SYM_CONNECT.Controllers
 
 
         [Authorize(Roles = "admin")]
-        public IActionResult Dashboard()
+        public async Task<IActionResult> ExportPDF()
         {
-            return View();
+            var groups = await _db.SYMGroup
+                .Include(g => g.Leader)
+                .Include(g => g.GroupMembers)
+                .ToListAsync();
+
+            var leaders = await _db.Users
+                .Where(u => u.Role == "Leader")
+                .ToListAsync();
+
+            var allEvents = await _db.Events.ToListAsync();
+            var currentYear = DateTime.Now.Year;
+
+            var recentEvents = await _db.Events
+                .Include(e => e.AssignedGroups)
+                .OrderByDescending(e => e.EventDate)
+                .Take(5)
+                .ToListAsync();
+
+            int maxMembers = groups.Any() ? groups.Max(g => g.GroupMembers.Count) : 1;
+
+            var vm = new ReportViewModel
+            {
+                TotalMembers = await _db.Users.CountAsync(),
+                ActiveMembers = await _db.Users.CountAsync(u => u.Status == "Active"),
+                InactiveMembers = await _db.Users.CountAsync(u => u.Status == "Inactive"),
+                TotalLeaders = await _db.Users.CountAsync(u => u.Role == "Leader"),
+                TotalGroups = await _db.SYMGroup.CountAsync(),
+                TotalEvents = await _db.Events.CountAsync(),
+                UpcomingEvents = await _db.Events.CountAsync(e => e.EventDate > DateTime.Now),
+                MaxMembers = maxMembers == 0 ? 1 : maxMembers,
+                Groups = groups,
+                RecentEvents = recentEvents,
+                EventsPerMonth = Enumerable.Range(1, 12)
+                    .Select(m => allEvents.Count(e => e.EventDate.Year == currentYear
+                                                   && e.EventDate.Month == m))
+                    .ToList(),
+                LeaderData = leaders.Select(l => new LeaderRowViewModel
+                {
+                    Leader = l,
+                    Group = groups.FirstOrDefault(g => g.LeaderId == l.Id),
+                    Members = groups.FirstOrDefault(g => g.LeaderId == l.Id)?.GroupMembers.Count
+                }).ToList()
+            };
+
+            return new ViewAsPdf("ExportPDF", vm)
+            {
+                FileName = $"SYMConnect_Report_{DateTime.Now:yyyyMMdd}.pdf",
+                PageSize = Rotativa.AspNetCore.Options.Size.A4,
+                PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape,
+                PageMargins = new Rotativa.AspNetCore.Options.Margins
+                {
+                    Top = 10,
+                    Bottom = 10,
+                    Left = 10,
+                    Right = 10
+                }
+            };
+        }
+
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> Dashboard()
+        {
+            var groups = await _db.SYMGroup
+                .Include(g => g.Leader)
+                .Include(g => g.GroupMembers)
+                .ToListAsync();
+
+            var leaders = await _db.Users
+                .Where(u => u.Role == "Leader")
+                .ToListAsync();
+
+            var allEvents = await _db.Events.ToListAsync();
+            var currentYear = DateTime.Now.Year;
+
+            var recentEvents = await _db.Events
+                .Include(e => e.AssignedGroups)
+                .OrderByDescending(e => e.EventDate)
+                .Take(5)
+                .ToListAsync();
+
+            int maxMembers = groups.Any() ? groups.Max(g => g.GroupMembers.Count) : 1;
+
+            var vm = new ReportViewModel
+            {
+                TotalMembers = await _db.Users.CountAsync(),
+                ActiveMembers = await _db.Users.CountAsync(u => u.Status == "Active"),
+                InactiveMembers = await _db.Users.CountAsync(u => u.Status == "Inactive"),
+                TotalLeaders = await _db.Users.CountAsync(u => u.Role == "Leader"),
+                TotalGroups = await _db.SYMGroup.CountAsync(),
+                TotalEvents = await _db.Events.CountAsync(),
+                UpcomingEvents = await _db.Events.CountAsync(e => e.EventDate > DateTime.Now),
+                MaxMembers = maxMembers == 0 ? 1 : maxMembers,
+                Groups = groups,
+                RecentEvents = recentEvents,
+                EventsPerMonth = Enumerable.Range(1, 12)
+                    .Select(m => allEvents.Count(e => e.EventDate.Year == currentYear
+                                                   && e.EventDate.Month == m))
+                    .ToList(),
+                LeaderData = leaders.Select(l => new LeaderRowViewModel
+                {
+                    Leader = l,
+                    Group = groups.FirstOrDefault(g => g.LeaderId == l.Id),
+                    Members = groups.FirstOrDefault(g => g.LeaderId == l.Id)?.GroupMembers.Count
+                }).ToList()
+            };
+
+            return View(vm);
+
+
         }
         [HttpGet]
         [Authorize(Roles = "admin")]
@@ -117,14 +226,51 @@ namespace SYM_CONNECT.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Report()
         {
-            ViewBag.TotalMembers = await _db.Users.CountAsync();
-            ViewBag.ActiveMembers = await _db.Users.CountAsync(u => u.Status == "Active");
-            ViewBag.TotalLeaders = await _db.Users.CountAsync(u => u.Role == "Leader");
-            ViewBag.TotalGroups = await _db.SYMGroup.CountAsync();
-            ViewBag.TotalEvents = await _db.Events.CountAsync();
-            ViewBag.UpcomingEvents = await _db.Events.CountAsync(e => e.EventDate > DateTime.Now);
+            var groups = await _db.SYMGroup
+                .Include(g => g.Leader)
+                .Include(g => g.GroupMembers)
+                .ToListAsync();
 
-            return View();
+            var leaders = await _db.Users
+                .Where(u => u.Role == "Leader")
+                .ToListAsync();
+
+            var allEvents = await _db.Events.ToListAsync();
+            var currentYear = DateTime.Now.Year;
+
+            var recentEvents = await _db.Events
+                .Include(e => e.AssignedGroups)
+                .OrderByDescending(e => e.EventDate)
+                .Take(5)
+                .ToListAsync();
+
+            int maxMembers = groups.Any() ? groups.Max(g => g.GroupMembers.Count) : 1;
+
+            var vm = new ReportViewModel
+            {
+                TotalMembers = await _db.Users.CountAsync(),
+                ActiveMembers = await _db.Users.CountAsync(u => u.Status == "Active"),
+                InactiveMembers = await _db.Users.CountAsync(u => u.Status == "Inactive"),
+                TotalLeaders = await _db.Users.CountAsync(u => u.Role == "Leader"),
+                TotalGroups = await _db.SYMGroup.CountAsync(),
+                TotalEvents = await _db.Events.CountAsync(),
+                UpcomingEvents = await _db.Events.CountAsync(e => e.EventDate > DateTime.Now),
+                MaxMembers = maxMembers == 0 ? 1 : maxMembers,
+                Groups = groups,
+                RecentEvents = recentEvents,
+                EventsPerMonth = Enumerable.Range(1, 12)
+                    .Select(m => allEvents.Count(e => e.EventDate.Year == currentYear
+                                                   && e.EventDate.Month == m))
+                    .ToList(),
+                LeaderData = leaders.Select(l => new LeaderRowViewModel
+                {
+                    Leader = l,
+                    Group = groups.FirstOrDefault(g => g.LeaderId == l.Id),
+                    Members = groups.FirstOrDefault(g => g.LeaderId == l.Id)?.GroupMembers.Count
+                }).ToList()
+            };
+
+            return View(vm);
         }
     }
 }

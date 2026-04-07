@@ -4,7 +4,7 @@ namespace SYM_CONNECT.ViewModel
 {
     public class RegisterViewModel
     {
-        [Required(ErrorMessage = "Email is required")]
+        [Required(ErrorMessage = "Email is required")] //for email
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
@@ -12,16 +12,16 @@ namespace SYM_CONNECT.ViewModel
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "LastName is required")]
-        public string LastName { get; set; }
+        public string LastName { get; set; } //lastname
         public string FullName => $"{FirstName} {LastName}";
 
         public string Role { get; set; }
 
-        [Required(ErrorMessage = "Password is required")]
+        [Required(ErrorMessage = "Password is required")] //pass is required
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
-        [Compare(nameof(Password), ErrorMessage = "Password doesn't match!")]
+        [Compare(nameof(Password), ErrorMessage = "Password doesn't match!")] //if dont match
         public string ConfirmPassword { get; set; }
 
         [Required]

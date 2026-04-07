@@ -7,16 +7,16 @@ namespace SYM_CONNECT.Models
     public class GroupMember
     {
         [Key]
-        public int GroupMemberId { get; set; }
+        public int GroupMemberId { get; set; } //groupmember  id
 
-        public int GroupId { get; set; }
+        public int GroupId { get; set; }  //group id
         [ValidateNever]
-        public SYMGroup? Group { get; set; }
+        public SYMGroup? Group { get; set; } //does it have group?
 
-        public int UserId { get; set; }
+        public int UserId { get; set; } //get usersid
         [ValidateNever]
-        public Users? User { get; set; }
+        public Users? User { get; set; } //freogin key with user
 
-        public int TotalEarnedPoints { get; set; } 
+        public int TotalEarnedPoints { get; set; }  //overall points of the specific member
     }
 }

@@ -1,31 +1,44 @@
-﻿@{
+﻿@model SYM_CONNECT.ViewModel.ReportViewModel
+@{
     ViewData["Title"] = "Reports";
     Layout = "_Layout";
-}
 
+    var groupLabels = string.Join(",", Model.Groups.Select(g => $"'{g.Name}'"));
+    var groupCounts = string.Join(",", Model.Groups.Select(g => g.GroupMembers.Count));
+    var monthlyData = string.Join(",", Model.EventsPerMonth);
+}
 
 <div class="container-fluid px-4 py-4">
 
     <!-- Page Header -->
     <div class="mb-3 d-flex align-items-start justify-content-between flex-wrap gap-2">
         <div>
-            <h1 class="page-title"><i class="bi bi-bar-chart-line-fill me-2"></i>Reports</h1>
+            <h1 class="page-title">
+                <i class="bi bi-bar-chart-line-fill me-2"></i>Reports
+            </h1>
             <p class="page-subtitle">Overview of members, leaders, groups, and events.</p>
         </div>
-        <div class="d-flex gap-2 pt-1">
-            <button class="btn-rpt-export outline"><i class="bi bi-file-earmark-excel"></i> Excel</button>
-            <button class="btn-rpt-export"><i class="bi bi-download"></i> Export PDF</button>
+    
+
+             <!-- Export -->
+        <a asp-action="ExportPDF"
+        asp-controller="Home"
+        class="btn-export">
+            <i class="bi bi-upload"></i> Export as PDF
+        </a>
         </div>
+
+
     </div>
 
-    <!-- ── SUMMARY CARDS ── -->
+    <!-- SUMMARY CARDS -->
     <div class="section-label">Summary Overview</div>
     <div class="row g-3 mb-1">
         <div class="col-6 col-md-4 col-lg-2">
             <div class="stat-card">
                 <div class="icon-wrap"><i class="bi bi-people-fill"></i></div>
                 <div class="stat-label">Total Members</div>
-                <div class="stat-value">@(ViewBag.TotalMembers ?? 120)</div>
+                <div class="stat-value">@Model.TotalMembers</div>
                 <span class="stat-sub sub-teal">All roles</span>
             </div>
         </div>
@@ -33,7 +46,7 @@
             <div class="stat-card">
                 <div class="icon-wrap"><i class="bi bi-person-check-fill"></i></div>
                 <div class="stat-label">Active Members</div>
-                <div class="stat-value">@(ViewBag.ActiveMembers ?? 98)</div>
+                <div class="stat-value">@Model.ActiveMembers</div>
                 <span class="stat-sub sub-green">Active</span>
             </div>
         </div>
@@ -41,7 +54,7 @@
             <div class="stat-card">
                 <div class="icon-wrap"><i class="bi bi-shield-fill-check"></i></div>
                 <div class="stat-label">Leaders</div>
-                <div class="stat-value">@(ViewBag.TotalLeaders ?? 15)</div>
+                <div class="stat-value">@Model.TotalLeaders</div>
                 <span class="stat-sub sub-teal">Assigned</span>
             </div>
         </div>
@@ -49,7 +62,7 @@
             <div class="stat-card">
                 <div class="icon-wrap"><i class="bi bi-diagram-3-fill"></i></div>
                 <div class="stat-label">Groups</div>
-                <div class="stat-value">@(ViewBag.TotalGroups ?? 10)</div>
+                <div class="stat-value">@Model.TotalGroups</div>
                 <span class="stat-sub sub-teal">Total</span>
             </div>
         </div>
@@ -57,7 +70,7 @@
             <div class="stat-card">
                 <div class="icon-wrap"><i class="bi bi-calendar-event-fill"></i></div>
                 <div class="stat-label">Total Events</div>
-                <div class="stat-value">@(ViewBag.TotalEvents ?? 34)</div>
+                <div class="stat-value">@Model.TotalEvents</div>
                 <span class="stat-sub sub-teal">All time</span>
             </div>
         </div>
@@ -65,16 +78,17 @@
             <div class="stat-card">
                 <div class="icon-wrap"><i class="bi bi-calendar-plus-fill"></i></div>
                 <div class="stat-label">Upcoming</div>
-                <div class="stat-value">@(ViewBag.UpcomingEvents ?? 5)</div>
+                <div class="stat-value">@Model.UpcomingEvents</div>
                 <span class="stat-sub sub-yellow">Events</span>
             </div>
         </div>
     </div>
 
-    <!-- ── MEMBERS REPORT ── -->
+    <!-- MEMBERS REPORT -->
     <div class="section-label">Members Report</div>
     <div class="row g-3 mb-1">
 
+        <!-- Donut Chart -->
         <div class="col-md-4">
             <div class="card-table h-100">
                 <div class="ct-header">
@@ -86,16 +100,24 @@
                 </div>
                 <div class="chart-body">
                     <div class="donut-row">
-                        <canvas id="memberDonut" style="max-width:150px;max-height:150px;"></canvas>
+                        <canvas id="memberDonut"
+                                style="max-width:150px;max-height:150px;"></canvas>
                         <ul class="legend-list">
-                            <li><span class="legend-dot" style="background:#0ab5c4;"></span>Active &mdash; <strong>98</strong></li>
-                            <li><span class="legend-dot" style="background:#ef4444;"></span>Inactive &mdash; <strong>22</strong></li>
+                            <li>
+                                <span class="legend-dot" style="background:#0ab5c4;"></span>
+                                Active &mdash; <strong>@Model.ActiveMembers</strong>
+                            </li>
+                            <li>
+                                <span class="legend-dot" style="background:#ef4444;"></span>
+                                Inactive &mdash; <strong>@Model.InactiveMembers</strong>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Members per Group Table -->
         <div class="col-md-8">
             <div class="card-table">
                 <div class="ct-header">
@@ -117,42 +139,58 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><span class="user-name-cell"><div class="avatar-initials">GA</div>Group Alpha</span></td>
-                                <td>Juan Dela Cruz</td><td><strong>14</strong></td>
-                                <td><div class="progress-wrap"><small class="text-muted">70%</small><div class="progress-track"><div class="progress-fill" style="width:70%"></div></div></div></td>
-                                <td><span class="badge-active">Active</span></td>
-                            </tr>
-                            <tr>
-                                <td><span class="user-name-cell"><div class="avatar-initials">GB</div>Group Beta</span></td>
-                                <td>Maria Santos</td><td><strong>11</strong></td>
-                                <td><div class="progress-wrap"><small class="text-muted">55%</small><div class="progress-track"><div class="progress-fill" style="width:55%"></div></div></div></td>
-                                <td><span class="badge-active">Active</span></td>
-                            </tr>
-                            <tr>
-                                <td><span class="user-name-cell"><div class="avatar-initials">GC</div>Group Gamma</span></td>
-                                <td>Pedro Reyes</td><td><strong>6</strong></td>
-                                <td><div class="progress-wrap"><small class="text-muted">30%</small><div class="progress-track"><div class="progress-fill" style="width:30%"></div></div></div></td>
-                                <td><span class="badge-inactive">Inactive</span></td>
-                            </tr>
-                            <tr>
-                                <td><span class="user-name-cell"><div class="avatar-initials">GD</div>Group Delta</span></td>
-                                <td>Ana Villanueva</td><td><strong>9</strong></td>
-                                <td><div class="progress-wrap"><small class="text-muted">45%</small><div class="progress-track"><div class="progress-fill" style="width:45%"></div></div></div></td>
-                                <td><span class="badge-active">Active</span></td>
-                            </tr>
+                            @foreach (var g in Model.Groups)
+                            {
+                                var initials = string.Concat(g.Name.Split(' ')
+                                    .Take(2).Select(w => w[0]));
+                                var count   = g.GroupMembers.Count;
+                                var fillPct = Model.MaxMembers > 0
+                                    ? (int)((count / (double)Model.MaxMembers) * 100) : 0;
+                                <tr>
+                                    <td>
+                                        <span class="user-name-cell">
+                                            <div class="avatar-initials">@initials</div>
+                                            @g.Name
+                                        </span>
+                                    </td>
+                                    <td>@(g.Leader?.FullName ?? "—")</td>
+                                    <td><strong>@count</strong></td>
+                                    <td>
+                                        <div class="progress-wrap">
+                                            <small class="text-muted">@fillPct%</small>
+                                            <div class="progress-track">
+                                                <div class="progress-fill"
+                                                     style="width:@fillPct%"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @if (g.Status == "Active")
+                                        {
+                                            <span class="badge-active">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge-inactive">Inactive</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
-                <div class="table-footer"><span>4 groups total</span></div>
+                <div class="table-footer">
+                    <span>@Model.Groups.Count groups total</span>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- ── LEADERS & GROUPS ── -->
+    <!-- LEADERS & GROUPS -->
     <div class="section-label">Leaders &amp; Groups Report</div>
     <div class="row g-3 mb-1">
 
+        <!-- Leaders Table -->
         <div class="col-md-6">
             <div class="card-table">
                 <div class="ct-header">
@@ -173,34 +211,53 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><span class="user-name-cell"><img src="https://i.pravatar.cc/40?u=101" class="user-avatar" />Juan Dela Cruz</span></td>
-                                <td>Group Alpha</td><td>14</td><td><span class="badge-active">Active</span></td>
-                            </tr>
-                            <tr>
-                                <td><span class="user-name-cell"><img src="https://i.pravatar.cc/40?u=102" class="user-avatar" />Maria Santos</span></td>
-                                <td>Group Beta</td><td>11</td><td><span class="badge-active">Active</span></td>
-                            </tr>
-                            <tr>
-                                <td><span class="user-name-cell"><img src="https://i.pravatar.cc/40?u=103" class="user-avatar" />Pedro Reyes</span></td>
-                                <td>Group Gamma</td><td>6</td><td><span class="badge-inactive">Inactive</span></td>
-                            </tr>
-                            <tr>
-                                <td><span class="user-name-cell"><img src="https://i.pravatar.cc/40?u=104" class="user-avatar" />Ana Villanueva</span></td>
-                                <td>Group Delta</td><td>9</td><td><span class="badge-active">Active</span></td>
-                            </tr>
-                            <tr>
-                                <td><span class="user-name-cell"><img src="https://i.pravatar.cc/40?u=105" class="user-avatar" />Rico Lim</span></td>
-                                <td><span class="text-muted fst-italic">Unassigned</span></td>
-                                <td>—</td><td><span class="badge-inactive">No Group</span></td>
-                            </tr>
+                            @foreach (var ld in Model.LeaderData)
+                            {
+                                <tr>
+                                    <td>
+                                        <span class="user-name-cell">
+                                            <img src="https://i.pravatar.cc/40?u=@ld.Leader.Id"
+                                                 class="user-avatar" />
+                                            @ld.Leader.FullName
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @if (ld.Group != null)
+                                        {
+                                            @ld.Group.Name
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted fst-italic">Unassigned</span>
+                                        }
+                                    </td>
+                                    <td>@(ld.Members?.ToString() ?? "—")</td>
+                                    <td>
+                                        @if (ld.Group == null)
+                                        {
+                                            <span class="badge-inactive">No Group</span>
+                                        }
+                                        else if (ld.Group.Status == "Active")
+                                        {
+                                            <span class="badge-active">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge-inactive">Inactive</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
-                <div class="table-footer"><span>5 leaders total</span></div>
+                <div class="table-footer">
+                    <span>@Model.TotalLeaders leaders total</span>
+                </div>
             </div>
         </div>
 
+        <!-- Bar Chart -->
         <div class="col-md-6">
             <div class="card-table h-100">
                 <div class="ct-header">
@@ -219,7 +276,7 @@
         </div>
     </div>
 
-    <!-- ── EVENTS REPORT ── -->
+    <!-- EVENTS REPORT -->
     <div class="section-label">Events Report</div>
     <div class="row g-3 mb-4">
 
@@ -229,7 +286,7 @@
                     <div class="icon-sm"><i class="bi bi-calendar3"></i></div>
                     <div>
                         <h6>Events per Month</h6>
-                        <small>Monthly event activity</small>
+                        <small>Monthly event activity (@DateTime.Now.Year)</small>
                     </div>
                 </div>
                 <div class="chart-body">
@@ -260,15 +317,34 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>General Assembly</td><td>All Groups</td><td>Mar 10</td><td><span class="badge-done">Done</span></td></tr>
-                            <tr><td>Bible Study</td><td>Group Alpha</td><td>Mar 15</td><td><span class="badge-done">Done</span></td></tr>
-                            <tr><td>Youth Camp</td><td>Group Beta</td><td>Mar 22</td><td><span class="badge-done">Done</span></td></tr>
-                            <tr><td>Outreach Program</td><td>Group Delta</td><td>Apr 5</td><td><span class="badge-upcoming">Upcoming</span></td></tr>
-                            <tr><td>Leadership Summit</td><td>Leaders</td><td>Apr 12</td><td><span class="badge-upcoming">Upcoming</span></td></tr>
+                            @foreach (var ev in Model.RecentEvents)
+                            {
+                                var groupName = ev.AssignedGroups.Any()
+                                    ? string.Join(", ", ev.AssignedGroups.Select(g => g.Name))
+                                    : "All Groups";
+                                var isDone = ev.EventDate < DateTime.Now;
+                                <tr>
+                                    <td>@ev.Title</td>
+                                    <td>@groupName</td>
+                                    <td>@ev.EventDate.ToString("MMM d")</td>
+                                    <td>
+                                        @if (isDone)
+                                        {
+                                            <span class="badge-done">Done</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge-upcoming">Upcoming</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
-                <div class="table-footer"><span>5 events shown</span></div>
+                <div class="table-footer">
+                    <span>@Model.RecentEvents.Count events shown</span>
+                </div>
             </div>
         </div>
     </div>
@@ -276,50 +352,73 @@
 </div>
 
 @section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const teal = '#0ab5c4', tealDark = '#07869b',
-              tealMid = '#55d0db', tealPale = '#c2edf1', red = '#ef4444';
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const teal = '#0ab5c4', tealDark = '#07869b',
+          tealMid = '#55d0db', tealPale = '#c2edf1', red = '#ef4444';
 
-        new Chart(document.getElementById('memberDonut'), {
-            type: 'doughnut',
-            data: {
-                labels: ['Active', 'Inactive'],
-                datasets: [{ data: [98, 22], backgroundColor: [teal, red], borderWidth: 0, hoverOffset: 6 }]
-            },
-            options: { cutout: '72%', plugins: { legend: { display: false } }, responsive: true, maintainAspectRatio: true }
-        });
+    new Chart(document.getElementById('memberDonut'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Active', 'Inactive'],
+            datasets: [{
+                data: [@Model.ActiveMembers, @Model.InactiveMembers],
+                backgroundColor: [teal, red],
+                borderWidth: 0, hoverOffset: 6
+            }]
+        },
+        options: {
+            cutout: '72%',
+            plugins: { legend: { display: false } },
+            responsive: true, maintainAspectRatio: true
+        }
+    });
 
-        new Chart(document.getElementById('groupBar'), {
-            type: 'bar',
-            data: {
-                labels: ['Group Alpha', 'Group Beta', 'Group Gamma', 'Group Delta'],
-                datasets: [{ label: 'Members', data: [14, 11, 6, 9], backgroundColor: [teal, tealDark, tealMid, tealPale], borderRadius: 8, borderSkipped: false }]
-            },
-            options: {
-                responsive: true, maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: {
-                    y: { beginAtZero: true, grid: { color: '#f0f9fa' }, ticks: { color: '#6c757d', font: { size: 11 } } },
-                    x: { grid: { display: false }, ticks: { color: '#6c757d', font: { size: 11 } } }
-                }
+    new Chart(document.getElementById('groupBar'), {
+        type: 'bar',
+        data: {
+            labels: [@Html.Raw(groupLabels)],
+            datasets: [{
+                label: 'Members',
+                data: [@Html.Raw(groupCounts)],
+                backgroundColor: [teal, tealDark, tealMid, tealPale],
+                borderRadius: 8, borderSkipped: false
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, grid: { color: '#f0f9fa' },
+                     ticks: { color: '#6c757d', font: { size: 11 } } },
+                x: { grid: { display: false },
+                     ticks: { color: '#6c757d', font: { size: 11 } } }
             }
-        });
+        }
+    });
 
-        new Chart(document.getElementById('eventsBar'), {
-            type: 'bar',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-                datasets: [{ label: 'Events', data: [3, 4, 6, 5, 4, 7, 5], backgroundColor: teal, borderRadius: 8, borderSkipped: false }]
-            },
-            options: {
-                responsive: true, maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: {
-                    y: { beginAtZero: true, grid: { color: '#f0f9fa' }, ticks: { color: '#6c757d', font: { size: 11 } } },
-                    x: { grid: { display: false }, ticks: { color: '#6c757d', font: { size: 11 } } }
-                }
+    new Chart(document.getElementById('eventsBar'), {
+        type: 'bar',
+        data: {
+            labels: ['Jan','Feb','Mar','Apr','May','Jun',
+                     'Jul','Aug','Sep','Oct','Nov','Dec'],
+            datasets: [{
+                label: 'Events',
+                data: [@Html.Raw(monthlyData)],
+                backgroundColor: teal,
+                borderRadius: 8, borderSkipped: false
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, grid: { color: '#f0f9fa' },
+                     ticks: { color: '#6c757d', font: { size: 11 } } },
+                x: { grid: { display: false },
+                     ticks: { color: '#6c757d', font: { size: 11 } } }
             }
-        });
-    </script>
+        }
+    });
+</script>
 }

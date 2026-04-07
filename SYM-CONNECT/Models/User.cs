@@ -15,19 +15,19 @@ namespace SYM_CONNECT.Models
     action: "CheckEmail",
     controller: "Users",
     AdditionalFields = "Id",   // sends the Id along with email
-    ErrorMessage = "This email is already registered."
+    ErrorMessage = "This email is already registered." //automatically shows
 )]
         [Required]
-        public string Email { get; set; }
-        public string? PasswordHash { get; set; }
+        public string Email { get; set; } //email
+        public string? PasswordHash { get; set; } //password
         [Required]
-        public string Role { get; set; }
+        public string Role { get; set; } //role
         [Required]
-        public string Status { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public string Status { get; set; } //get its status
+        public DateTime CreatedAt { get; set; } //when created?
 
         //if set to  inactive
-        public DateTime? InactiveAt { get; set; }
+        public DateTime? InactiveAt { get; set; } //default to false if not inactive
 
     }
 }

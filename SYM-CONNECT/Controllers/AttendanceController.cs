@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
+using Rotativa.AspNetCore;
 using SYM_CONNECT.Data;
 using SYM_CONNECT.Models;
 using System;
@@ -80,9 +81,19 @@ namespace SYM_CONNECT.Controllers
   
             bool alreadyAttended = await _context.Attendances.AnyAsync(a => a.UserId == attendance.UserId && 
                                            a.EventId == attendance.EventId);
-            var selectedEvent = await _context.Events.FindAsync(attendance.EventId);
 
-            if(attendance.PointsEarned == 0 || attendance.PointsEarned < 0)
+            var selectedEvent = await _context.Events
+       .FirstOrDefaultAsync(e => e.EventId == attendance.EventId);
+
+
+            if (selectedEvent == null)
+            {
+                ModelState.AddModelError("EventId", "Event not found.");
+                TempData["Error"] = "Event Error";
+                return View(attendance);
+            }
+
+            if (attendance.PointsEarned == 0 || attendance.PointsEarned < 0)
             {
                 ModelState.AddModelError("PointsEarned",
                       "Please enter a valid number");
@@ -100,7 +111,7 @@ namespace SYM_CONNECT.Controllers
                 return View(attendance);
             }
 
-            if (attendance.AttendanceDate <= selectedEvent.EventDate)
+            if (attendance.AttendanceDate < selectedEvent.EventDate)
             {
 
                 ModelState.AddModelError("AttendanceDate",
@@ -328,12 +339,37 @@ namespace SYM_CONNECT.Controllers
         }
 
 
-     
+        public async Task<IActionResult> ExportPDF()
+        {
+            // Get ALL users from database
+            var attendances = await _context.Attendances
+                .Include(a => a.User)
+                      .Include(a => a.Event)
+
+                .OrderBy(u => u.PointsEarned)
+                .ToListAsync();
+
+            // Return as PDF using the ExportPDF view
+            return new ViewAsPdf("ExportPDF", attendances)
+            {
+                FileName = $"Users_{DateTime.Now:yyyyMMdd}.pdf",
+                PageSize = Rotativa.AspNetCore.Options.Size.A4,
+                PageOrientation = Rotativa.AspNetCore
+                                    .Options.Orientation.Landscape,
+                PageMargins = new Rotativa.AspNetCore.Options.Margins
+                {
+                    Top = 10,
+                    Bottom = 10,
+                    Left = 10,
+                    Right = 10
+                }
+            };
+        }
+
+
 
         public async Task LoadDropdowns()
-        {
-
-     
+        {     
                 var groups = await _context.SYMGroup
                     .Include(g => g.Leader)
                     .Where(g => g.Status == "Active")
