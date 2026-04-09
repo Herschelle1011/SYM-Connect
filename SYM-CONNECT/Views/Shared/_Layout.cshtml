@@ -41,6 +41,7 @@
 
             <nav class="sidebar-nav">
 
+                @* //DASHBOARD BUTTON *@
                 <a asp-controller="Home" asp-action="Dashboard"
                    class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" &&
                                                    ViewContext.RouteData.Values["action"]?.ToString() == "Dashboard"
@@ -48,40 +49,90 @@
                     <i class="bi bi-grid-fill"></i> Dashboard
                 </a>
 
+                @* //USERS MANAGEMENT BUTTON *@
                 <a asp-controller="Users" asp-action="Index"
                    class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Users"
                                                    ? "active" : "")">
                     <i class="bi bi-person-fill"></i> User
                 </a>
 
+                @* //EVENTS MANAGEMENT BUTTON *@
                 <a asp-controller="Events" asp-action="Index"
                    class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Events"
                                                    ? "active" : "")">
                     <i class="bi bi-calendar-event-fill"></i> Events
                 </a>
 
+                @* //ATTENDANCE MANAGEMENT BUTTON *@
                 <a asp-controller="Attendance" asp-action="Index"
                    class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Attendance"
                                                    ? "active" : "")">
                     <i class="bi bi-check-circle-fill"></i> Attendance
                 </a>
 
+                @* //SYM GROUP MANAGEMENT BUTTON *@
                    <a asp-controller="SYMGroups" asp-action="Index"
                    class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "SYMGroups"
                                                    ? "active" : "")">
                     <i class="bi bi-people-fill"></i> Groups
                 </a>
 
+                @* //GROUP MEMBERS MANAGEMENT BUTTON *@
                 <a asp-controller="GroupMembers" asp-action="Index"
                    class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "GroupMembers"
-                                                                      ? "active" : "")">
+                                                                     ? "active" : "")">
                     <i class="bi bi-heart-pulse-fill"></i> Members
                 </a>
+
+                @* //REPORT MANAGEMENT BUTTON *@
+                <a asp-controller="Reports" asp-action="Index"
+                   class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Reports")">
+                    <i class="bi bi-bar-chart-fill"></i> Reports
+                </a>
+
+
+                @* LOGOUT SECTION *@
+                <form asp-controller="Home" asp-action="Logout" method="post" style="margin-top: auto;">
+                    @Html.AntiForgeryToken()
+                    <button type="button"
+                            class="nav-link"
+                            style="width:100%; background:none; border:none; text-align:left; cursor:pointer;"
+                            data-bs-toggle="modal"
+                            data-bs-target="#logoutModal">
+                        <i class="bi bi-box-arrow-left"></i> Logout
+                    </button>
+                </form>
 
             </nav>
 
         </aside>
 
+        <!-- Add this anywhere before </body> -->
+        <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body text-center py-4">
+                        <div class="logout-icon-wrap mb-3">
+                            <i class="bi bi-box-arrow-left"></i>
+                        </div>
+                        <h5 class="modal-title fw-semibold mb-1" id="logoutModalLabel">Logging out?</h5>
+                        <p class="text-muted small mb-4">You'll need to sign in again to access your account.</p>
+
+                        <div class="d-flex justify-content-center gap-2">
+                            <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
+                                Cancel
+                            </button>
+                            <form asp-controller="Home" asp-action="Logout" method="post" style="display:inline;">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-danger px-4">
+                                    Yes, logout
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- MAIN CONTENT -->
         <main class="main-content">
@@ -148,4 +199,18 @@
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </html>

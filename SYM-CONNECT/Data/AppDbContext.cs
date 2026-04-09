@@ -56,7 +56,9 @@ namespace SYM_CONNECT.Data
             modelBuilder.Entity<Event>()
     .HasMany(e => e.AssignedGroups)
     .WithMany(g => g.Events)
+    
     .UsingEntity(j => j.ToTable("EventGroups"));
+
 
         }
     }

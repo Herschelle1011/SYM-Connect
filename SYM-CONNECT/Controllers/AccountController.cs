@@ -22,17 +22,17 @@ namespace SYM_CONNECT.Controllers
         {
             _db = db;
         }
-        [HttpGet]
+        [HttpGet]//GET    LOGIN  FOR VIEW
         public IActionResult Login()
          {
             return View();
          }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken] //TOKEN  REQUIRED IF  LOGGED IN
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid) //CHECK IF NOT  VALID
             {
                 var errors = ModelState.Values.SelectMany(v => v.Errors);
                 foreach (var error in errors)
@@ -40,27 +40,27 @@ namespace SYM_CONNECT.Controllers
                     Console.WriteLine(error.ErrorMessage);
                 }
 
-                return View(model);
+                return View(model);  //RETURN   TO  VIEW
             }
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid) return View(model); 
 
-                var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+                var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == model.Email);  //GET  EMAIL  BY  INPUTTED EMAL  IF  EXISTED
 
                 if (user == null)
                 {
-                    ModelState.AddModelError("Password", "Invalid email or password.");
+                    ModelState.AddModelError("Password", "Invalid email or password."); //INVALID IF SHOW NOTHING
                     return View(model);
                 }
 
                 if (user.Status == "Inactive") //if status is inactive add error wont proceed
                 {
-                    ModelState.AddModelError("Password", "Your account is inactive. Contact Administrator!");
+                    ModelState.AddModelError("Password", "Your account is inactive. Contact Administrator!"); //CANNOT  LOGIN IF INACTIVE
                     return View(model);
                 }
 
             // VERIFY PASSWORD
             // COMPARE PLAIN PASSWORD
-            if (user.PasswordHash != model.Password) // using PasswordHash as plain text for now
+            if (user.PasswordHash != model.Password) // using PasswordHash as plain text for now  NOT  HASHED
             {
                 ModelState.AddModelError("Password", "Invalid email or password.");
                 return View(model);
@@ -70,14 +70,14 @@ namespace SYM_CONNECT.Controllers
 
 
             // CREATE SESSION & CLAIMS SAVED!
-            HttpContext.Session.SetString("Id", user.Id.ToString());
+            HttpContext.Session.SetString("Id", user.Id.ToString());   //FOR GETTING CURRENT  USER LOGIN / FULLNAME /  ROLE/ EMAIL
                 HttpContext.Session.SetString("FullName", user.FullName);
                 HttpContext.Session.SetString("Role", user.Role);
                 HttpContext.Session.SetString("Email", user.Email);
 
                 var claims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),  
                         new Claim(ClaimTypes.Name, user.FullName),
                         new Claim(ClaimTypes.Email, user.Email),
                         new Claim(ClaimTypes.Role, user.Role)
@@ -86,30 +86,23 @@ namespace SYM_CONNECT.Controllers
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var principal = new ClaimsPrincipal(identity);
 
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);  //SIGNINSYNC TOKEN STORED
 
-                // REDIRECT BASED ON ROLE
+                // REDIRECT BASED ON ROLE 
                 return user.Role switch
                 {
-                    "admin" => RedirectToAction("Dashboard", "Home"),
-                    "Leader" => RedirectToAction("Index", "Home"),
-                    "Member" => RedirectToAction("Index", "Home"),
-                    _ => RedirectToAction("Login", "Account")
+                    "admin" => RedirectToAction("Dashboard", "Home"), //IF ADMIN
+                    "Leader" => RedirectToAction("Index", "Home"), //IF LEADER
+                    "Member" => RedirectToAction("Index", "Home"), //IF MEMBER
+                    _ => RedirectToAction("Login", "Account") //IF NOT REDIRECT TO LOGIN
                 };
             }
-        [HttpPost]
-        public IActionResult Logout()
-        {
-            HttpContext.Session.Clear();
-            return RedirectToAction("Login", "Account");
-        }
 
 
-
-        [HttpGet]
+        [HttpGet] //GET  REGISTER
         public IActionResult Register()
         {
-            return View();
+            return View(); //RETURN TO  VIEW
         }
 
     }

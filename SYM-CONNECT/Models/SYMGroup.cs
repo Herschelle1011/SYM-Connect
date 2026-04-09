@@ -17,7 +17,7 @@ namespace SYM_CONNECT.Models
         [Required]
         public string Status { get; set; } // Active / Inactive
 
-        public int LeaderId { get; set; } //leaderId
+        public int? LeaderId { get; set; } //leaderId
         [ValidateNever]
         public Users? Leader { get; set; } //getItsLeader
 

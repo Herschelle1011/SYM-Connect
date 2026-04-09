@@ -15,175 +15,177 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.TargetFrameworkIdentifier = .NETCoreApp
+build_property.TargetFrameworkVersion = v9.0
 build_property.RootNamespace = SYM_CONNECT
 build_property.RootNamespace = SYM_CONNECT
-build_property.ProjectDir = C:\Users\ACT-STUDENT\Source\Repos\SYM-Connect\SYM-CONNECT\
+build_property.ProjectDir = C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\ACT-STUDENT\Source\Repos\SYM-Connect\SYM-CONNECT
+build_property.MSBuildProjectDirectory = C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Account/Login.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Account/Register.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Attendance/Create.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Attendance/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXR0ZW5kYW5jZVxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Attendance/Delete.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Attendance/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXR0ZW5kYW5jZVxEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Attendance/Details.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Attendance/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXR0ZW5kYW5jZVxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Attendance/Edit.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Attendance/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXR0ZW5kYW5jZVxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Attendance/ExportPDF.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Attendance/ExportPDF.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXR0ZW5kYW5jZVxFeHBvcnRQREYuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Attendance/Index.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Attendance/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXR0ZW5kYW5jZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Events/Create.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Events/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXZlbnRzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Events/Details.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Events/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXZlbnRzXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Events/Edit.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Events/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXZlbnRzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Events/ExportPDF.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Events/ExportPDF.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXZlbnRzXEV4cG9ydFBERi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Events/Index.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Events/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXZlbnRzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Events/_CreateEventModal.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Events/_CreateEventModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXZlbnRzXF9DcmVhdGVFdmVudE1vZGFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/GroupMembers/Create.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/GroupMembers/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR3JvdXBNZW1iZXJzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/GroupMembers/Delete.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/GroupMembers/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR3JvdXBNZW1iZXJzXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/GroupMembers/Details.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/GroupMembers/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR3JvdXBNZW1iZXJzXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/GroupMembers/Edit.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/GroupMembers/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR3JvdXBNZW1iZXJzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/GroupMembers/Index.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/GroupMembers/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR3JvdXBNZW1iZXJzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Home/Dashboard.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Home/Dashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxEYXNoYm9hcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Home/ExportPDF.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Home/ExportPDF.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFeHBvcnRQREYuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Home/UserManagement.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Home/UserManagement.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxVc2VyTWFuYWdlbWVudC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Shared/Error.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Shared/_LoginLayout.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Shared/_LoginLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpbkxheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Shared/_RegisterLayout.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Shared/_RegisterLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9SZWdpc3RlckxheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/SYMGroups/Create.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/SYMGroups/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU1lNR3JvdXBzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/SYMGroups/Delete.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/SYMGroups/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU1lNR3JvdXBzXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/SYMGroups/Details.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/SYMGroups/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU1lNR3JvdXBzXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/SYMGroups/Edit.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/SYMGroups/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU1lNR3JvdXBzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/SYMGroups/Index.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/SYMGroups/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU1lNR3JvdXBzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Users/Create.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Users/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Users/Delete.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Users/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Users/Details.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Users/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Users/Edit.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Users/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Users/ExportPDF.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Users/ExportPDF.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRXhwb3J0UERGLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Users/Index.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Users/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/_ViewImports.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/_ViewStart.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/ACT-STUDENT/Source/Repos/SYM-Connect/SYM-CONNECT/Views/Shared/_Layout.cshtml]
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-40nwtn9by5

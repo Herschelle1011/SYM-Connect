@@ -1,4 +1,45 @@
-﻿//USERS MODAL
+﻿//GROUP MODAL
+
+
+// ── Cancel Modal ──────────────────────────────
+function openCancelGroupModal(GroupId, Name) {
+    document.getElementById('cancelGroupTitle').innerText = Name;
+    document.getElementById('cancelGroupForm').action = '/SYMGroups/Cancel/' + GroupId;
+
+    var modal = new bootstrap.Modal(document.getElementById('cancelGroupModal')); 
+    modal.show();
+}
+
+//DELETE MODAL
+function openDeleteGroupModal(GroupId, Name) {
+    document.getElementById('deleteGroupTitle').innerText = Name;
+    document.getElementById('deleteGroupForm').action = '/SYMGroups/Delete/' + GroupId;
+    var modal = new bootstrap.Modal(document.getElementById('deleteGroupModal'));
+    modal.show();
+}
+
+
+// Filter inactive groups search
+function filterInactiveGroupRows(query) {
+    const rows = document.querySelectorAll('.inactive-group-row');
+    const noResults = document.getElementById('noInactiveGroupResults');
+    const q = query.toLowerCase();
+    let anyVisible = false;
+
+    rows.forEach(row => {
+        const name = row.getAttribute('data-name') || '';
+        const match = name.includes(q);
+        row.style.display = match ? 'flex' : 'none';
+        if (match) anyVisible = true;
+    });
+
+    noResults.style.display = anyVisible ? 'none' : 'block';
+}
+
+
+
+
+//USERS MODAL
 
 function openInactiveModal(Id, Email) {
     document.getElementById('InactiveUsersName').innerText = Email;
@@ -233,68 +274,138 @@ function applyRoleFilter(role) {
 
 
 
-// ── Apply the filter ──────────────────────────────
-function applyStatusFilter(selectedStatus) {
-    document.getElementById('roleFilterLabel').innerText =
-        selectedStatus === 'All' ? 'Status' : selectedStatus;
-    document.getElementById('statusDropdown').style.display = 'none';
+function applyProgressFilter(selectedProgress) {
 
-    // ✅ Filter table rows
+    // Update label
+    document.getElementById('progressFilterLabel').innerText =
+        selectedProgress === 'All' ? 'Progress' : selectedProgress;
+
+    // Close dropdown
+    document.getElementById('progressDropdown').style.display = 'none';
+
+    // Filter rows
     var rows = document.querySelectorAll('#tableBody tr');
+
     rows.forEach(function (row) {
-        // Skip the no-results row
+
         if (row.id === 'noSearchResults') return;
 
-        // Status is in column index 3 (0=name, 1=email, 2=role, 3=status)
-        var rowStatus = row.cells[3]?.innerText.trim() ?? '';
+        // Adjust index if needed
+        var rowProgress = row.cells[7]?.innerText.trim() ?? '';
 
-        if (selectedStatus === 'All') {
-            row.style.display = ''; // show all
+        if (selectedProgress === 'All') {
+            row.style.display = '';
         } else {
             row.style.display =
-                rowStatus.toLowerCase() === selectedStatus.toLowerCase()
-                    ? ''      // show
-                    : 'none'; // hide
+                rowProgress.toLowerCase() === selectedProgress.toLowerCase()
+                    ? ''
+                    : 'none';
         }
     });
 
-    // ✅ Check if any rows are visible
+    // Check visible rows
     var anyVisible = Array.from(rows).some(function (row) {
         return row.id !== 'noSearchResults' &&
             row.style.display !== 'none';
     });
 
-    // ✅ Show/hide no results message
+    // Show/hide no results
     var noMsg = document.getElementById('noSearchResults');
     if (noMsg) {
         noMsg.style.display = anyVisible ? 'none' : '';
     }
 
-    // ✅ Highlight selected option
-    document.querySelectorAll('.status-option')
+    // Highlight selected option
+    document.querySelectorAll('.progress-option')
         .forEach(function (opt) {
             opt.style.background =
-                opt.innerText.trim() === selectedStatus
-                    ? '#E1F5EE'   // highlight selected
-                    : '';          // reset others
+                opt.innerText.trim().includes(selectedProgress)
+                    ? '#E1F5EE'
+                    : '';
         });
 }
 
-
 // ── Open / Close dropdown ────────────────────────
-function toggleStatusDropdown() {
-    var dropdown = document.getElementById('statusDropdown');
+function toggleProgressDropdown() {
+    var dropdown = document.getElementById('progressDropdown');
     var isOpen = dropdown.style.display === 'block';
     dropdown.style.display = isOpen ? 'none' : 'block';
 }
 
 // ── Close dropdown when clicking outside ─────────
 document.addEventListener('click', function (e) {
+    var btn = document.getElementById('progressFilterBtn');
+    var dropdown = document.getElementById('progressDropdown');
+    if (!btn.contains(e.target) &&
+        !dropdown.contains(e.target)) {
+        dropdown.style.display = 'none';
+    }
+
+});
+
+
+function applyStatusFilter(selectedStatus) {
+
+    // Update label
+    document.getElementById('roleFilterLabel').innerText =
+        selectedStatus === 'All' ? 'Status' : selectedStatus;
+
+    // Close dropdown
+    document.getElementById('statusDropdown').style.display = 'none';
+
+    // Filter rows
+    var rows = document.querySelectorAll('#tableBody tr');
+
+    rows.forEach(function (row) {
+
+        if (row.id === 'noSearchResults') return;
+
+        var rowStatus = row.cells[3]?.innerText.trim() ?? '';
+
+        if (selectedStatus === 'All') {
+            row.style.display = '';
+        } else {
+            row.style.display =
+                rowStatus.toLowerCase() === selectedStatus.toLowerCase()
+                    ? ''
+                    : 'none';
+        }
+    });
+
+    // Check visible rows
+    var anyVisible = Array.from(rows).some(function (row) {
+        return row.id !== 'noSearchResults' &&
+            row.style.display !== 'none';
+    });
+
+    // Show/hide no results
+    var noMsg = document.getElementById('noSearchResults');
+    if (noMsg) {
+        noMsg.style.display = anyVisible ? 'none' : '';
+    }
+
+    // Highlight selected option
+    document.querySelectorAll('.status-option')
+        .forEach(function (opt) {
+            opt.style.background =
+                opt.innerText.trim().includes(selectedStatus)
+                    ? '#E1F5EE'
+                    : '';
+        });
+}
+
+function toggleStatusDropdown() {
+    var dropdown = document.getElementById('statusDropdown');
+    var isOpen = dropdown.style.display === 'block';
+    dropdown.style.display = isOpen ? 'none' : 'block';
+}
+
+document.addEventListener('click', function (e) {
     var btn = document.getElementById('statusFilterBtn');
     var dropdown = document.getElementById('statusDropdown');
+
     if (!btn.contains(e.target) &&
         !dropdown.contains(e.target)) {
         dropdown.style.display = 'none';
     }
 });
-

@@ -650,7 +650,6 @@ C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\bin\Debug\net9
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\bin\Debug\net9.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\bin\Debug\net9.0\runtimes\win\lib\net7.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\bin\Debug\net9.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll
-C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net9.0\compressed\7sxjmlfdrz-{0}-j78tsgeljh-j78tsgeljh.gz
 C:\Users\ACT-STUDENT\Source\Repos\SYM-Connect\SYM-CONNECT\bin\Debug\net9.0\appsettings.Development.json
 C:\Users\ACT-STUDENT\Source\Repos\SYM-Connect\SYM-CONNECT\bin\Debug\net9.0\appsettings.json
 C:\Users\ACT-STUDENT\Source\Repos\SYM-Connect\SYM-CONNECT\bin\Debug\net9.0\SYM-CONNECT.staticwebassets.runtime.json
@@ -981,3 +980,8 @@ C:\Users\ACT-STUDENT\Source\Repos\SYM-Connect\SYM-CONNECT\obj\Debug\net9.0\refin
 C:\Users\ACT-STUDENT\Source\Repos\SYM-Connect\SYM-CONNECT\obj\Debug\net9.0\SYM-CONNECT.pdb
 C:\Users\ACT-STUDENT\Source\Repos\SYM-Connect\SYM-CONNECT\obj\Debug\net9.0\SYM-CONNECT.genruntimeconfig.cache
 C:\Users\ACT-STUDENT\Source\Repos\SYM-Connect\SYM-CONNECT\obj\Debug\net9.0\ref\SYM-CONNECT.dll
+C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\bin\Debug\net9.0\Rotativa.AspNetCore.dll
+C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net9.0\SYM-CONNECT.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net9.0\compressed\7sxjmlfdrz-{0}-umghhfijcu-umghhfijcu.gz
+C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net9.0\compressed\hmdj04tq22-{0}-jtzz6blr1k-jtzz6blr1k.gz
+C:\Users\Herschelle\Downloads\SYM-Connect\SYM-Connect\SYM-CONNECT\obj\Debug\net9.0\compressed\xdmo6efjjz-{0}-w25v45g9f1-w25v45g9f1.gz

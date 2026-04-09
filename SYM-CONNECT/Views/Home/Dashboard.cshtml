@@ -1,107 +1,714 @@
 ﻿@model SYM_CONNECT.ViewModel.ReportViewModel
 @{
-    ViewData["Title"] = "Reports";
+    ViewData["Title"] = "Dashboard";
     Layout = "_Layout";
+
+    var now = DateTime.Now;
+    var filterYear = Model.SelectedYear ?? now.Year;
+    var filterMonth = Model.SelectedMonth ?? now.Month;
+
+    var monthNames = new[] {
+        "January","February","March","April","May","June",
+        "July","August","September","October","November","December"
+    };
+
+    string timeframeLabel = (Model.SelectedMonth.HasValue && Model.SelectedYear.HasValue)
+        ? $"{monthNames[Model.SelectedMonth.Value - 1]} {Model.SelectedYear.Value}"
+        : Model.SelectedYear.HasValue ? $"All of {Model.SelectedYear.Value}"
+        : Model.SelectedMonth.HasValue ? $"{monthNames[Model.SelectedMonth.Value - 1]} (all years)"
+        : "All time";
 
     var groupLabels = string.Join(",", Model.Groups.Select(g => $"'{g.Name}'"));
     var groupCounts = string.Join(",", Model.Groups.Select(g => g.GroupMembers.Count));
     var monthlyData = string.Join(",", Model.EventsPerMonth);
+
+    // Insight deltas
+    var deltaSign = Model.MemberDelta >= 0 ? "+" : "";
+    var deltaClass = Model.MemberDelta > 0 ? "delta-up" : Model.MemberDelta < 0 ? "delta-down" : "delta-neu";
+    var completionPct = Model.TotalEvents > 0
+        ? (int)((Model.DoneEvents / (double)Model.TotalEvents) * 100) : 0;
+    var activePct = Model.TotalMembers > 0
+        ? (int)((Model.ActiveMembers / (double)Model.TotalMembers) * 100) : 0;
 }
+
+<style>
+    /* ── Page header ─────────────────────────── */
+    .dash-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 1.5rem;
+    }
+
+    .dash-greeting {
+        font-size: 1.35rem;
+        font-weight: 600;
+        color: var(--text-primary, #1a1a2e);
+    }
+
+        .dash-greeting span {
+            color: #0ab5c4;
+        }
+
+    .dash-sub {
+        font-size: 0.82rem;
+        color: #6c757d;
+        margin-top: 2px;
+    }
+
+    .timeframe-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #e8fafb;
+        border: 1px solid #0ab5c4;
+        color: #07869b;
+        border-radius: 20px;
+        padding: 4px 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+        .timeframe-pill i {
+            font-size: 0.7rem;
+        }
+
+    /* ── Filter form ─────────────────────────── */
+    .filter-bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 1.25rem;
+    }
+
+        .filter-bar select {
+            font-size: 0.82rem;
+            padding: 5px 10px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            background: #fff;
+            color: #344;
+        }
+
+    .btn-filter {
+        background: #0ab5c4;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 6px 16px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+        .btn-filter:hover {
+            background: #07869b;
+        }
+
+    .btn-clear {
+        background: transparent;
+        color: #6c757d;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 5px 14px;
+        font-size: 0.82rem;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+        .btn-clear:hover {
+            background: #f8f9fa;
+        }
+
+    /* ── Stat cards ──────────────────────────── */
+    .stat-card {
+        background: #fff;
+        border-radius: 14px;
+        padding: 18px 16px;
+        box-shadow: 0 2px 8px rgba(10,181,196,.07);
+        border: 1px solid #e8fafb;
+        position: relative;
+        overflow: hidden;
+        transition: transform .18s, box-shadow .18s;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(10,181,196,.13);
+        }
+
+    .stat-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+
+    .stat-label {
+        font-size: 0.73rem;
+        color: #6c757d;
+        font-weight: 500;
+        margin-bottom: 3px;
+        text-transform: uppercase;
+        letter-spacing: .04em;
+    }
+
+    .stat-value {
+        font-size: 1.9rem;
+        font-weight: 700;
+        color: #1a1a2e;
+        line-height: 1;
+        margin-bottom: 6px;
+    }
+
+    .stat-delta {
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 2px 8px;
+        border-radius: 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+    }
+
+    .delta-up {
+        background: #e1f5ee;
+        color: #0f6e56;
+    }
+
+    .delta-down {
+        background: #fde8e8;
+        color: #b91c1c;
+    }
+
+    .delta-neu {
+        background: #f1f5f9;
+        color: #64748b;
+    }
+
+    .stat-accent {
+        position: absolute;
+        bottom: -10px;
+        right: -10px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        opacity: .07;
+    }
+    /* icon colours */
+    .ic-teal {
+        background: #e8fafb;
+        color: #0ab5c4;
+    }
+
+    .ic-green {
+        background: #e1f5ee;
+        color: #0f6e56;
+    }
+
+    .ic-red {
+        background: #fde8e8;
+        color: #b91c1c;
+    }
+
+    .ic-yellow {
+        background: #fef9e7;
+        color: #b7800a;
+    }
+
+    .ic-blue {
+        background: #e6f0fd;
+        color: #185fa5;
+    }
+
+    .ic-purple {
+        background: #f0eeff;
+        color: #534ab7;
+    }
+
+    .ic-indigo {
+        background: #eef2ff;
+        color: #4f46e5;
+    }
+
+    /* ── Insight cards ───────────────────────── */
+    .insight-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 10px;
+        margin-bottom: 1.25rem;
+    }
+
+    .insight-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 11px;
+        background: #fff;
+        border-radius: 12px;
+        border-left: 3px solid #0ab5c4;
+        padding: 12px 14px;
+        box-shadow: 0 1px 4px rgba(10,181,196,.06);
+    }
+
+        .insight-card.ins-green {
+            border-left-color: #1D9E75;
+        }
+
+        .insight-card.ins-yellow {
+            border-left-color: #b7800a;
+        }
+
+        .insight-card.ins-red {
+            border-left-color: #e24b4a;
+        }
+
+        .insight-card.ins-blue {
+            border-left-color: #378add;
+        }
+
+    .ins-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        margin-top: 5px;
+        background: #0ab5c4;
+    }
+
+    .ins-green .ins-dot {
+        background: #1D9E75;
+    }
+
+    .ins-yellow .ins-dot {
+        background: #b7800a;
+    }
+
+    .ins-red .ins-dot {
+        background: #e24b4a;
+    }
+
+    .ins-blue .ins-dot {
+        background: #378add;
+    }
+
+    .ins-text {
+        font-size: 0.8rem;
+        color: #374151;
+        line-height: 1.5;
+    }
+
+        .ins-text strong {
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+    /* ── Card table (reuse from reports) ─────── */
+    .card-table {
+        background: #fff;
+        border-radius: 14px;
+        border: 1px solid #e8fafb;
+        box-shadow: 0 2px 8px rgba(10,181,196,.05);
+        overflow: hidden;
+    }
+
+    .ct-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 16px;
+        border-bottom: 1px solid #f0f9fa;
+    }
+
+        .ct-header h6 {
+            margin: 0;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .ct-header small {
+            font-size: 0.73rem;
+            color: #6c757d;
+        }
+
+    .icon-sm {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: #e8fafb;
+        color: #0ab5c4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        flex-shrink: 0;
+    }
+
+    .chart-body {
+        padding: 14px 16px;
+    }
+
+    .chart-wrap {
+        position: relative;
+        width: 100%;
+        height: 200px;
+    }
+
+    .donut-row {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        justify-content: center;
+        padding: 8px 0;
+    }
+
+    .legend-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+        .legend-list li {
+            font-size: 0.8rem;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+    .legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        flex-shrink: 0;
+    }
+
+    .user-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.8rem;
+    }
+
+        .user-table th {
+            padding: 8px 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            background: #f8fbfc;
+            border-bottom: 1px solid #e8fafb;
+        }
+
+        .user-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f0f9fa;
+            color: #374151;
+            vertical-align: middle;
+        }
+
+        .user-table tr:last-child td {
+            border-bottom: none;
+        }
+
+    .badge-active {
+        background: #e1f5ee;
+        color: #0f6e56;
+        border-radius: 20px;
+        padding: 2px 10px;
+        font-size: 0.72rem;
+        font-weight: 600;
+    }
+
+    .badge-inactive {
+        background: #fde8e8;
+        color: #b91c1c;
+        border-radius: 20px;
+        padding: 2px 10px;
+        font-size: 0.72rem;
+        font-weight: 600;
+    }
+
+    .badge-done {
+        background: #e8fafb;
+        color: #07869b;
+        border-radius: 20px;
+        padding: 2px 10px;
+        font-size: 0.72rem;
+        font-weight: 600;
+    }
+
+    .badge-upcoming {
+        background: #fef9e7;
+        color: #b7800a;
+        border-radius: 20px;
+        padding: 2px 10px;
+        font-size: 0.72rem;
+        font-weight: 600;
+    }
+
+    .table-footer {
+        padding: 8px 14px;
+        font-size: 0.73rem;
+        color: #6c757d;
+        border-top: 1px solid #f0f9fa;
+        background: #f8fbfc;
+    }
+
+    .section-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        color: #6c757d;
+        margin: 1.5rem 0 .75rem;
+        padding-left: 2px;
+    }
+
+    .progress-wrap {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .progress-track {
+        flex: 1;
+        background: #e8fafb;
+        border-radius: 4px;
+        height: 5px;
+    }
+
+    .progress-fill {
+        background: #0ab5c4;
+        border-radius: 4px;
+        height: 5px;
+    }
+
+    .user-name-cell {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .avatar-initials {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        background: #e8fafb;
+        color: #0ab5c4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.72rem;
+        font-weight: 700;
+        flex-shrink: 0;
+    }
+
+    .user-avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+</style>
 
 <div class="container-fluid px-4 py-4">
 
-    <!-- Page Header -->
-    <div class="mb-3 d-flex align-items-start justify-content-between flex-wrap gap-2">
+    <!-- ── Page Header ──────────────────────────────────────────────────────── -->
+    <div class="dash-header">
         <div>
-            <h1 class="page-title">
-                <i class="bi bi-bar-chart-line-fill me-2"></i>Reports
-            </h1>
-            <p class="page-subtitle">Overview of members, leaders, groups, and events.</p>
+            <div class="dash-greeting">
+                Welcome back, <span>Admin</span> &nbsp;
+                <span class="timeframe-pill">
+                    <i class="bi bi-calendar3"></i> @timeframeLabel
+                </span>
+            </div>
+            <div class="dash-sub">Here's what's happening in your organization this period.</div>
         </div>
-    
 
-             <!-- Export -->
-        <a asp-action="ExportPDF"
-        asp-controller="Home"
-        class="btn-export">
+        <a asp-action="ExportPDF" asp-controller="Home" class="btn-export">
             <i class="bi bi-upload"></i> Export as PDF
         </a>
-        </div>
-
-
     </div>
 
-    <!-- SUMMARY CARDS -->
-    <div class="section-label">Summary Overview</div>
-    <div class="row g-3 mb-1">
+    <!-- ── Filter Bar ───────────────────────────────────────────────────────── -->
+    <form method="get" asp-action="Dashboard" class="filter-bar">
+        <select name="month">
+            <option value="">-- Month --</option>
+            @for (int m = 1; m <= 12; m++)
+            {
+                <option value="@m" selected="@(Model.SelectedMonth == m)">@monthNames[m - 1]</option>
+            }
+        </select>
+        <select name="year">
+            <option value="">-- Year --</option>
+            @for (int y = now.Year; y >= 2000; y--)
+            {
+                <option value="@y" selected="@(Model.SelectedYear == y)">@y</option>
+            }
+        </select>
+        <button type="submit" class="btn-filter">
+            <i class="bi bi-funnel-fill"></i> Filter
+        </button>
+        @if (Model.SelectedMonth.HasValue || Model.SelectedYear.HasValue)
+        {
+            <a asp-action="Dashboard" class="btn-clear">
+                <i class="bi bi-x-circle"></i> Clear
+            </a>
+        }
+    </form>
+
+    <!-- ── Summary Cards ────────────────────────────────────────────────────── -->
+    <div class="section-label">Summary overview</div>
+    <div class="row g-3 mb-3">
         <div class="col-6 col-md-4 col-lg-2">
             <div class="stat-card">
-                <div class="icon-wrap"><i class="bi bi-people-fill"></i></div>
+                <div class="stat-icon ic-teal"><i class="bi bi-people-fill"></i></div>
                 <div class="stat-label">Total Members</div>
                 <div class="stat-value">@Model.TotalMembers</div>
-                <span class="stat-sub sub-teal">All roles</span>
+                <span class="stat-delta @deltaClass">
+                    @(Model.MemberDelta >= 0 ? "▲" : "▼") @deltaSign@Model.MemberDelta vs last month
+                </span>
+                <div class="stat-accent" style="background:#0ab5c4;"></div>
             </div>
         </div>
         <div class="col-6 col-md-4 col-lg-2">
             <div class="stat-card">
-                <div class="icon-wrap"><i class="bi bi-person-check-fill"></i></div>
+                <div class="stat-icon ic-green"><i class="bi bi-person-check-fill"></i></div>
                 <div class="stat-label">Active Members</div>
                 <div class="stat-value">@Model.ActiveMembers</div>
-                <span class="stat-sub sub-green">Active</span>
+                <span class="stat-delta delta-up">@activePct% of total</span>
+                <div class="stat-accent" style="background:#1D9E75;"></div>
             </div>
         </div>
         <div class="col-6 col-md-4 col-lg-2">
             <div class="stat-card">
-                <div class="icon-wrap"><i class="bi bi-shield-fill-check"></i></div>
+                <div class="stat-icon @(Model.InactiveMembers > 0 ? "ic-red" : "ic-green")">
+                    <i class="bi bi-person-x-fill"></i>
+                </div>
+                <div class="stat-label">Inactive</div>
+                <div class="stat-value">@Model.InactiveMembers</div>
+                @if (Model.InactiveMembers > 0)
+                {
+                    <span class="stat-delta delta-down">⚠ Needs attention</span>
+                }
+                else
+                {
+                    <span class="stat-delta delta-up">✓ All active</span>
+                }
+                <div class="stat-accent" style="background:#e24b4a;"></div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+            <div class="stat-card">
+                <div class="stat-icon ic-yellow"><i class="bi bi-shield-fill-check"></i></div>
                 <div class="stat-label">Leaders</div>
                 <div class="stat-value">@Model.TotalLeaders</div>
-                <span class="stat-sub sub-teal">Assigned</span>
+                <span class="stat-delta delta-neu">Assigned</span>
+                <div class="stat-accent" style="background:#b7800a;"></div>
             </div>
         </div>
         <div class="col-6 col-md-4 col-lg-2">
             <div class="stat-card">
-                <div class="icon-wrap"><i class="bi bi-diagram-3-fill"></i></div>
-                <div class="stat-label">Groups</div>
-                <div class="stat-value">@Model.TotalGroups</div>
-                <span class="stat-sub sub-teal">Total</span>
-            </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-2">
-            <div class="stat-card">
-                <div class="icon-wrap"><i class="bi bi-calendar-event-fill"></i></div>
+                <div class="stat-icon ic-blue"><i class="bi bi-calendar-event-fill"></i></div>
                 <div class="stat-label">Total Events</div>
                 <div class="stat-value">@Model.TotalEvents</div>
-                <span class="stat-sub sub-teal">All time</span>
+                <span class="stat-delta delta-neu">This period</span>
+                <div class="stat-accent" style="background:#378add;"></div>
             </div>
         </div>
         <div class="col-6 col-md-4 col-lg-2">
             <div class="stat-card">
-                <div class="icon-wrap"><i class="bi bi-calendar-plus-fill"></i></div>
-                <div class="stat-label">Upcoming</div>
-                <div class="stat-value">@Model.UpcomingEvents</div>
-                <span class="stat-sub sub-yellow">Events</span>
+                <div class="stat-icon ic-indigo"><i class="bi bi-calendar-check-fill"></i></div>
+                <div class="stat-label">Done Events</div>
+                <div class="stat-value">@Model.DoneEvents</div>
+                <span class="stat-delta @(completionPct >= 50 ? "delta-up" : "delta-neu")">
+                    @completionPct% completion
+                </span>
+                <div class="stat-accent" style="background:#4f46e5;"></div>
             </div>
         </div>
     </div>
 
-    <!-- MEMBERS REPORT -->
-    <div class="section-label">Members Report</div>
-    <div class="row g-3 mb-1">
+    <!-- ── Insights ──────────────────────────────────────────────────────────── -->
+    <div class="section-label">Activity insights — @timeframeLabel</div>
+    <div class="insight-grid mb-3">
+        <div class="insight-card @(Model.MemberDelta >= 0 ? "" : "ins-red")">
+            <div class="ins-dot"></div>
+            <div class="ins-text">
+                <strong>@deltaSign@Model.MemberDelta new member@(Math.Abs(Model.MemberDelta) != 1 ? "s" : "")</strong>
+                compared to last month (@Model.PrevMonthMembers). Total is now <strong>@Model.TotalMembers</strong>.
+            </div>
+        </div>
+        <div class="insight-card ins-green">
+            <div class="ins-dot"></div>
+            <div class="ins-text">
+                <strong>@Model.ActiveMembers active member@(Model.ActiveMembers != 1 ? "s" : "")</strong>
+                — <strong>@activePct%</strong> of the total membership is currently active.
+            </div>
+        </div>
+        <div class="insight-card ins-yellow">
+            <div class="ins-dot"></div>
+            <div class="ins-text">
+                <strong>@Model.TotalLeaders leader@(Model.TotalLeaders != 1 ? "s" : "")</strong>
+                assigned across <strong>@Model.TotalGroups group@(Model.TotalGroups != 1 ? "s" : "")</strong> this period.
+            </div>
+        </div>
+        <div class="insight-card ins-blue">
+            <div class="ins-dot"></div>
+            <div class="ins-text">
+                <strong>@Model.DoneEvents of @Model.TotalEvents event@(Model.TotalEvents != 1 ? "s" : "")</strong>
+                completed — <strong>@completionPct%</strong> completion rate this period.
+            </div>
+        </div>
+        @if (Model.InactiveMembers > 0)
+        {
+            <div class="insight-card ins-red">
+                <div class="ins-dot"></div>
+                <div class="ins-text">
+                    <strong>@Model.InactiveMembers inactive member@(Model.InactiveMembers != 1 ? "s" : "")</strong>
+                    detected. Consider reviewing their status in User Management.
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="insight-card ins-green">
+                <div class="ins-dot"></div>
+                <div class="ins-text">
+                    All members are currently <strong>active</strong>. Excellent retention this period!
+                </div>
+            </div>
+        }
+    </div>
 
-        <!-- Donut Chart -->
+    <!-- ── Charts Row ────────────────────────────────────────────────────────── -->
+    <div class="section-label">Overview charts</div>
+    <div class="row g-3 mb-3">
+        <!-- Donut -->
         <div class="col-md-4">
             <div class="card-table h-100">
                 <div class="ct-header">
                     <div class="icon-sm"><i class="bi bi-pie-chart-fill"></i></div>
                     <div>
                         <h6>Member Status</h6>
-                        <small>Active vs Inactive breakdown</small>
+                        <small>Active vs Inactive</small>
                     </div>
                 </div>
                 <div class="chart-body">
                     <div class="donut-row">
-                        <canvas id="memberDonut"
-                                style="max-width:150px;max-height:150px;"></canvas>
+                        <canvas id="memberDonut" style="max-width:140px;max-height:140px;"></canvas>
                         <ul class="legend-list">
                             <li>
                                 <span class="legend-dot" style="background:#0ab5c4;"></span>
@@ -117,154 +724,14 @@
             </div>
         </div>
 
-        <!-- Members per Group Table -->
+        <!-- Group bar -->
         <div class="col-md-8">
-            <div class="card-table">
-                <div class="ct-header">
-                    <div class="icon-sm"><i class="bi bi-table"></i></div>
-                    <div>
-                        <h6>Members per Group</h6>
-                        <small>Distribution across all groups</small>
-                    </div>
-                </div>
-                <div style="overflow-x:auto;">
-                    <table class="user-table">
-                        <thead>
-                            <tr>
-                                <th><i class="bi bi-diagram-3"></i> Group</th>
-                                <th><i class="bi bi-shield-check"></i> Leader</th>
-                                <th><i class="bi bi-people"></i> Members</th>
-                                <th><i class="bi bi-bar-chart"></i> Fill Rate</th>
-                                <th><i class="bi bi-circle-half"></i> Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var g in Model.Groups)
-                            {
-                                var initials = string.Concat(g.Name.Split(' ')
-                                    .Take(2).Select(w => w[0]));
-                                var count   = g.GroupMembers.Count;
-                                var fillPct = Model.MaxMembers > 0
-                                    ? (int)((count / (double)Model.MaxMembers) * 100) : 0;
-                                <tr>
-                                    <td>
-                                        <span class="user-name-cell">
-                                            <div class="avatar-initials">@initials</div>
-                                            @g.Name
-                                        </span>
-                                    </td>
-                                    <td>@(g.Leader?.FullName ?? "—")</td>
-                                    <td><strong>@count</strong></td>
-                                    <td>
-                                        <div class="progress-wrap">
-                                            <small class="text-muted">@fillPct%</small>
-                                            <div class="progress-track">
-                                                <div class="progress-fill"
-                                                     style="width:@fillPct%"></div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        @if (g.Status == "Active")
-                                        {
-                                            <span class="badge-active">Active</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge-inactive">Inactive</span>
-                                        }
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-                <div class="table-footer">
-                    <span>@Model.Groups.Count groups total</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- LEADERS & GROUPS -->
-    <div class="section-label">Leaders &amp; Groups Report</div>
-    <div class="row g-3 mb-1">
-
-        <!-- Leaders Table -->
-        <div class="col-md-6">
-            <div class="card-table">
-                <div class="ct-header">
-                    <div class="icon-sm"><i class="bi bi-shield-fill-check"></i></div>
-                    <div>
-                        <h6>Leaders Overview</h6>
-                        <small>Leaders and their assigned groups</small>
-                    </div>
-                </div>
-                <div style="overflow-x:auto;">
-                    <table class="user-table">
-                        <thead>
-                            <tr>
-                                <th><i class="bi bi-person"></i> Leader</th>
-                                <th><i class="bi bi-diagram-3"></i> Group</th>
-                                <th><i class="bi bi-people"></i> Members</th>
-                                <th><i class="bi bi-circle-half"></i> Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var ld in Model.LeaderData)
-                            {
-                                <tr>
-                                    <td>
-                                        <span class="user-name-cell">
-                                            <img src="https://i.pravatar.cc/40?u=@ld.Leader.Id"
-                                                 class="user-avatar" />
-                                            @ld.Leader.FullName
-                                        </span>
-                                    </td>
-                                    <td>
-                                        @if (ld.Group != null)
-                                        {
-                                            @ld.Group.Name
-                                        }
-                                        else
-                                        {
-                                            <span class="text-muted fst-italic">Unassigned</span>
-                                        }
-                                    </td>
-                                    <td>@(ld.Members?.ToString() ?? "—")</td>
-                                    <td>
-                                        @if (ld.Group == null)
-                                        {
-                                            <span class="badge-inactive">No Group</span>
-                                        }
-                                        else if (ld.Group.Status == "Active")
-                                        {
-                                            <span class="badge-active">Active</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge-inactive">Inactive</span>
-                                        }
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-                <div class="table-footer">
-                    <span>@Model.TotalLeaders leaders total</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Bar Chart -->
-        <div class="col-md-6">
             <div class="card-table h-100">
                 <div class="ct-header">
                     <div class="icon-sm"><i class="bi bi-bar-chart-fill"></i></div>
                     <div>
                         <h6>Members per Group</h6>
-                        <small>Bar chart comparison</small>
+                        <small>Distribution across all groups</small>
                     </div>
                 </div>
                 <div class="chart-body">
@@ -276,34 +743,36 @@
         </div>
     </div>
 
-    <!-- EVENTS REPORT -->
-    <div class="section-label">Events Report</div>
-    <div class="row g-3 mb-4">
-
-        <div class="col-md-7">
-            <div class="card-table h-100">
+    <!-- Events per month -->
+    <div class="row g-3 mb-3">
+        <div class="col-12">
+            <div class="card-table">
                 <div class="ct-header">
                     <div class="icon-sm"><i class="bi bi-calendar3"></i></div>
                     <div>
                         <h6>Events per Month</h6>
-                        <small>Monthly event activity (@DateTime.Now.Year)</small>
+                        <small>Monthly event activity — @filterYear</small>
                     </div>
                 </div>
                 <div class="chart-body">
-                    <div class="chart-wrap">
+                    <div class="chart-wrap" style="height:220px;">
                         <canvas id="eventsBar"></canvas>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="col-md-5">
+    <!-- ── Recent Events Table ───────────────────────────────────────────────── -->
+    <div class="section-label">Recent events</div>
+    <div class="row g-3 mb-4">
+        <div class="col-12">
             <div class="card-table">
                 <div class="ct-header">
                     <div class="icon-sm"><i class="bi bi-list-check"></i></div>
                     <div>
                         <h6>Recent Events</h6>
-                        <small>Latest event records</small>
+                        <small>Latest records for @timeframeLabel</small>
                     </div>
                 </div>
                 <div style="overflow-x:auto;">
@@ -320,13 +789,13 @@
                             @foreach (var ev in Model.RecentEvents)
                             {
                                 var groupName = ev.AssignedGroups.Any()
-                                    ? string.Join(", ", ev.AssignedGroups.Select(g => g.Name))
-                                    : "All Groups";
+                                ? string.Join(", ", ev.AssignedGroups.Select(g => g.Name))
+                                : "All Groups";
                                 var isDone = ev.EventDate < DateTime.Now;
                                 <tr>
                                     <td>@ev.Title</td>
                                     <td>@groupName</td>
-                                    <td>@ev.EventDate.ToString("MMM d")</td>
+                                    <td>@ev.EventDate.ToString("MMM d, yyyy")</td>
                                     <td>
                                         @if (isDone)
                                         {
@@ -339,11 +808,19 @@
                                     </td>
                                 </tr>
                             }
+                            @if (!Model.RecentEvents.Any())
+                            {
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted py-3">
+                                        No events found for this period.
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
                 <div class="table-footer">
-                    <span>@Model.RecentEvents.Count events shown</span>
+                    <span>@Model.RecentEvents.Count event(s) shown for @timeframeLabel</span>
                 </div>
             </div>
         </div>
@@ -352,73 +829,73 @@
 </div>
 
 @section Scripts {
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    const teal = '#0ab5c4', tealDark = '#07869b',
-          tealMid = '#55d0db', tealPale = '#c2edf1', red = '#ef4444';
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const teal = '#0ab5c4', tealDark = '#07869b',
+              tealMid = '#55d0db', tealPale = '#c2edf1', red = '#ef4444';
 
-    new Chart(document.getElementById('memberDonut'), {
-        type: 'doughnut',
-        data: {
-            labels: ['Active', 'Inactive'],
-            datasets: [{
-                data: [@Model.ActiveMembers, @Model.InactiveMembers],
-                backgroundColor: [teal, red],
-                borderWidth: 0, hoverOffset: 6
-            }]
-        },
-        options: {
-            cutout: '72%',
-            plugins: { legend: { display: false } },
-            responsive: true, maintainAspectRatio: true
-        }
-    });
-
-    new Chart(document.getElementById('groupBar'), {
-        type: 'bar',
-        data: {
-            labels: [@Html.Raw(groupLabels)],
-            datasets: [{
-                label: 'Members',
-                data: [@Html.Raw(groupCounts)],
-                backgroundColor: [teal, tealDark, tealMid, tealPale],
-                borderRadius: 8, borderSkipped: false
-            }]
-        },
-        options: {
-            responsive: true, maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: {
-                y: { beginAtZero: true, grid: { color: '#f0f9fa' },
-                     ticks: { color: '#6c757d', font: { size: 11 } } },
-                x: { grid: { display: false },
-                     ticks: { color: '#6c757d', font: { size: 11 } } }
+        new Chart(document.getElementById('memberDonut'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Active', 'Inactive'],
+                datasets: [{
+                    data: [@Model.ActiveMembers, @Model.InactiveMembers],
+                    backgroundColor: [teal, red],
+                    borderWidth: 0, hoverOffset: 6
+                }]
+            },
+            options: {
+                cutout: '72%',
+                plugins: { legend: { display: false } },
+                responsive: true, maintainAspectRatio: true
             }
-        }
-    });
+        });
 
-    new Chart(document.getElementById('eventsBar'), {
-        type: 'bar',
-        data: {
-            labels: ['Jan','Feb','Mar','Apr','May','Jun',
-                     'Jul','Aug','Sep','Oct','Nov','Dec'],
-            datasets: [{
-                label: 'Events',
-                data: [@Html.Raw(monthlyData)],
-                backgroundColor: teal,
-                borderRadius: 8, borderSkipped: false
-            }]
-        },
-        options: {
-            responsive: true, maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: {
-                y: { beginAtZero: true, grid: { color: '#f0f9fa' },
-                     ticks: { color: '#6c757d', font: { size: 11 } } },
-                x: { grid: { display: false },
-                     ticks: { color: '#6c757d', font: { size: 11 } } }
+        new Chart(document.getElementById('groupBar'), {
+            type: 'bar',
+            data: {
+                labels: [@Html.Raw(groupLabels)],
+                datasets: [{
+                    label: 'Members',
+                    data: [@Html.Raw(groupCounts)],
+                    backgroundColor: [teal, tealDark, tealMid, tealPale],
+                    borderRadius: 8, borderSkipped: false
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#f0f9fa' },
+                         ticks: { color: '#6c757d', font: { size: 11 } } },
+                    x: { grid: { display: false },
+                         ticks: { color: '#6c757d', font: { size: 11 } } }
+                }
             }
-        }
-    });
-</script>
+        });
+
+        new Chart(document.getElementById('eventsBar'), {
+            type: 'bar',
+            data: {
+                labels: ['Jan','Feb','Mar','Apr','May','Jun',
+                         'Jul','Aug','Sep','Oct','Nov','Dec'],
+                datasets: [{
+                    label: 'Events',
+                    data: [@Html.Raw(monthlyData)],
+                    backgroundColor: teal,
+                    borderRadius: 8, borderSkipped: false
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#f0f9fa' },
+                         ticks: { color: '#6c757d', font: { size: 11 }, stepSize: 1 } },
+                    x: { grid: { display: false },
+                         ticks: { color: '#6c757d', font: { size: 11 }, autoSkip: false } }
+                }
+            }
+        });
+    </script>
 }

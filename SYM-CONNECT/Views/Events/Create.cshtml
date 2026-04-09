@@ -115,6 +115,20 @@
                                value="@ViewBag.CurrentUserId" />
                     </div>
 
+                    <!-- Event Handler -->
+                    <div class="col-md-6">
+                        <label asp-for="EventHandlerBy" class="form-label field-label">
+                            <i class="bi bi-person me-1 text-muted"></i>
+                            Event Handler (Leaders only)
+                        </label>
+                        <select asp-for="EventHandlerId"
+                                asp-items="@ViewBag.AssignedLeader"
+                                class="form-select themed-input">
+                            <option value="" disabled selected>-- Select Event Handler --</option>
+                        </select>
+                        <span asp-validation-for="EventHandlerId" class="text-danger small"></span>
+                    </div>
+
                     <!-- Approval Status -->
                     <div class="col-md-6">
                         <label asp-for="ApprovalStatus" class="form-label field-label">
@@ -126,7 +140,7 @@
                                 var isAdmin = User.IsInRole("admin"); //show if the role is admin
                             }
 
-                            @if (isAdmin) 
+                            @if (isAdmin)  //CHECK IF CURRENT ROLE  IS ADMIN
                             {
                             <select asp-for="ApprovalStatus" 
                                     class="form-select themed-input" disabled style=" background:#f0f9fa;
@@ -140,7 +154,7 @@
 
                                 <input type="hidden" value="Approved" asp-for="ApprovalStatus" />
                             }
-                            else
+                            else //IF NOT DEFAULT TO PENDING
                             {
                                  <select asp-for="ApprovalStatus"
                                     class="form-select themed-input"

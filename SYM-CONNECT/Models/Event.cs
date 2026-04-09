@@ -17,7 +17,6 @@ namespace SYM_CONNECT.Models
 
         [Required]
         public DateTime EventDate { get; set; } // event date
-                                                // ADD THIS:
         public DateTime? EndDate { get; set; } // event end date
 
         [Required]
@@ -32,12 +31,34 @@ namespace SYM_CONNECT.Models
         public bool? IsCancelled { get; set; } = false; 
 
         [NotMapped] 
-        public bool IsActuallyCancelled => CancelledAt != null;
-        public DateTime? CancelledAt { get; set; }
+        public bool IsActuallyCancelled => CancelledAt != null; //IS IT  CANCELLED?
+        public DateTime? CancelledAt { get; set; } //DATE OF WHEN IS IT CANCELLED
 
         public int? CancelledBy { get; set; }
         public Users? CancelledByUser { get; set; }
 
+        public int? EventHandlerId { get; set; }
+
+        [ForeignKey("EventHandlerId")]
+        public Users? EventHandlerBy { get; set; }
+
+        [NotMapped] //events  progress
+        public string EventProgress
+        {
+            get
+            {
+               //GET EVENTPROGRESS BY ALSO THIS SELECTION CONDITION
+                if (EventDate > DateTime.Now)
+                    return "Upcoming";
+
+                if (EndDate.HasValue && EndDate >= DateTime.Now)
+                    return "Ongoing";
+
+                return "Done";
+            }
+        }
+
+        //GET ASSIGNED GROUPS LIST
         public ICollection<SYMGroup> AssignedGroups { get; set; } = new List<SYMGroup>();
     }
 

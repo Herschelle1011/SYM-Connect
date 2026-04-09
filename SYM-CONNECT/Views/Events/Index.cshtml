@@ -11,6 +11,69 @@
 </div>
 
 <!-- Card / Table -->
+@{
+    var now = DateTime.Now;
+    var monthNames = new[] {
+        "January","February","March","April","May","June",
+        "July","August","September","October","November","December"
+    };
+}
+
+<form method="get" asp-action="Index" class="filter-bar" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:1.25rem;">
+
+    <select name="month"
+            style="font-size:0.82rem;padding:5px 10px;border-radius:8px;
+               border:1px solid #dee2e6;background:#fff;color:#344;">
+        <option value="">-- Month --</option>
+        @for (int m = 1; m <= 12; m++)
+        {
+            if (Model.SelectedMonth == m)
+            {
+                <option value="@m" selected>@monthNames[m - 1]</option>
+            }
+            else
+            {
+                <option value="@m">@monthNames[m - 1]</option>
+            }
+        }
+    </select>
+
+    <select name="year"
+            style="font-size:0.82rem;padding:5px 10px;border-radius:8px;
+               border:1px solid #dee2e6;background:#fff;color:#344;">
+        <option value="">-- Year --</option>
+        @for (int y = now.Year; y >= 2000; y--)
+        {
+            if (Model.SelectedYear == y)
+            {
+                <option value="@y" selected>@y</option>
+            }
+            else
+            {
+                <option value="@y">@y</option>
+            }
+        }
+    </select>
+
+    <button type="submit"
+            style="background:#0ab5c4;color:#fff;border:none;
+                   border-radius:8px;padding:6px 16px;
+                   font-size:0.82rem;font-weight:600;cursor:pointer;">
+        <i class="bi bi-funnel-fill"></i> Filter
+    </button>
+
+    @if (Model.SelectedMonth.HasValue || Model.SelectedYear.HasValue)
+    {
+        <a asp-action="Index"
+           style="background:transparent;color:#6c757d;
+                      border:1px solid #dee2e6;border-radius:8px;
+                      padding:5px 14px;font-size:0.82rem;
+                      cursor:pointer;text-decoration:none;">
+            <i class="bi bi-x-circle"></i> Clear
+        </a>
+    }
+</form>
+
 <div class="card-table">
     <!-- Toolbar -->
     <div class="toolbar">
@@ -77,9 +140,81 @@
                 </div>
 
             </div>
+        </div>
+
+
+        <!-- Progress Filter Dropdown -->
+        <div style="position:relative; display:inline-block;">
+
+            <!-- Trigger Button -->
+            <button class="btn-role-filter"
+                    id="progressFilterBtn"
+                    onclick="toggleProgressDropdown()"
+                    type="button">
+                <i class="bi bi-funnel-fill"></i>
+                <span id="progressFilterLabel">Progress</span>             
+                <i class="bi bi-chevron-down"
+                   style="font-size:.65rem;opacity:.6;"></i>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div id="progressDropdown"
+                 style="display:none;
+                position:absolute;
+                top:calc(100% + 6px);
+                left:0;
+                background:#fff;
+                border:1px solid #d1f0e8;
+                border-radius:10px;
+                box-shadow:0 4px 16px rgba(10,181,196,.12);
+                min-width:150px;
+                z-index:999;
+                overflow:hidden;">
+
+                <!-- Each option -->
+                <div onclick="applyProgressFilter('All')"
+                     class="progress-option"
+                     style="padding:9px 16px; cursor:pointer;
+                    font-size:13px; color:#085041;
+                    display:flex; align-items:center; gap:8px;
+                    border-bottom:1px solid #f0fbf7;">
+                    <i class="bi bi-people"></i> All
+                </div>
+                <div onclick="applyProgressFilter('Upcoming')"
+                     class="progress-option"
+                     style="padding:9px 16px; cursor:pointer;
+                    font-size:13px; color:#085041;
+                    display:flex; align-items:center; gap:8px;
+                    border-bottom:1px solid #f0fbf7;">
+                    <i class="bi bi-shield-check"></i> Upcoming
+                </div>
+                <div onclick="applyProgressFilter('Ongoing')"
+                     class="progress-option"
+                     style="padding:9px 16px; cursor:pointer;
+                    font-size:13px; color:#085041;
+                    display:flex; align-items:center; gap:8px;
+                    border-bottom:1px solid #f0fbf7;">
+                    <i class="bi bi-person-badge"></i> Ongoing
+                </div>
+                <div onclick="applyProgressFilter('Done')"
+                     class="progress-option"
+                     style="padding:9px 16px; cursor:pointer;
+                    font-size:13px; color:#085041;
+                    display:flex; align-items:center; gap:8px;">
+                    <i class="bi bi-person"></i> Done
+                </div>
+
+
+
+            </div>
 
 
         </div>
+
+
+
+
+
 
         <!-- Search -->
         <div class="search-wrap">
@@ -130,6 +265,8 @@
                     <th><i class="bi bi-person"></i> Created By</th>
                     <th><i class="bi bi-shield-check"></i> Approved By</th>
                     <th><i class="bi bi-calendar3"></i> End Date</th>
+                    <th><i class="bi bi-stopwatch"></i> Progress</th>
+
 
                     <th>Actions</th>
                 </tr>
@@ -137,8 +274,7 @@
             <tbody id="tableBody">
                 @foreach (var item in Model.Events)
                 {
-                   
-
+                  
                     <tr>
                         <td>
                             <span class="user-name-cell" style="gap:0;">
@@ -173,19 +309,69 @@
                         <td>@Html.DisplayFor(modelItem => item.EndDate)</td>
 
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.EventId"
-                               class="btn-action btn-edit" style="text-decoration:none;">
-                                <i class="bi bi-pencil"></i> Edit
-                            </a>
+
+                            @if (item.ApprovalStatus == "Approved")
+                            {
+                                @if (item.EventProgress == "Upcoming")
+                                {
+                                    <span class="badge-pending">Upcoming</span>
+                                }
+                                else if (item.EventProgress == "Ongoing")
+                                {
+                                    <span class="badge-active">Ongoing</span>
+                                }
+                                else
+                                {
+                                    <span class="badge-done">Done</span>
+                                }
+                            }
+                            else
+                            {
+                                <span class="badge-inactive">N/A</span>
+
+                            }
+                        </td>
+
+                        <td>
+
+                            @if (item.EventProgress == "Done")
+                            {                    
+                                <a class="btn-action btn-edit"
+                                   style="text-decoration:none; pointer-events:none; opacity:0.5; cursor:not-allowed;">
+                                    <i class="bi bi-pencil"></i> Edit
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.EventId"
+                                   class="btn-action btn-edit" style="text-decoration:none;">
+                                    <i class="bi bi-pencil"></i> Edit
+                                </a>
+                            }
                             <a asp-action="Details" asp-route-id="@item.EventId"
                                class="btn-action btn-arc ms-1" style="text-decoration:none;">
                                 <i class="bi bi-eye"></i> Details
                             </a>
+                            @{
+                                var hasStarted = Model.Events.Any(e => e.EventId == item.EventId && e.EventDate <= DateTime.Now);
+                                if (hasStarted)
+                                {
+                                    <button class="btn btn-warning btn-sm ms-1"
+                                            style="text-decoration:none; cursor: not-allowed; opacity:0.5"
+                                            disabled>
+                                        Cancel
+                                    </button>
+                                }
+                                else
+                                {
 
-                            <button class="btn btn-warning btn-sm ms-1" style="text-decoration:none"
-                                    onclick="openCancelModal(@item.EventId, '@item.Title')">
-                                Cancel
-                            </button>
+                                        <button class="btn btn-warning btn-sm ms-1" style="text-decoration:none"
+                                            onclick="openCancelModal(@item.EventId, '@item.Title')">
+                                        Cancel
+                                    </button>
+                                }
+                            }
+                          
 
                         </td>
                     </tr>

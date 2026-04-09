@@ -8,10 +8,10 @@ namespace SYM_CONNECT.ViewModel
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "FirstName is required")]
+        [Required(ErrorMessage = "FirstName is required")] //FIRSTNAME IF REQUIRED
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "LastName is required")]
+        [Required(ErrorMessage = "LastName is required")] //LASTNAME IF REQUIRED
         public string LastName { get; set; } //lastname
         public string FullName => $"{FirstName} {LastName}";
 

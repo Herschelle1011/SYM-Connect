@@ -1,25 +1,25 @@
 @model SYM_CONNECT.Models.Attendance
 @{
-    ViewData["Title"] = "Details";
-    Layout = "_Layout";
+    ViewData["Title"] = "Details"; //PAGE TITLE
+    Layout = "_Layout"; //MAIN LAYOUT
 }
 
 <div class="container-fluid px-4 py-4">
-    <!-- Page Header -->
+    <!-- HEADER -->
     <div class="mb-4">
         <h2 class="fw-bold" style="color: #0ab5c4;">Attendance Details</h2>
         <p class="text-muted mb-0">Viewing detailed information for this attendance record.</p>
     </div>
 
-    <!-- Card -->
+    <!-- CARD -->
     <div class="card border-0 rounded-4 shadow-sm" style="background: #ffffff;">
         <div class="card-body p-4">
 
-            <!-- Card Header Row -->
+            <!-- CARD HEADER -->
             <div class="d-flex align-items-center gap-2 mb-4">
                 <span class="rounded-3 d-flex align-items-center justify-content-center"
                       style="width:40px;height:40px;background:linear-gradient(135deg,#0ab5c4,#07869b);">
-                    <i class="bi bi-person-check-fill text-white fs-5"></i>
+                    <i class="bi bi-person-check-fill text-white fs-5"></i> <!--ICON-->
                 </span>
                 <div>
                     <h5 class="mb-0 fw-bold text-dark">Attendance Information</h5>
@@ -29,49 +29,56 @@
 
             <hr style="border-color: #e8f7f8;" />
 
+            <!-- READ-ONLY DATA DISPLAY -->
             <div class="row g-3">
 
-                <!-- Attendance Date -->
+                <!-- ATTENDANCE DATE -->
                 <div class="col-md-6">
                     <label class="form-label field-label">
                         <i class="bi bi-calendar3 me-1 text-muted"></i>
                         @Html.DisplayNameFor(model => model.AttendanceDate)
                     </label>
+
+                    <!-- DISPLAY VALUE -->
                     <div class="form-control themed-input bg-light" style="color:#444;">
                         @Html.DisplayFor(model => model.AttendanceDate)
                     </div>
                 </div>
 
-                <!-- Points Earned -->
+                <!-- POINTS -->
                 <div class="col-md-6">
                     <label class="form-label field-label">
                         <i class="bi bi-star me-1 text-muted"></i>
                         @Html.DisplayNameFor(model => model.PointsEarned)
                     </label>
+
                     <div class="form-control themed-input bg-light" style="color:#444;">
                         @Html.DisplayFor(model => model.PointsEarned)
                     </div>
                 </div>
 
-                <!-- User -->
-
-                   <div class="col-md-6">
+                <!-- USER -->
+                <div class="col-md-6">
                     <label class="form-label field-label">
                         <i class="bi bi-person me-1 text-muted"></i>
                         @Html.DisplayNameFor(model => model.User)
                     </label>
+
+                    <!-- SHOW FULL NAME + EMAIL -->
                     <div class="form-control themed-input bg-light" style="color:#444;">
                         @Model.User?.FullName |
                         @Model.User?.Email
                     </div>
                 </div>
 
-                <!-- Event -->
+                <!-- EVENT -->
                 <div class="col-md-6">
                     <label class="form-label field-label">
                         <i class="bi bi-calendar-event me-1 text-muted"></i>
                         @Html.DisplayNameFor(model => model.Event)
                     </label>
+
+                    <!-- SHOW TITLE + DATE RANGE -->
                     <div class="form-control themed-input bg-light" style="color:#444;">
                         @Model.Event?.Title |
                         @Model.Event?.EventDate.ToString("MMM dd, yyyy hh:mm tt") -
@@ -85,16 +92,21 @@
 
             <hr style="border-color: #e8f7f8;" class="mt-4" />
 
-            <!-- Action Buttons -->
+            <!-- ACTION BUTTONS -->
             <div class="d-flex gap-2 pt-2">
+
+                <!-- EDIT -->
                 <a asp-action="Edit" asp-route-id="@Model?.AttendanceId"
                    class="btn btn-save d-flex align-items-center gap-1">
                     <i class="bi bi-pencil"></i> Edit
                 </a>
+
+                <!-- BACK -->
                 <a asp-action="Index"
                    class="btn btn-back d-flex align-items-center gap-1">
                     <i class="bi bi-arrow-left"></i> Back to List
                 </a>
+
             </div>
 
         </div>

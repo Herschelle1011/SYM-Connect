@@ -1,35 +1,36 @@
 ﻿@model List<SYM_CONNECT.Models.Attendance>
 @{
-    Layout = null;
+    Layout = null; //NO LAYOUT USED FOR PDF EXPORT
 }
+
 <!DOCTYPE html>
 <html>
 <head>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Arial, sans-serif; /*BASE FONT*/
             font-size: 12px;
         }
 
         h2 {
-            color: #0ab5c4;
+            color: #0ab5c4; /*HEADER COLOR*/
             margin-bottom: 4px;
         }
 
         p {
-            color: #888;
+            color: #888; /*SUBTEXT*/
             font-size: 11px;
             margin-top: 0;
         }
 
         table {
-            width: 100%;
+            width: 100%; /*FULL WIDTH TABLE*/
             border-collapse: collapse;
             margin-top: 16px;
         }
 
         thead {
-            background: #0ab5c4;
+            background: #0ab5c4; /*TABLE HEADER BG*/
             color: white;
         }
 
@@ -41,17 +42,17 @@
 
         td {
             padding: 7px 10px;
-            border-bottom: 1px solid #e8f7f8;
+            border-bottom: 1px solid #e8f7f8; /*ROW BORDER*/
             font-size: 11px;
             vertical-align: middle;
         }
 
         tr:nth-child(even) {
-            background: #f5fbfd;
+            background: #f5fbfd; /*ALTERNATE ROW COLOR*/
         }
 
         .badge-points {
-            background: #dbeafe;
+            background: #dbeafe; /*POINTS STYLE*/
             color: #1e40af;
             padding: 2px 8px;
             border-radius: 10px;
@@ -69,38 +70,57 @@
 </head>
 <body>
 
+    <!-- HEADER -->
     <h2>SYM Connect — Attendance Management</h2>
+
+    <!-- GENERATED DATE -->
     <p>Generated on: @DateTime.Now.ToString("MMMM dd, yyyy hh:mm tt")</p>
+
+    <!-- TOTAL RECORD COUNT -->
     <p>Total Records: @Model.Count</p>
 
+    <!-- TABLE -->
     <table>
         <thead>
             <tr>
-                <th>#</th>
+                <th>#</th> <!--ROW NUMBER-->
                 <th>Attendance Date</th>
                 <th>Points Earned</th>
                 <th>FullName</th>
                 <th>User</th>
-
                 <th>Event</th>
             </tr>
         </thead>
+
         <tbody>
             @for (int i = 0; i < Model.Count; i++)
             {
-                var att = Model[i];
+                var att = Model[i]; //CURRENT RECORD
+
                 <tr>
-                    <td>@(i + 1)</td>
+                    <td>@(i + 1)</td> <!--INDEX-->
+                    <!-- DATE FORMAT -->
                     <td>@att.AttendanceDate.ToString("M/d/yyyy hh:mm tt")</td>
-                    <td><span class="badge-points">★ @att.PointsEarned</span></td>
+
+                    <!-- POINTS -->
+                    <td>
+                        <span class="badge-points">★ @att.PointsEarned</span>
+                    </td>
+
+                    <!-- USER FULL NAME -->
                     <td>@(att.User?.FullName ?? "—")</td>
-                        <td>@(att.User?.Email ?? "—")</td>
+
+                    <!-- USER EMAIL -->
+                    <td>@(att.User?.Email ?? "—")</td>
+
+                    <!-- EVENT TITLE -->
                     <td>@(att.Event?.Title ?? "—")</td>
                 </tr>
             }
         </tbody>
     </table>
 
+    <!-- FOOTER -->
     <div class="footer">
         SYM Connect System — Confidential
     </div>

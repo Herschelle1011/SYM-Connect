@@ -157,6 +157,21 @@
                                                    border:1px solid #fde8b0;cursor:pointer;">
                                     <i class="bi bi-arrow-left-right"></i> Transfer
                                 </button>
+
+                                <!-- ✅ REMOVE BUTTON -->
+                                <button type="button"
+                                        onclick="openRemoveMemberModal(
+                                  @member.GroupMemberId,
+                                   '@member.User?.FullName')"
+                                        class="btn-action ms-1"
+                                        style="color:#e74c3c;border-color:#f5c0b8;
+                       background:#fff5f5;border-radius:7px;
+                       padding:5px 12px;font-size:.75rem;
+                       font-weight:500;display:inline-flex;
+                       align-items:center;gap:4px;
+                       border:1px solid #f5c0b8;cursor:pointer;">
+                                    <i class="bi bi-person-x"></i> Remove
+                                </button>
                             </td>
                         </tr>
                     }
@@ -293,8 +308,69 @@
 </form>
 
 
+<!-- ═════════ REMOVE MEMBER MODAL ═════════ -->
+<div class="modal fade" id="removeMemberModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content"
+             style="border-radius:14px;border:1px solid #f5c0b8;overflow:hidden;">
+
+            <!-- HEADER -->
+            <div class="modal-header"
+                 style="background:#fff5f5;border-bottom:1px solid #f5c0b8;">
+                <h5 class="modal-title" style="color:#e74c3c;font-weight:700;">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    Confirm Remove
+                </h5>
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- BODY -->
+            <div class="modal-body" style="padding:20px;">
+                <p>Are you sure you want to remove</p>
+                <p style="color:#e74c3c;font-weight:700;">
+                    "<span id="removeMemberName"></span>"?
+                </p>
+                <p class="text-muted" style="font-size:.85rem;">
+                    This will remove the member from this group.
+                </p>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light"
+                        data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <form id="removeMemberForm" method="post"
+                      asp-action="RemoveMember"
+                      asp-controller="SYMGroups">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="removeGroupMemberId" name="groupMemberId" />
+
+                    <button type="submit"
+                            style="background:#e74c3c;color:#fff;
+                                   border:none;border-radius:8px;
+                                   padding:6px 16px;font-size:.8rem;">
+                        <i class="bi bi-person-x"></i> Yes, Remove
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script>
+
+                function openRemoveMemberModal(groupMemberId, name) {
+            document.getElementById('removeMemberName').innerText = name;
+            document.getElementById('removeGroupMemberId').value = groupMemberId;
+
+            new bootstrap.Modal(document.getElementById('removeMemberModal')).show();
+        }
+
         // ─── State variables ───────────────────────────
         let currentGroupId   = @Model.GroupId;
         let selectedMemberId = null;   // for transfer

@@ -16,42 +16,44 @@ namespace SYM_CONNECT.Controllers
 {
     public class AttendanceController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly AppDbContext _context; //for  database purposes
 
         public AttendanceController(AppDbContext context)
         {
-            _context = context;
+            _context = context; 
         }
 
         // GET: Attendance
         public async Task<IActionResult> Index()
-        {
-            var appDbContext = _context.Attendances.Include(a => a.Event).Include(a => a.User);
-            return View(await appDbContext.ToListAsync());
+        { 
+            var appDbContext = _context.Attendances.Include(a => a.Event).Include(a => a.User);  //get attendace and include  events and user
+            return View(await appDbContext.ToListAsync()); //using await async to load attendance   
         }
 
         // GET: Attendance/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id) //GET  DETAILS
         {
-            await LoadDropdowns();
+            await LoadDropdowns();  //AUTO LOAD DROPDOWNS  METHOD
 
 
-            if (id == null)
+            if (id == null)  //IF  USER ID NOT  FOUND
             {
                 return NotFound();
             }
 
-            var attendance = await _context.Attendances
+            var attendance = await _context.Attendances 
                 .Include(a => a.Event)
                 .Include(a => a.User)
-                .FirstOrDefaultAsync(m => m.AttendanceId == id);
-            if (attendance == null)
+                .FirstOrDefaultAsync(m => m.AttendanceId == id);  //GET ATTENDANCE INCLUDES EVENTS AND  A USER
+
+            if (attendance == null)  //IF ATTENDANCE  NOT FOUND
             {
                 return NotFound();
             }
+
             var eventList = ViewBag.EventList as SelectList;
             ViewBag.SelectedEvent = eventList?
-                .FirstOrDefault(e => e.Value == attendance.EventId.ToString())?.Text;
+                .FirstOrDefault(e => e.Value == attendance.EventId.ToString())?.Text; //TO DISPLAY EVENT LIST FOR VIEW PURPOSES
             return View(attendance);
         }
 
@@ -59,11 +61,11 @@ namespace SYM_CONNECT.Controllers
         public async Task<IActionResult> Create()
         {
      
-           await LoadDropdowns();
+           await LoadDropdowns();  //LOAD  DROP DOWNS
 
             var model = new Attendance
             {
-                AttendanceDate = DateTime.Now
+                AttendanceDate = DateTime.Now  //ATTENDACE DATE DEFAULT  TO CURRENT DATE NOW
             };
 
 
@@ -75,52 +77,52 @@ namespace SYM_CONNECT.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AttendanceId,UserId,EventId,AttendanceDate,PointsEarned")] Attendance attendance)
+        public async Task<IActionResult> Create([Bind("AttendanceId,UserId,EventId,AttendanceDate,PointsEarned")] Attendance attendance) 
         {
-            await LoadDropdowns();
+            await LoadDropdowns(); //LOAD DROPDOWNS
   
             bool alreadyAttended = await _context.Attendances.AnyAsync(a => a.UserId == attendance.UserId && 
-                                           a.EventId == attendance.EventId);
+                                           a.EventId == attendance.EventId); //DOES THE USER ALREADY ATTENDANDED? BOOLEAN
 
-            var selectedEvent = await _context.Events
+            var selectedEvent = await _context.Events //THE SELECTED EVENT GETS EVENTID
        .FirstOrDefaultAsync(e => e.EventId == attendance.EventId);
 
 
-            if (selectedEvent == null)
+            if (selectedEvent == null) //IF NOT EXIST RETURN ERROR
             {
                 ModelState.AddModelError("EventId", "Event not found.");
                 TempData["Error"] = "Event Error";
                 return View(attendance);
             }
 
-            if (attendance.PointsEarned == 0 || attendance.PointsEarned < 0)
+            if (attendance.PointsEarned == 0 || attendance.PointsEarned < 0) //POINTS VALIDATIO PURPOSES
             {
                 ModelState.AddModelError("PointsEarned",
                       "Please enter a valid number");
                 TempData["Error"] = "Invalid Number";
-                await LoadDropdowns();
+                await LoadDropdowns(); //LOAD DROP DOWN
                 return View(attendance);
             }
 
 
-            if (alreadyAttended) {
-                ModelState.AddModelError("AttendanceDate",
+            if (alreadyAttended) { 
+                ModelState.AddModelError("AttendanceDate", //DOES THE USER ALREADY ATTENDED? 
               "User already attended to this event.");
                 TempData["Error"] = "User already attended.";
                 await LoadDropdowns();
-                return View(attendance);
+                return View(attendance); //RETURN TO VIEW
             }
 
-            if (attendance.AttendanceDate < selectedEvent.EventDate)
+            if (attendance.AttendanceDate < selectedEvent.EventDate) //PROPER VALIDATION IF EVENTDATE IS GREATER  THAN THE ATTENDANCEDATE SELECTED
             {
 
-                ModelState.AddModelError("AttendanceDate",
-                  "Attendance cannot be recorded before the event start date.");
+                ModelState.AddModelError("AttendanceDate", 
+                  "Attendance cannot be recorded before the event start date.");  //SHOW ERROR MESSAGE
                 TempData["Error"] = "Date Input Error";
                 return View(attendance);
             }
 
-            else if (attendance.AttendanceDate > selectedEvent.EndDate)
+            else if (attendance.AttendanceDate > selectedEvent.EndDate) // ELSE IF THE EVENTDATE IS DONE
             {
                 ModelState.AddModelError("AttendanceDate",
                   "Attendance cannot be recorded selected event has ended.");
@@ -134,27 +136,27 @@ namespace SYM_CONNECT.Controllers
                 var groupMember = await _context.GroupMembers
                     .FirstOrDefaultAsync(g => g.UserId == attendance.UserId);
 
-                // Block attendance if user has no group
+                // Block attendance CURRENT USER if user has no group
                 if (groupMember == null)
                 {
                     ModelState.AddModelError("UserId",
-                        "This member is not assigned to any group yet.");
+                        "This member is not assigned to any group yet."); //SHOW ERROR MESSAGE
                     TempData["Error"] = "Member has no group assigned.";
                     await LoadDropdowns();
                     return View(attendance);
                 }
 
-                // Safe to proceed
+                // THEN IT IS Safe to proceed
                 _context.Attendances.Add(attendance);
                 groupMember.TotalEarnedPoints += attendance.PointsEarned;
                 _context.GroupMembers.Update(groupMember);
 
                 await _context.SaveChangesAsync();
-                TempData["Success"] = $"{attendance.PointsEarned} points added!";
+                TempData["Success"] = $"{attendance.PointsEarned} points added!";  //TOAST NOTIFICATION
                 return RedirectToAction(nameof(Index));
             
         }
-
+            //FOR VIEW DATA FOR THE VIEW PURPOSES
             ViewData["EventId"] = new SelectList(_context.Events, "EventId", "Description", attendance.EventId);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Email", attendance.UserId);
             return View(attendance);
@@ -165,7 +167,7 @@ namespace SYM_CONNECT.Controllers
         {
          
 
-            await LoadDropdowns();
+            await LoadDropdowns(); //ALWAYS LOAD DROPDOWNS
 
             if (id == null)
             {

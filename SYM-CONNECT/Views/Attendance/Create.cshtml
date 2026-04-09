@@ -1,25 +1,25 @@
 @model SYM_CONNECT.Models.Attendance
 @{
-    ViewData["Title"] = "Create";
-    Layout = "_Layout";
+    ViewData["Title"] = "Create"; //PAGE TITLE
+    Layout = "_Layout"; //MAIN LAYOUT
 }
 
 <div class="container-fluid px-4 py-4">
-    <!-- Page Header -->
+    <!-- HEADER -->
     <div class="mb-4">
         <h2 class="fw-bold" style="color: #0ab5c4;">Create Attendance</h2>
         <p class="text-muted mb-0">Fill out the form below to log a new attendance record.</p>
     </div>
 
-    <!-- Card -->
+    <!-- CARD WRAPPER -->
     <div class="card border-0 rounded-4 shadow-sm" style="background: #ffffff;">
         <div class="card-body p-4">
 
-            <!-- Card Header Row -->
+            <!-- CARD HEADER -->
             <div class="d-flex align-items-center gap-2 mb-4">
                 <span class="rounded-3 d-flex align-items-center justify-content-center"
                       style="width:40px;height:40px;background:linear-gradient(135deg,#0ab5c4,#07869b);">
-                    <i class="bi bi-person-check-fill text-white fs-5"></i>
+                    <i class="bi bi-person-check-fill text-white fs-5"></i> <!--ICON-->
                 </span>
                 <div>
                     <h5 class="mb-0 fw-bold text-dark">Attendance Information</h5>
@@ -29,66 +29,75 @@
 
             <hr style="border-color: #e8f7f8;" />
 
+            <!-- FORM AttendanceController.Create -->
             <form asp-action="Create">
+
+                <!-- VALIDATION SUMMARY -->
                 <div asp-validation-summary="ModelOnly"
                      class="alert alert-danger py-2 small mb-3 rounded-3" role="alert"></div>
 
                 <div class="row g-3">
 
-
-
-                    <!-- User -->
+                    <!-- USER SELECT -->
                     <div class="col-md-6">
                         <label asp-for="UserId" class="form-label field-label">
                             <i class="bi bi-person me-1 text-muted"></i>Username <span class="text-danger">*</span>
                         </label>
+
+                        <!-- DROPDOWN FROM ViewBag.MemberId -->
                         <select asp-for="UserId" class="form-select themed-input" asp-items="ViewBag.MemberId">
                             <option value="" disabled>-- Select User --</option>
                         </select>
+
                         <span asp-validation-for="UserId" class="text-danger small"></span>
                     </div>
 
-
-
-                    <!-- Event -->
+                    <!-- EVENT SELECT -->
                     <div class="col-md-6">
                         <label asp-for="EventId" class="form-label field-label">
                             <i class="bi bi-calendar-event me-1 text-muted"></i>Event Name <span class="text-danger">*</span>
                         </label>
+
+                        <!-- DROPDOWN FROM ViewBag.EventList -->
                         <select asp-for="EventId" class="form-select themed-input" asp-items="@ViewBag.EventList">
                             <option value="" disabled>-- Select Event --</option>
                         </select>
+
                         <span asp-validation-for="EventId" class="text-danger small"></span>
                     </div>
 
-                    <!-- Attendance Date -->
-                    <!-- Attendance Date - Display Only (no asp-for) -->
+                    <!-- DISPLAY CURRENT TIME ONLY -->
                     <div class="col-md-6">
                         <label class="form-label field-label">
                             <i class="bi bi-calendar3 me-1 text-muted"></i>
                             Current Time
                         </label>
+
+                        <!-- READONLY DISPLAY (NOT SUBMITTED) -->
                         <input type="text"
                                id="currentTimeDisplay"
                                class="form-control themed-input"
                                readonly
                                style="background:#f0f9fa;
-                  color:var(--text-muted);
-                  cursor:not-allowed;" />
+                                      color:var(--text-muted);
+                                      cursor:not-allowed;" />
+
                         <span asp-validation-for="AttendanceDate" class="text-danger small"></span>
                     </div>
 
-                    <!-- ✅ Only this one submits to controller -->
+                    <!-- HIDDEN FIELD  THIS IS WHAT ACTUALLY GETS SENT for DATABASE PURPOSES -->
                     <input type="hidden" asp-for="AttendanceDate" id="attendanceDateHidden" />
 
-
-                    <!-- Points Earned -->
+                    <!-- POINTS -->
                     <div class="col-md-6">
                         <label asp-for="PointsEarned" class="form-label field-label">
                             <i class="bi bi-star me-1 text-muted"></i>Points Earned <span class="text-danger">*</span>
                         </label>
-                        <input asp-for="PointsEarned" class="form-control themed-input"
+
+                        <input asp-for="PointsEarned"
+                               class="form-control themed-input"
                                placeholder="Enter points earned" />
+
                         <span asp-validation-for="PointsEarned" class="text-danger small"></span>
                     </div>
 
@@ -96,15 +105,17 @@
 
                 <hr style="border-color: #e8f7f8;" class="mt-4" />
 
-                <!-- Action Buttons -->
+                <!-- ACTION BUTTONS -->
                 <div class="d-flex gap-2 pt-2">
                     <button type="submit" class="btn btn-save d-flex align-items-center gap-1">
-                        <i class="bi bi-plus-circle"></i> Create Attendance
+                        <i class="bi bi-plus-circle"></i> Create Attendance <!--SUBMIT-->
                     </button>
+
                     <a asp-action="Index" class="btn btn-back d-flex align-items-center gap-1">
-                        <i class="bi bi-arrow-left"></i> Back to List
+                        <i class="bi bi-arrow-left"></i> Back to List <!--NAV BACK-->
                     </a>
                 </div>
+
             </form>
 
         </div>
@@ -113,38 +124,39 @@
 
 @section Scripts {
     @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        await Html.RenderPartialAsync("_ValidationScriptsPartial"); //LOAD VALIDATION SCRIPTS
     }
-
 
     <script>
-    function updateClock() {
-        const now = new Date();
+        function updateClock() {
+            const now = new Date(); //GET CURRENT TIME
 
-        // Format: 04/06/2026 08:35:50.895 PM
-        const date = now.toLocaleDateString('en-US', {
-            month: '2-digit',
-            day:   '2-digit',
-            year:  'numeric'
-        });
+            //FORMAT DATE
+            const date = now.toLocaleDateString('en-US', {
+                month: '2-digit',
+                day:   '2-digit',
+                year:  'numeric'
+            });
 
-        const time = now.toLocaleTimeString('en-US', {
-            hour:   '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: true
-        });
+            //FORMAT TIME
+            const time = now.toLocaleTimeString('en-US', {
+                hour:   '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            });
 
-        const ms = String(now.getMilliseconds()).padStart(3, '0');
+            const ms = String(now.getMilliseconds()).padStart(3, '0'); //MILLISECONDS
 
-        // Combine: 04/06/2026 08:35:50.895 PM
-        const [timePart, period] = time.split(' ');
-        document.getElementById('currentTimeDisplay').value =
-            `${date} ${timePart} ${period}`;
-    }
+            //DISPLAY FORMAT
+            const [timePart, period] = time.split(' ');
 
-    // ✅ Run immediately + every 1 second
-    updateClock();
-    setInterval(updateClock, 1);  // 1ms for smooth milliseconds
-</script>
+            document.getElementById('currentTimeDisplay').value =
+                `${date} ${timePart} ${period}`;
+        }
+
+        //RUN IMMEDIATELY + LOOP
+        updateClock();
+        setInterval(updateClock, 1); //REALTIME UPDATE
+    </script>
 }

@@ -6,6 +6,8 @@
 
 <!-- Page Header -->
 <div class="d-flex align-items-center justify-content-between mb-4">
+
+    <!-- LEFT: Title -->
     <div>
         <h1 class="page-title mb-0">
             Groups
@@ -14,11 +16,27 @@
             </span>
         </h1>
     </div>
-    <a asp-action="Create" class="btn-add-user" style="text-decoration:none;">
-        <i class="bi bi-plus-circle-fill"></i> Add New Group
-    </a>
-</div>
 
+    <!-- RIGHT: Buttons (grouped properly) -->
+    <div class="d-flex align-items-center gap-2">
+
+        <button class="btn-archive-outline"
+                data-bs-toggle="modal"
+                data-bs-target="#inactiveGroupsModal">
+            <i class="bi bi-archive"></i> View Inactive Groups
+        </button>
+
+        <a asp-action="Create" class="btn-add-user" style="text-decoration:none;">
+            <i class="bi bi-plus-circle-fill"></i> Add New Group
+        </a>
+
+        <a asp-action="GroupReport" asp-controller="Reports" class="btn-add-user" style="text-decoration:none;">
+            <i class="bi bi-diagram-3-fill"></i> View Group Reports
+        </a>
+
+
+    </div>
+</div>
 <!-- Card Grid -->
 <div class="row g-3">
     @foreach (var group in Model)
@@ -110,4 +128,269 @@
             </div>
         </div>
     }
+</div>
+
+
+
+<!-- ── INACTIVE GROUPS MODAL ────────────────────────────── -->
+<div class="modal fade" id="inactiveGroupsModal" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content"
+             style="border-radius:14px;overflow:hidden;
+                    border:1px solid var(--teal-light);
+                    box-shadow:0 8px 32px rgba(10,181,196,.15);">
+
+            <!-- HEADER -->
+            <div class="modal-header"
+                 style="background:var(--teal-light);
+                        border-bottom:1px solid var(--teal-mid);
+                        padding:14px 20px;flex-direction:column;
+                        align-items:stretch;gap:10px;">
+
+                <!-- Title row -->
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-archive"
+                           style="color:var(--teal-dark);font-size:15px;"></i>
+                        <h5 class="modal-title mb-0"
+                            style="font-size:15px;font-weight:700;color:var(--teal-dark);">
+                            Inactive Groups
+                        </h5>
+                        <span style="background:#e53e3e;color:#fff;
+                                     font-size:11px;font-weight:700;
+                                     padding:2px 8px;border-radius:12px;">
+
+                            @{
+                                var inactiveGroups = ViewBag.InactiveGroups as List<SYM_CONNECT.Models.SYMGroup>;
+                            }
+
+                            @* Count badge *@
+                            @(inactiveGroups?.Count ?? 0)
+
+                        
+                        </span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Search bar -->
+                <div style="position:relative;">
+                    <i class="bi bi-search"
+                       style="position:absolute;left:10px;top:50%;
+                              transform:translateY(-50%);
+                              color:var(--teal-dark);font-size:12px;"></i>
+                    <input type="text"
+                           id="inactiveGroupSearch"
+                           placeholder="Search inactive groups..."
+                           oninput="filterInactiveGroupRows(this.value)"
+                           style="width:100%;box-sizing:border-box;
+                                  padding:7px 12px 7px 30px;
+                                  border:1px solid var(--teal-mid);
+                                  border-radius:8px;font-size:13px;
+                                  background:#f0fbf7;
+                                  color:var(--teal-dark);outline:none;">
+                </div>
+            </div>
+
+            <!-- LEGEND -->
+            <div style="display:flex;gap:20px;padding:9px 20px;
+                        border-bottom:1px solid var(--teal-light);
+                        background:#f5fbfd;">
+                <div class="d-flex align-items-center gap-2">
+                    <div style="width:9px;height:9px;border-radius:50%;
+                                background:#22c55e;flex-shrink:0;"></div>
+                    <small style="color:var(--text-muted);font-weight:500;">
+                        Reactivate — restore group to active
+                    </small>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <div style="width:9px;height:9px;border-radius:50%;
+                                background:#ef4444;flex-shrink:0;"></div>
+                    <small style="color:var(--text-muted);font-weight:500;">
+                        Delete — permanent hard delete
+                    </small>
+                </div>
+            </div>
+
+            <!-- BODY -->
+            <div class="modal-body" style="padding:12px 16px;">
+
+                @if (inactiveGroups == null || !inactiveGroups.Any())
+                {
+                    <p class="text-muted text-center py-3">No inactive groups found.</p>
+                }
+                else
+                {
+                    <div class="d-flex flex-column gap-2" id="inactiveGroupList">
+
+                        @* Loop *@
+                        @foreach (var group in inactiveGroups ?? new List<SYM_CONNECT.Models.SYMGroup>())
+                        {
+                            <div class="inactive-group-row"
+                                 data-name="@group.Name.ToLower()"
+                                 style="display:flex;align-items:center;
+                                                justify-content:space-between;
+                                                padding:11px 14px;
+                                                border:1px solid var(--teal-mid);
+                                                border-radius:10px;
+                                                background:var(--teal-light);
+                                                gap:10px;">
+
+                                <!-- Left: info -->
+                                <div style="flex:1;min-width:0;">
+                                    <div style="font-size:13.5px;font-weight:700;
+                                                        color:var(--teal-dark);
+                                                        white-space:nowrap;overflow:hidden;
+                                                        text-overflow:ellipsis;">
+                                        @group.Name
+                                    </div>
+
+                                    <!-- Region -->
+                                    <div class="d-flex align-items-center gap-1 mt-1">
+                                        <i class="bi bi-geo-alt"
+                                           style="font-size:10px;color:var(--teal-dark);"></i>
+                                        <span style="font-size:11px;color:var(--teal-dark);font-weight:500;">
+                                            @group.Region — @group.SubRegion
+                                        </span>
+                                    </div>
+
+                                    <!-- Leader -->
+                                    <div class="d-flex align-items-center gap-1 mt-1">
+                                        <i class="bi bi-person"
+                                           style="font-size:10px;color:var(--teal-dark);"></i>
+                                        <span style="font-size:11px;color:var(--teal-dark);font-weight:500;">
+                                            Leader: @(group.Leader?.FullName ?? "None assigned")
+                                        </span>
+                                    </div>
+
+                                    <!-- Member count -->
+                                    <div class="d-flex align-items-center gap-1 mt-1">
+                                        <i class="bi bi-people"
+                                           style="font-size:10px;color:var(--teal-dark);"></i>
+                                        <span style="font-size:11px;color:var(--teal-dark);font-weight:500;">
+                                            Members: @(group.GroupMembers?.Count ?? 0)
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Right: buttons -->
+                                <div class="d-flex align-items-center gap-2 flex-shrink-0">
+
+                                    <!-- Reactivate -->
+                                    <form asp-action="ReactivateGroup"
+                                          asp-route-id="@group.GroupId"
+                                          method="post"
+                                          style="display:inline;">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit"
+                                                title="Reactivate"
+                                                style="width:33px;height:33px;
+                                                               border-radius:8px;
+                                                               background:#16a34a;
+                                                               border:none;cursor:pointer;
+                                                               display:flex;align-items:center;
+                                                               justify-content:center;">
+                                            <i class="bi bi-arrow-counterclockwise"
+                                               style="color:#fff;font-size:14px;"></i>
+                                        </button>
+                                    </form>
+
+                                    <!-- Delete -->
+                                    <button onclick="openDeleteGroupModal(
+                                                                @group.GroupId,
+                                                                '@Html.Raw(group.Name.Replace("'", "\\'"))')"
+                                            style="display:flex;align-items:center;
+                                                           gap:5px;padding:7px 13px;
+                                                           background:#ef4444;color:#fff;
+                                                           border:none;border-radius:8px;
+                                                           font-size:12px;font-weight:600;
+                                                           cursor:pointer;">
+                                        <i class="bi bi-trash" style="font-size:12px;"></i>
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        }
+
+                        <!-- No search results -->
+                        <p id="noInactiveGroupResults"
+                           style="display:none;text-align:center;
+                                      font-size:13px;color:#888;
+                                      padding:16px 0;margin:0;">
+                            No inactive groups match your search.
+                        </p>
+                    </div>
+                }
+            </div>
+
+            <!-- FOOTER -->
+            <div class="modal-footer"
+                 style="border-top:1px solid var(--teal-light);
+                        padding:11px 20px;background:#fafeff;">
+                <button type="button"
+                        data-bs-dismiss="modal"
+                        style="background:#5f6b7a;color:#fff;
+                               border:none;padding:7px 20px;
+                               border-radius:8px;font-size:13px;
+                               font-weight:600;cursor:pointer;">
+                    Close
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Delete Group Confirmation Modal -->
+<div class="modal fade" id="deleteGroupModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content"
+             style="border-radius:14px;border:2px solid var(--teal-dark);overflow:hidden;">
+
+            <div class="modal-header"
+                 style="background:var(--teal-light);border-bottom:1px solid var(--teal-mid);">
+                <h5 class="modal-title" style="color:var(--teal-dark);font-weight:700;">
+                    <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>
+                    Confirm Delete
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body" style="padding:20px 24px;">
+                <p style="color:var(--text-dark);font-size:.9rem;">
+                    Are you sure you want to permanently delete
+                </p>
+                <p style="color:#e53e3e;font-weight:700;font-size:1rem;margin-top:4px;">
+                    "<span id="deleteGroupTitle"></span>"?
+                </p>
+                <p style="color:var(--text-muted);font-size:.8rem;margin-top:8px;">
+                    This action cannot be undone. All group data will be lost.
+                </p>
+            </div>
+
+            <div class="modal-footer"
+                 style="border-top:1px solid var(--teal-light);background:#fafeff;">
+                <button type="button"
+                        data-bs-dismiss="modal"
+                        style="background:#f1f5f9;color:var(--text-dark);
+                               border:1px solid #cdd6df;border-radius:8px;
+                               padding:7px 18px;font-size:.83rem;
+                               font-weight:600;cursor:pointer;">
+                    Go Back
+                </button>
+                <form id="deleteGroupForm" method="post" style="display:inline;">
+                    @Html.AntiForgeryToken()
+                    <button type="submit"
+                            style="background:#ef4444;color:#fff;
+                                   border:none;border-radius:8px;
+                                   padding:7px 18px;font-size:.83rem;
+                                   font-weight:600;cursor:pointer;">
+                        <i class="bi bi-trash me-1"></i> Yes, Delete It
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

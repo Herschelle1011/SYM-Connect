@@ -1,25 +1,25 @@
 @model SYM_CONNECT.Models.Attendance
 @{
-    ViewData["Title"] = "Edit";
-    Layout = "_Layout";
+    ViewData["Title"] = "Edit"; //PAGE TITLE
+    Layout = "_Layout"; //MAIN LAYOUT
 }
 
 <div class="container-fluid px-4 py-4">
-    <!-- Page Header -->
+    <!-- HEADER -->
     <div class="mb-4">
         <h2 class="fw-bold" style="color: #0ab5c4;">Edit Attendance</h2>
         <p class="text-muted mb-0">Update the attendance record details below.</p>
     </div>
 
-    <!-- Card -->
+    <!-- CARD -->
     <div class="card border-0 rounded-4 shadow-sm" style="background: #ffffff;">
         <div class="card-body p-4">
 
-            <!-- Card Header Row -->
+            <!-- CARD HEADER -->
             <div class="d-flex align-items-center gap-2 mb-4">
                 <span class="rounded-3 d-flex align-items-center justify-content-center"
                       style="width:40px;height:40px;background:linear-gradient(135deg,#0ab5c4,#07869b);">
-                    <i class="bi bi-pencil-square text-white fs-5"></i>
+                    <i class="bi bi-pencil-square text-white fs-5"></i> <!--ICON-->
                 </span>
                 <div>
                     <h5 class="mb-0 fw-bold text-dark">Attendance Information</h5>
@@ -29,50 +29,68 @@
 
             <hr style="border-color: #e8f7f8;" />
 
+            <!-- FORM → AttendanceController.Edit -->
             <form asp-action="Edit">
-                <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small mb-3 rounded-3" role="alert"></div>
+
+                <!-- VALIDATION SUMMARY -->
+                <div asp-validation-summary="ModelOnly"
+                     class="alert alert-danger py-2 small mb-3 rounded-3" role="alert"></div>
+
+                <!-- HIDDEN ID (REQUIRED FOR UPDATE) -->
                 <input type="hidden" asp-for="AttendanceId" />
 
                 <div class="row g-3">
 
-                    <!-- User -->
+                    <!-- USER -->
                     <div class="col-md-6">
                         <label asp-for="UserId" class="form-label field-label">
                             <i class="bi bi-person me-1 text-muted"></i>User <span class="text-danger">*</span>
                         </label>
+
+                        <!-- DROPDOWN FROM ViewBag.MemberId -->
                         <select asp-for="UserId" class="form-select themed-input" asp-items="ViewBag.MemberId">
                             <option value="" disabled>-- Select User --</option>
                         </select>
+
                         <span asp-validation-for="UserId" class="text-danger small"></span>
                     </div>
 
-
-                    <!-- Event -->
+                    <!-- EVENT -->
                     <div class="col-md-6">
                         <label asp-for="EventId" class="form-label field-label">
                             <i class="bi bi-calendar-event me-1 text-muted"></i>Event <span class="text-danger">*</span>
                         </label>
+
+                        <!-- DROPDOWN FROM ViewBag.EventList -->
                         <select asp-for="EventId" class="form-select themed-input" asp-items="ViewBag.EventList">
                             <option value="" disabled>-- Select Event --</option>
                         </select>
+
                         <span asp-validation-for="EventId" class="text-danger small"></span>
                     </div>
 
-                    <!-- Attendance Date -->
+                    <!-- ATTENDANCE DATE -->
                     <div class="col-md-6">
                         <label asp-for="AttendanceDate" class="form-label field-label">
                             <i class="bi bi-calendar3 me-1 text-muted"></i>Attendance Date <span class="text-danger">*</span>
                         </label>
+
+                        <!-- EDITABLE DATE -->
                         <input asp-for="AttendanceDate" class="form-control themed-input" />
+
                         <span asp-validation-for="AttendanceDate" class="text-danger small"></span>
                     </div>
 
-                    <!-- Points Earned -->
+                    <!-- POINTS -->
                     <div class="col-md-6">
                         <label asp-for="PointsEarned" class="form-label field-label">
                             <i class="bi bi-star me-1 text-muted"></i>Points Earned <span class="text-danger">*</span>
                         </label>
-                        <input asp-for="PointsEarned" class="form-control themed-input" placeholder="Enter points earned" />
+
+                        <input asp-for="PointsEarned"
+                               class="form-control themed-input"
+                               placeholder="Enter points earned" />
+
                         <span asp-validation-for="PointsEarned" class="text-danger small"></span>
                     </div>
 
@@ -80,14 +98,19 @@
 
                 <hr style="border-color: #e8f7f8;" class="mt-4" />
 
-                <!-- Action Buttons -->
+                <!-- ACTION BUTTONS -->
                 <div class="d-flex gap-2 pt-2">
+
+                    <!-- SAVE -->
                     <button type="submit" class="btn btn-save d-flex align-items-center gap-1">
                         <i class="bi bi-floppy"></i> Save Changes
                     </button>
+
+                    <!-- BACK -->
                     <a asp-action="Index" class="btn btn-back d-flex align-items-center gap-1">
                         <i class="bi bi-arrow-left"></i> Back to List
                     </a>
+
                 </div>
             </form>
 
@@ -97,6 +120,6 @@
 
 @section Scripts {
     @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        await Html.RenderPartialAsync("_ValidationScriptsPartial"); //LOAD VALIDATION SCRIPTS
     }
 }

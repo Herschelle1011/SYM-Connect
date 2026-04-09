@@ -103,6 +103,9 @@ namespace SYM_CONNECT.Migrations
                     b.Property<DateTime>("EventDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("EventHandlerId")
+                        .HasColumnType("int");
+
                     b.Property<bool?>("IsCancelled")
                         .HasColumnType("bit");
 
@@ -117,6 +120,8 @@ namespace SYM_CONNECT.Migrations
                     b.HasIndex("CancelledByUserId");
 
                     b.HasIndex("CreatedBy");
+
+                    b.HasIndex("EventHandlerId");
 
                     b.ToTable("Events");
                 });
@@ -155,7 +160,7 @@ namespace SYM_CONNECT.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GroupId"));
 
-                    b.Property<int>("LeaderId")
+                    b.Property<int?>("LeaderId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -270,11 +275,17 @@ namespace SYM_CONNECT.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("SYM_CONNECT.Models.Users", "EventHandlerBy")
+                        .WithMany()
+                        .HasForeignKey("EventHandlerId");
+
                     b.Navigation("ApprovedByUser");
 
                     b.Navigation("CancelledByUser");
 
                     b.Navigation("CreatedByUser");
+
+                    b.Navigation("EventHandlerBy");
                 });
 
             modelBuilder.Entity("SYM_CONNECT.Models.GroupMember", b =>
@@ -301,8 +312,7 @@ namespace SYM_CONNECT.Migrations
                     b.HasOne("SYM_CONNECT.Models.Users", "Leader")
                         .WithMany()
                         .HasForeignKey("LeaderId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Leader");
                 });
