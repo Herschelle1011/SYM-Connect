@@ -1,0 +1,1126 @@
+﻿@model SYM_CONNECT.ViewModels.LeaderReportViewModel
+@using SYM_CONNECT.Models
+@{
+    ViewData["Title"] = "Leader Report";
+    Layout = "_Layout";
+
+    int filterYear = Model.SelectedYear ?? DateTime.Now.Year;
+    var allLeaders = ViewBag.AllLeaders as List<SYM_CONNECT.Models.Users> ?? new();
+
+    var monthlyEventsData = string.Join(",", Model.MonthlyEventsAttended);
+    var monthlyPointsData = string.Join(",", Model.MonthlyPointsEarned);
+
+    string rankSuffix = Model.LeaderRank switch { 1 => "st", 2 => "nd", 3 => "rd", _ => "th" };
+    string rateClass = Model.AttendanceRate >= 80 ? "ic-green" : Model.AttendanceRate >= 50 ? "ic-yellow" : "ic-red";
+    string rateDelta = Model.AttendanceRate >= 80 ? "delta-up" : Model.AttendanceRate >= 50 ? "delta-neu" : "delta-down";
+    string rateLabel = Model.AttendanceRate >= 80 ? "Excellent" : Model.AttendanceRate >= 50 ? "Average" : "Needs Work";
+}
+
+<style>
+    /* ── Mirrors EventsReport / GroupReport theme exactly ─────── */
+    .er-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 1.25rem;
+    }
+
+    .er-title {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: #1a1a2e;
+    }
+
+        .er-title span {
+            color: #0ab5c4;
+        }
+
+    .er-meta {
+        font-size: 0.78rem;
+        color: #6c757d;
+        margin-top: 3px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+        .er-meta b {
+            color: #374151;
+        }
+
+    .filter-bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 1.25rem;
+    }
+
+        .filter-bar select, .filter-bar input[type=number] {
+            font-size: 0.82rem;
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            background: #fff;
+            color: #374151;
+        }
+
+    .btn-go {
+        background: #0ab5c4;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 6px 16px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+        .btn-go:hover {
+            background: #07869b;
+        }
+
+    .btn-export {
+        background: #fff;
+        color: #0ab5c4;
+        border: 1.5px solid #0ab5c4;
+        border-radius: 8px;
+        padding: 6px 16px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+        .btn-export:hover {
+            background: #e8fafb;
+            color: #07869b;
+        }
+
+    .section-label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        color: #6c757d;
+        margin: 1.4rem 0 .7rem;
+        padding-left: 2px;
+    }
+
+    /* Stat cards */
+    .stat-card {
+        background: #fff;
+        border-radius: 14px;
+        padding: 18px 16px;
+        box-shadow: 0 2px 8px rgba(10,181,196,.07);
+        border: 1px solid #e8fafb;
+        position: relative;
+        overflow: hidden;
+        transition: transform .18s, box-shadow .18s;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(10,181,196,.13);
+        }
+
+    .stat-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.95rem;
+        margin-bottom: 10px;
+    }
+
+    .stat-label {
+        font-size: 0.7rem;
+        color: #6c757d;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: .04em;
+        margin-bottom: 2px;
+    }
+
+    .stat-value {
+        font-size: 1.85rem;
+        font-weight: 700;
+        color: #1a1a2e;
+        line-height: 1;
+        margin-bottom: 5px;
+    }
+
+    .stat-delta {
+        font-size: 0.7rem;
+        font-weight: 600;
+        padding: 2px 8px;
+        border-radius: 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+    }
+
+    .delta-up {
+        background: #e1f5ee;
+        color: #0f6e56;
+    }
+
+    .delta-down {
+        background: #fde8e8;
+        color: #b91c1c;
+    }
+
+    .delta-neu {
+        background: #f1f5f9;
+        color: #64748b;
+    }
+
+    .stat-accent {
+        position: absolute;
+        bottom: -10px;
+        right: -10px;
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        opacity: .07;
+    }
+
+    .ic-teal {
+        background: #e8fafb;
+        color: #0ab5c4;
+    }
+
+    .ic-green {
+        background: #e1f5ee;
+        color: #0f6e56;
+    }
+
+    .ic-yellow {
+        background: #fef9e7;
+        color: #b7800a;
+    }
+
+    .ic-blue {
+        background: #e6f0fd;
+        color: #185fa5;
+    }
+
+    .ic-purple {
+        background: #f0eeff;
+        color: #534ab7;
+    }
+
+    .ic-red {
+        background: #fde8e8;
+        color: #b91c1c;
+    }
+
+    /* Card table */
+    .card-table {
+        background: #fff;
+        border-radius: 14px;
+        border: 1px solid #e8fafb;
+        box-shadow: 0 2px 8px rgba(10,181,196,.05);
+        overflow: hidden;
+    }
+
+    .ct-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 13px 16px;
+        border-bottom: 1px solid #f0f9fa;
+    }
+
+        .ct-header h6 {
+            margin: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .ct-header small {
+            font-size: 0.72rem;
+            color: #6c757d;
+        }
+
+    .icon-sm {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        background: #e8fafb;
+        color: #0ab5c4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.82rem;
+        flex-shrink: 0;
+    }
+
+    .chart-body {
+        padding: 14px 16px;
+    }
+
+    .chart-wrap {
+        position: relative;
+        width: 100%;
+        height: 220px;
+    }
+
+    /* Tables */
+    .ev-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.79rem;
+    }
+
+        .ev-table th {
+            padding: 7px 12px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            background: #f8fbfc;
+            border-bottom: 1px solid #e8fafb;
+        }
+
+        .ev-table td {
+            padding: 9px 12px;
+            border-bottom: 1px solid #f0f9fa;
+            color: #374151;
+            vertical-align: middle;
+        }
+
+        .ev-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .ev-table tr:hover td {
+            background: #f8fbfc;
+        }
+
+    .table-footer {
+        padding: 7px 14px;
+        font-size: 0.71rem;
+        color: #6c757d;
+        border-top: 1px solid #f0f9fa;
+        background: #f8fbfc;
+    }
+
+    /* Badges */
+    .badge-active {
+        background: #e8fafb;
+        color: #07869b;
+        border-radius: 20px;
+        padding: 2px 10px;
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+
+    .badge-nogroup {
+        background: #fde8e8;
+        color: #b91c1c;
+        border-radius: 20px;
+        padding: 2px 10px;
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+
+    .badge-done {
+        background: #e8fafb;
+        color: #07869b;
+        border-radius: 20px;
+        padding: 2px 10px;
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+
+    .badge-upcoming {
+        background: #fef9e7;
+        color: #b7800a;
+        border-radius: 20px;
+        padding: 2px 10px;
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+
+    .badge-approved {
+        background: #e1f5ee;
+        color: #0f6e56;
+        border-radius: 20px;
+        padding: 2px 10px;
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+
+    /* Progress bar */
+    .progress-wrap {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .progress-track {
+        flex: 1;
+        background: #e8fafb;
+        border-radius: 4px;
+        height: 6px;
+        min-width: 60px;
+    }
+
+    .progress-fill {
+        background: #0ab5c4;
+        border-radius: 4px;
+        height: 6px;
+    }
+
+    .pf-green {
+        background: #1D9E75;
+    }
+
+    .pf-yellow {
+        background: #b7800a;
+    }
+
+    .pf-red {
+        background: #e24b4a;
+    }
+
+    /* Leader profile card */
+    .leader-card {
+        background: #fff;
+        border-radius: 14px;
+        border: 1px solid #e8fafb;
+        box-shadow: 0 2px 8px rgba(10,181,196,.07);
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 1rem;
+    }
+
+    .leader-avatar {
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        background: linear-gradient(135deg,#0ab5c4,#07869b);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: #fff;
+        font-weight: 700;
+        flex-shrink: 0;
+    }
+
+    .leader-name {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #1a1a2e;
+    }
+
+    .leader-sub {
+        font-size: 0.78rem;
+        color: #6c757d;
+        margin-top: 2px;
+    }
+
+    .leader-pills {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-top: 6px;
+    }
+
+    .leader-pill {
+        font-size: 0.7rem;
+        font-weight: 600;
+        padding: 2px 10px;
+        border-radius: 20px;
+    }
+
+    .pill-teal {
+        background: #e8fafb;
+        color: #07869b;
+    }
+
+    .pill-region {
+        background: #f0eeff;
+        color: #534ab7;
+    }
+
+    .pill-status-active {
+        background: #e1f5ee;
+        color: #0f6e56;
+    }
+
+    .pill-status-nogroup {
+        background: #fde8e8;
+        color: #b91c1c;
+    }
+
+    /* Rank badge */
+    .rank-badge {
+        background: linear-gradient(135deg,#0ab5c4,#07869b);
+        color: #fff;
+        border-radius: 10px;
+        padding: 4px 12px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    /* Leader selector */
+    .leader-selector {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+    }
+
+    .ls-btn {
+        background: #fff;
+        border: 1.5px solid #dee2e6;
+        border-radius: 10px;
+        padding: 6px 14px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: #374151;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all .15s;
+    }
+
+        .ls-btn:hover {
+            border-color: #0ab5c4;
+            color: #0ab5c4;
+            background: #e8fafb;
+        }
+
+        .ls-btn.active {
+            border-color: #0ab5c4;
+            background: #0ab5c4;
+            color: #fff;
+        }
+
+    /* Leaderboard row highlight */
+    .lb-current {
+        background: #e8fafb !important;
+    }
+
+        .lb-current td {
+            font-weight: 600;
+            color: #07869b !important;
+        }
+
+    /* Donut strip */
+    .donut-strip {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        padding: 14px 16px;
+        border-top: 1px solid #f0f9fa;
+    }
+
+    .donut-label {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.75rem;
+        color: #374151;
+    }
+
+    .donut-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+    }
+
+    /* Empty state */
+    .empty-state {
+        text-align: center;
+        padding: 28px 16px;
+        color: #9ca3af;
+        font-size: 0.8rem;
+        font-style: italic;
+    }
+
+    /* Member summary sections */
+    .member-section {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .ms-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 16px;
+        border-bottom: 1px solid #f0f9fa;
+    }
+
+        .ms-row:last-child {
+            border-bottom: none;
+        }
+
+    .ms-rank {
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: #9ca3af;
+        width: 18px;
+        text-align: center;
+    }
+
+    .ms-avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: #e8fafb;
+        color: #0ab5c4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        font-weight: 700;
+        flex-shrink: 0;
+    }
+
+    .ms-name {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #1a1a2e;
+        flex: 1;
+    }
+
+    .ms-pts {
+        font-size: 0.75rem;
+        color: #6c757d;
+    }
+
+    .ms-badge {
+        font-size: 0.65rem;
+        font-weight: 600;
+        padding: 1px 7px;
+        border-radius: 20px;
+    }
+</style>
+
+<div class="container-fluid px-4 py-4">
+
+    <!-- ── Page Header ─────────────────────────────────────────── -->
+    <div class="er-header">
+        <div>
+            <div class="er-title">
+                <i class="bi bi-person-badge-fill me-2" style="color:#0ab5c4;"></i>
+                Leader Report — <span>@Model.LeaderName</span>
+            </div>
+            <div class="er-meta">
+                <span><i class="bi bi-geo-alt"></i> @Model.Region / @Model.SubRegion</span>
+                <span><i class="bi bi-people-fill"></i> Group: <b>@Model.GroupName</b></span>
+                <span><i class="bi bi-calendar3"></i> Year: <b>@filterYear</b></span>
+                @if (Model.GroupStatus == "Active")
+                {
+                    <span class="badge-active">Active</span>
+                }
+                else
+                {
+                    <span class="badge-nogroup">@Model.GroupStatus</span>
+                }
+            </div>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+            <a asp-action="Index" asp-controller="Reports" class="btn btn-sm btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Reports
+            </a>
+        </div>
+    </div>
+
+    <!-- ── Leader Selector ─────────────────────────────────────── -->
+    <div class="leader-selector">
+        @foreach (var l in allLeaders)
+        {
+            <a href="@Url.Action("LeaderReport", "Reports", new { leaderId = l.Id, year = filterYear })"
+               class="ls-btn @(l.Id == Model.LeaderId ? "active" : "")">
+                @l.FullName
+            </a>
+        }
+    </div>
+
+    <!-- ── Year Filter ──────────────────────────────────────────── -->
+    <form method="get" asp-action="LeaderReport" class="filter-bar">
+        <input type="hidden" name="leaderId" value="@Model.LeaderId" />
+        <input type="number" name="year" value="@filterYear" min="2000" max="@DateTime.Now.Year" style="width:100px;" />
+        <button type="submit" class="btn-go"><i class="bi bi-funnel-fill"></i> View</button>
+    </form>
+
+    <!-- ── Leader Profile Card ─────────────────────────────────── -->
+    <div class="leader-card">
+        <div class="leader-avatar">@(Model.LeaderName.Length > 0 ? Model.LeaderName[0].ToString().ToUpper() : "L")</div>
+        <div style="flex:1;">
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+                <div class="leader-name">@Model.LeaderName</div>
+                <span class="rank-badge"><i class="bi bi-trophy-fill"></i> #@Model.LeaderRank@rankSuffix of @Model.TotalLeadersCount</span>
+            </div>
+            <div class="leader-sub"><i class="bi bi-envelope"></i> @Model.LeaderEmail</div>
+            <div class="leader-pills">
+                <span class="leader-pill pill-teal"><i class="bi bi-people-fill"></i> @Model.GroupName</span>
+                <span class="leader-pill pill-region"><i class="bi bi-geo-alt-fill"></i> @Model.Region</span>
+                @if (Model.GroupStatus == "Active")
+                {
+                    <span class="leader-pill pill-status-active">Active Group</span>
+                }
+                else
+                {
+                    <span class="leader-pill pill-status-nogroup">No Group</span>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Overview Stats ──────────────────────────────────────── -->
+    <div class="section-label">Overview — @filterYear</div>
+    <div class="row g-3 mb-3">
+
+        <div class="col-6 col-md-4 col-lg-2">
+            <div class="stat-card">
+                <div class="stat-icon ic-blue"><i class="bi bi-people-fill"></i></div>
+                <div class="stat-label">Total Members</div>
+                <div class="stat-value">@Model.TotalMembers</div>
+                <span class="stat-delta delta-neu">In group</span>
+                <div class="stat-accent" style="background:#378add;"></div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-4 col-lg-2">
+            <div class="stat-card">
+                <div class="stat-icon ic-teal"><i class="bi bi-calendar-check-fill"></i></div>
+                <div class="stat-label">Events Attended</div>
+                <div class="stat-value">@Model.TotalEvents</div>
+                <span class="stat-delta delta-up">This year</span>
+                <div class="stat-accent" style="background:#0ab5c4;"></div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-4 col-lg-2">
+            <div class="stat-card">
+                <div class="stat-icon ic-yellow"><i class="bi bi-star-fill"></i></div>
+                <div class="stat-label">Total Points</div>
+                <div class="stat-value">@Model.TotalPoints</div>
+                <span class="stat-delta delta-up">Earned</span>
+                <div class="stat-accent" style="background:#b7800a;"></div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-4 col-lg-2">
+            <div class="stat-card">
+                <div class="stat-icon @rateClass"><i class="bi bi-bar-chart-fill"></i></div>
+                <div class="stat-label">Attendance Rate</div>
+                <div class="stat-value">@Model.AttendanceRate<small style="font-size:1rem;">%</small></div>
+                <span class="stat-delta @rateDelta">@rateLabel</span>
+                <div class="stat-accent" style="background:#0ab5c4;"></div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-4 col-lg-2">
+            <div class="stat-card">
+                <div class="stat-icon ic-purple"><i class="bi bi-trophy-fill"></i></div>
+                <div class="stat-label">Group Rank</div>
+                <div class="stat-value">#@Model.LeaderRank</div>
+                <span class="stat-delta delta-neu">of @Model.TotalLeadersCount leaders</span>
+                <div class="stat-accent" style="background:#534ab7;"></div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-4 col-lg-2">
+            <div class="stat-card">
+                <div class="stat-icon ic-red"><i class="bi bi-person-x-fill"></i></div>
+                <div class="stat-label">No Attendance</div>
+                <div class="stat-value">@Model.NoAttendanceCount</div>
+                <span class="stat-delta delta-down">Needs outreach</span>
+                <div class="stat-accent" style="background:#e24b4a;"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ── Activity Timeline ────────────────────────────────────── -->
+    <div class="section-label">Activity Timeline</div>
+    <div class="row g-3 mb-3">
+
+        <!-- Monthly Activity Chart -->
+        <div class="col-12 col-lg-8">
+            <div class="card-table">
+                <div class="ct-header">
+                    <div class="icon-sm"><i class="bi bi-graph-up"></i></div>
+                    <div>
+                        <h6>Monthly Activity — @filterYear</h6>
+                        <small>Events attended &amp; points earned per month</small>
+                    </div>
+                </div>
+                <div class="chart-body">
+                    <div class="chart-wrap">
+                        <canvas id="monthlyChart"></canvas>
+                    </div>
+                </div>
+                <div class="donut-strip">
+                    <span class="donut-label"><span class="donut-dot" style="background:#0ab5c4;"></span> Events Attended</span>
+                    <span class="donut-label"><span class="donut-dot" style="background:#b7800a;"></span> Points Earned</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Donut -->
+        <div class="col-12 col-lg-4">
+            <div class="card-table h-100">
+                <div class="ct-header">
+                    <div class="icon-sm"><i class="bi bi-pie-chart-fill"></i></div>
+                    <div>
+                        <h6>Performance Split</h6>
+                        <small>Members by activity level</small>
+                    </div>
+                </div>
+                <div class="chart-body d-flex align-items-center justify-content-center" style="min-height:180px;">
+                    <div class="chart-wrap" style="height:180px; max-width:200px;">
+                        <canvas id="perfDonut"></canvas>
+                    </div>
+                </div>
+                <div class="donut-strip" style="justify-content:center; gap:16px;">
+                    <span class="donut-label"><span class="donut-dot" style="background:#1D9E75;"></span> Active (@Model.TopMembers.Count(m => m.PointsEarned > 0))</span>
+                    <span class="donut-label"><span class="donut-dot" style="background:#e24b4a;"></span> No Attendance (@Model.NoAttendanceCount)</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ── Member Summary ───────────────────────────────────────── -->
+    <div class="section-label">Member Summary</div>
+    <div class="row g-3 mb-3">
+
+        <!-- Most Active -->
+        <div class="col-12 col-md-4">
+            <div class="card-table h-100">
+                <div class="ct-header">
+                    <div class="icon-sm" style="background:#e1f5ee;color:#0f6e56;"><i class="bi bi-award-fill"></i></div>
+                    <div>
+                        <h6>Most Active</h6>
+                        <small>Top 5 by points</small>
+                    </div>
+                </div>
+                <div class="member-section">
+                    @if (!Model.TopMembers.Any())
+                    {
+                        <div class="empty-state">No members yet.</div>
+                    }
+                    @for (int i = 0; i < Model.TopMembers.Count; i++)
+                    {
+                        var m = Model.TopMembers[i];
+                        <div class="ms-row">
+                            <div class="ms-rank">@(i + 1)</div>
+                            <div class="ms-avatar">@(m.FullName.Length > 0 ? m.FullName[0].ToString().ToUpper() : "?")</div>
+                            <div class="ms-name">@m.FullName</div>
+                            <div class="ms-pts">@m.PointsEarned pts</div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Least Active -->
+        <div class="col-12 col-md-4">
+            <div class="card-table h-100">
+                <div class="ct-header">
+                    <div class="icon-sm" style="background:#fef9e7;color:#b7800a;"><i class="bi bi-arrow-down-circle-fill"></i></div>
+                    <div>
+                        <h6>Least Active</h6>
+                        <small>Bottom 5 — needs follow-up</small>
+                    </div>
+                </div>
+                <div class="member-section">
+                    @if (!Model.LeastActive.Any())
+                    {
+                        <div class="empty-state">No members yet.</div>
+                    }
+                    @foreach (var m in Model.LeastActive)
+                    {
+                        <div class="ms-row">
+                            <div class="ms-avatar">@(m.FullName.Length > 0 ? m.FullName[0].ToString().ToUpper() : "?")</div>
+                            <div class="ms-name">@m.FullName</div>
+                            <div class="ms-pts">@m.PointsEarned pts</div>
+                            <span class="ms-badge" style="background:#fef9e7;color:#b7800a;">Low</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- No Attendance -->
+        <div class="col-12 col-md-4">
+            <div class="card-table h-100">
+                <div class="ct-header">
+                    <div class="icon-sm ic-red"><i class="bi bi-person-x-fill"></i></div>
+                    <div>
+                        <h6>No Attendance</h6>
+                        <small>Flagged for outreach</small>
+                    </div>
+                </div>
+                <div class="member-section">
+                    @if (!Model.NoAttendance.Any())
+                    {
+                        <div class="empty-state" style="color:#0f6e56;font-style:normal;">
+                            <i class="bi bi-check-circle-fill"></i> All members attended!
+                        </div>
+                    }
+                    @foreach (var m in Model.NoAttendance)
+                    {
+                        <div class="ms-row">
+                            <div class="ms-avatar" style="background:#fde8e8;color:#b91c1c;">@(m.FullName.Length > 0 ? m.FullName[0].ToString().ToUpper() : "?")</div>
+                            <div class="ms-name">@m.FullName</div>
+                            <span class="ms-badge" style="background:#fde8e8;color:#b91c1c;">Absent</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ── Event Breakdown ──────────────────────────────────────── -->
+    <div class="section-label">Event Breakdown</div>
+    <div class="row g-3 mb-3">
+        <div class="col-12">
+            <div class="card-table">
+                <div class="ct-header">
+                    <div class="icon-sm"><i class="bi bi-calendar-event-fill"></i></div>
+                    <div>
+                        <h6>Events Assigned to @Model.GroupName</h6>
+                        <small>All events in @filterYear</small>
+                    </div>
+                </div>
+                <div style="overflow-x:auto;">
+                    <table class="ev-table">
+                        <thead>
+                            <tr>
+                                <th><i class="bi bi-calendar-event"></i> Event</th>
+                                <th><i class="bi bi-calendar3"></i> Date</th>
+                                <th><i class="bi bi-people-fill"></i> Attendees</th>
+                                <th><i class="bi bi-star-fill"></i> Points</th>
+                                <th><i class="bi bi-circle-half"></i> Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (!Model.EventBreakdown.Any())
+                            {
+                                <tr><td colspan="5" class="empty-state">No events found for this leader's group in @filterYear.</td></tr>
+                            }
+                            @foreach (var ev in Model.EventBreakdown)
+                            {
+                                <tr>
+                                    <td>
+                                        <div style="font-weight:600;color:#1a1a2e;">@ev.Title</div>
+                                        <div style="font-size:0.7rem;color:#9ca3af;">@ev.GroupName</div>
+                                    </td>
+                                    <td style="white-space:nowrap;">
+                                        @ev.EventDate.ToString("MMM d, yyyy")
+                                        <br /><span style="font-size:0.68rem;color:#9ca3af;">@ev.EventDate.ToString("h:mm tt")</span>
+                                    </td>
+                                    <td>
+                                        <div class="progress-wrap">
+                                            <span style="font-weight:600;color:#1a1a2e;">@ev.Attendees</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span style="font-weight:600;color:#b7800a;">+@ev.PointsAwarded</span>
+                                    </td>
+                                    <td>
+                                        @if (ev.EventDate < DateTime.Now)
+                                        {
+                                            <span class="badge-done">Done</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge-upcoming">Upcoming</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-footer">Showing @Model.EventBreakdown.Count event(s) for @filterYear</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Leaders Leaderboard ──────────────────────────────────── -->
+    <div class="section-label">Leaders Leaderboard — @filterYear</div>
+    <div class="row g-3 mb-4">
+        <div class="col-12">
+            <div class="card-table">
+                <div class="ct-header">
+                    <div class="icon-sm" style="background:#f0eeff;color:#534ab7;"><i class="bi bi-trophy-fill"></i></div>
+                    <div>
+                        <h6>All Leaders Ranked</h6>
+                        <small>Sorted by total group points</small>
+                    </div>
+                </div>
+                <div style="overflow-x:auto;">
+                    <table class="ev-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><i class="bi bi-person-badge-fill"></i> Leader</th>
+                                <th><i class="bi bi-people-fill"></i> Group</th>
+                                <th><i class="bi bi-person-fill"></i> Members</th>
+                                <th><i class="bi bi-calendar-check"></i> Events</th>
+                                <th><i class="bi bi-star-fill"></i> Points</th>
+                                <th><i class="bi bi-bar-chart-fill"></i> Attendance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (!Model.Leaderboard.Any())
+                            {
+                                <tr><td colspan="7" class="empty-state">No leaders found.</td></tr>
+                            }
+                            @for (int i = 0; i < Model.Leaderboard.Count; i++)
+                            {
+                                var row = Model.Leaderboard[i];
+                                string rankIcon = (i + 1) == 1 ? "🥇" : (i + 1) == 2 ? "🥈" : (i + 1) == 3 ? "🥉" : $"#{i + 1}";
+                                <tr class="@(row.IsCurrentLeader ? "lb-current" : "")">
+                                    <td style="font-weight:700;font-size:0.9rem;">@rankIcon</td>
+                                    <td>
+                                        <div style="display:flex;align-items:center;gap:8px;">
+                                            <div class="ms-avatar" style="@(row.IsCurrentLeader ? "background:#0ab5c4;color:#fff;" : "")">
+                                                @(row.LeaderName.Length > 0 ? row.LeaderName[0].ToString().ToUpper() : "L")
+                                            </div>
+                                            <div>
+                                                <div style="font-weight:600;color:#1a1a2e;">@row.LeaderName</div>
+                                                @if (row.IsCurrentLeader)
+                                                {
+                                                    <span style="font-size:0.65rem;color:#0ab5c4;font-weight:600;">← Current</span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @if (row.GroupName == "Unassigned")
+                                        {
+                                            <span style="color:#9ca3af;font-style:italic;">Unassigned</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge-active">@row.GroupName</span>
+                                        }
+                                    </td>
+                                    <td style="font-weight:600;">@row.TotalMembers</td>
+                                    <td style="font-weight:600;">@row.TotalEvents</td>
+                                    <td style="font-weight:700;color:#b7800a;">@row.TotalPoints</td>
+                                    <td>
+                                        @{
+                                            string pfClass = row.AttendanceRate >= 80 ? "pf-green" : row.AttendanceRate >= 50 ? "pf-yellow" : "pf-red";
+                                        }
+                                        <div class="progress-wrap">
+                                            <div class="progress-track">
+                                                <div class="progress-fill @pfClass" style="width:@(Math.Min(row.AttendanceRate, 100))%;"></div>
+                                            </div>
+                                            <span style="font-size:0.72rem;color:#374151;min-width:36px;">@row.AttendanceRate%</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-footer">@Model.Leaderboard.Count leader(s) total</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const teal   = '#0ab5c4';
+        const green  = '#1D9E75';
+        const yellow = '#b7800a';
+        const red    = '#e24b4a';
+
+        // ── Monthly Activity (bar + line combo) ──
+        new Chart(document.getElementById('monthlyChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                datasets: [
+                    {
+                        label: 'Events Attended',
+                        data: [@Html.Raw(monthlyEventsData)],
+                        backgroundColor: teal,
+                        borderRadius: 6,
+                        borderSkipped: false,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: 'Points Earned',
+                        data: [@Html.Raw(monthlyPointsData)],
+                        type: 'line',
+                        borderColor: yellow,
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        pointBackgroundColor: yellow,
+                        pointRadius: 4,
+                        tension: 0.4,
+                        yAxisID: 'y1'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                plugins: { legend: { display: false } },
+                scales: {
+                    y:  { beginAtZero:true, grid:{ color:'#f0f9fa' }, ticks:{ color:'#6c757d', font:{size:11}, stepSize:1 }, position:'left' },
+                    y1: { beginAtZero:true, grid:{ display:false }, ticks:{ color:'#b7800a', font:{size:11} }, position:'right' },
+                    x:  { grid:{ display:false }, ticks:{ color:'#6c757d', font:{size:11} } }
+                }
+            }
+        });
+
+        // ── Performance Donut ──
+        const activeCount = @Model.TopMembers.Count(m => m.PointsEarned > 0);
+        const noAttCount  = @Model.NoAttendanceCount;
+        new Chart(document.getElementById('perfDonut'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Active', 'No Attendance'],
+                datasets: [{
+                    data: [activeCount, noAttCount],
+                    backgroundColor: [green, red],
+                    borderWidth: 0,
+                    hoverOffset: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '68%',
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw} members` } }
+                }
+            }
+        });
+    </script>
+}

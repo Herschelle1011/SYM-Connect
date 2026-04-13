@@ -5,6 +5,7 @@ using Rotativa.AspNetCore;
 using SYM_CONNECT.Data;
 using SYM_CONNECT.Models;
 using SYM_CONNECT.ViewModel;
+using SYM_CONNECT.ViewModels;
 
 namespace SYM_CONNECT.Controllers
 {
@@ -45,7 +46,6 @@ namespace SYM_CONNECT.Controllers
 
             var recentEvents = await recentEventsQuery
                 .OrderByDescending(e => e.EventDate)
-                .Take(10)
                 .ToListAsync();  //TAKE 10 OF THE RECENT EVENTS  TO LIST 
 
             int maxMembers = groups.Any() ? groups.Max(g => g.GroupMembers.Count) : 1; //GETMEMBERS   COUNT
@@ -261,6 +261,274 @@ namespace SYM_CONNECT.Controllers
             return View("GroupReports", vm);
         }
 
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> EventsReport(int? month, int? year)
+        {
+            var vm = await BuildReportViewModel(month, year);
+            return View("EventsReports", vm);
+        }
+
+        //get attendees
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> Attendees(int eventId, int? month, int? year)
+        {
+            // GET THE EVENT WITH ITS ASSIGNED GROUPS
+            var ev = await _db.Events
+                .Include(e => e.AssignedGroups)
+                .FirstOrDefaultAsync(e => e.EventId == eventId);
+
+            if (ev == null) return NotFound();
+
+            // STEP 1: GET ALL MEMBERS BELONGING TO GROUPS ASSIGNED TO THIS EVENT
+            var groupMembers = await _db.GroupMembers
+                .Include(gm => gm.User)
+                .Include(gm => gm.Group)
+                .Where(gm => _db.Events
+                    .Where(e => e.EventId == eventId)
+                    .SelectMany(e => e.AssignedGroups)
+                    .Any(g => g.GroupId == gm.GroupId))
+                .ToListAsync();
+
+            // STEP 2: GET ATTENDANCE RECORDS FOR THIS EVENT
+            var attendanceRecords = await _db.Attendances
+                .Where(a => a.EventId == eventId)
+                .ToListAsync();
+
+            // STEP 3: APPLY MONTH/YEAR FILTER ON ATTENDANCE (OPTIONAL)
+            if (month.HasValue)
+                attendanceRecords = attendanceRecords
+                    .Where(a => a.AttendanceDate.Month == month.Value).ToList();
+
+            if (year.HasValue)
+                attendanceRecords = attendanceRecords
+                    .Where(a => a.AttendanceDate.Year == year.Value).ToList();
+
+            // STEP 4: MAP — JOIN MEMBERS WITH THEIR ATTENDANCE (NULL = ABSENT)
+            var attendeeRows = groupMembers.Select(gm =>
+            {
+                // FIND MATCHING ATTENDANCE FOR THIS MEMBER
+                var attendance = attendanceRecords
+                    .FirstOrDefault(a => a.UserId == gm.UserId);
+
+                return new AttendeeRow
+                {
+                    UserId = gm.UserId,
+                    FullName = gm.User?.FullName ?? "—",
+                    Email = gm.User?.Email ?? "—",
+                    GroupName = gm.Group?.Name ?? "—",
+                    CheckInTime = attendance?.AttendanceDate ,  // NULL = ABSENT
+                    PointsEarned = attendance?.PointsEarned ?? 0
+                };
+            }).ToList();
+
+            // COMPUTE PUNCTUALITY COUNTS USING EVENT START TIME
+            int onTimeCount = 0, lateCount = 0, absentCount = 0;
+
+            foreach (var row in attendeeRows)
+            {
+                if (row.CheckInTime == null)
+                {
+                    absentCount++;
+                }
+                else
+                {
+                    var diff = (row.CheckInTime.Value - ev.EventDate).TotalMinutes;
+                    if (diff > 0)
+                        lateCount++;
+                    else
+                        onTimeCount++;
+                }
+            }
+
+            // BUILD THE VIEWMODEL
+            var vm = new AttendanceViewModel
+            {
+                EventId = ev.EventId,
+                EventTitle = ev.Title,
+                EventStartTime = ev.EventDate,
+
+                // ASSIGNED GROUP NAMES AS STRINGS FOR PILLS + DROPDOWN FILTER
+                AssignedGroups = ev.AssignedGroups
+                    .Select(g => g.Name)
+                    .Distinct()
+                    .ToList(),
+
+                Attendances = attendeeRows,
+                OnTimeCount = onTimeCount,
+                LateCount = lateCount,
+                AbsentCount = absentCount,
+
+                SelectedMonth = month,
+                SelectedYear = year
+            };
+
+            return View("Attendees", vm);
+        }
+
+
+        // ─── Leader Report ────────────────────────────────────────────
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> LeaderReport(int? leaderId, int? year)
+        {
+            int filterYear = year ?? DateTime.Now.Year;
+
+            // LOAD ALL LEADERS
+            var allLeaders = await _db.Users
+                .Where(u => u.Role == "Leader")
+                .ToListAsync();
+
+            // DEFAULT TO FIRST LEADER IF NONE SELECTED
+            if (!leaderId.HasValue && allLeaders.Any())
+                leaderId = allLeaders.First().Id;
+
+            var leader = allLeaders.FirstOrDefault(u => u.Id == leaderId);
+            if (leader == null) return NotFound();
+
+            // LOAD ALL GROUPS WITH MEMBERS AND EVENTS
+            var allGroups = await _db.SYMGroup
+                .Include(g => g.Leader)
+                .Include(g => g.GroupMembers)
+                    .ThenInclude(gm => gm.User)
+                .Include(g => g.Events)
+                .ToListAsync();
+
+            // GET THIS LEADER'S GROUP
+            var group = allGroups.FirstOrDefault(g => g.LeaderId == leaderId);
+
+            // GET EVENTS ASSIGNED TO THIS LEADER'S GROUP IN THE FILTER YEAR
+            List<SYM_CONNECT.Models.Event> groupEvents = new();
+            List<GroupMember> members = new();
+
+            if (group != null)
+            {
+                members = group.GroupMembers.ToList();
+
+                groupEvents = await _db.Events
+                    .Include(e => e.AssignedGroups)
+                    .Where(e => e.AssignedGroups.Any(ag => ag.GroupId == group.GroupId)
+                             && e.EventDate.Year == filterYear
+                             && e.IsCancelled == false)
+                    .OrderByDescending(e => e.EventDate)
+                    .ToListAsync();
+            }
+
+            int totalPoints = members.Sum(m => m.TotalEarnedPoints);
+            int totalMembers = members.Count;
+            int totalEvents = groupEvents.Count;
+            int completedEvents = groupEvents.Count(e => e.EventDate < DateTime.Now);
+
+            // ATTENDANCE RATE FORMULA
+            double attendanceRate = totalMembers > 0 && totalEvents > 0
+                ? Math.Round((double)groupEvents.Sum(e => e.AssignedGroups.Count) / (totalMembers * totalEvents) * 100, 1)
+                : 0;
+
+            // RANK LEADERS BY TOTAL POINTS OF THEIR GROUP MEMBERS
+            var rankedLeaders = allLeaders
+                .Select(l => new
+                {
+                    Leader = l,
+                    Points = allGroups.FirstOrDefault(g => g.LeaderId == l.Id)
+                                      ?.GroupMembers.Sum(m => m.TotalEarnedPoints) ?? 0
+                })
+                .OrderByDescending(x => x.Points)
+                .ToList();
+            int rank = rankedLeaders.FindIndex(x => x.Leader.Id == leaderId) + 1;
+
+            // MONTHLY EVENTS CHART DATA
+            var monthlyEvents = Enumerable.Range(1, 12)
+                .Select(m => groupEvents.Count(e => e.EventDate.Month == m))
+                .ToList();
+
+            // MONTHLY POINTS CHART DATA
+            var monthlyPoints = Enumerable.Range(1, 12)
+                .Select(m => groupEvents.Where(e => e.EventDate.Month == m)
+                                        .Sum(e => e.AssignedGroups.Count * 10))
+                .ToList();
+
+            // MEMBER SUMMARY ROWS
+            var memberRows = members.Select(m => new MemberSummaryRow
+            {
+                UserId = m.UserId,
+                FullName = m.User?.FullName ?? "—",
+                EventsAttended = groupEvents.Count(e => e.AssignedGroups.Any(ag => ag.GroupId == group!.GroupId)),
+                PointsEarned = m.TotalEarnedPoints,
+                Status = m.User?.Status ?? "—"
+            }).ToList();
+
+            var topMembers = memberRows.OrderByDescending(m => m.PointsEarned).Take(5).ToList();
+            var leastActive = memberRows.OrderBy(m => m.PointsEarned).Take(5).ToList();
+            var noAttendance = memberRows.Where(m => m.PointsEarned == 0).ToList();
+
+            // EVENT BREAKDOWN ROWS
+            var eventBreakdown = groupEvents.Select(e => new EventBreakdownRow
+            {
+                EventId = e.EventId,
+                Title = e.Title,
+                EventDate = e.EventDate,
+                Attendees = e.AssignedGroups.Count,
+                PointsAwarded = e.AssignedGroups.Count * 10,
+                GroupName = group?.Name ?? "—"
+            }).ToList();
+
+            // LEADERBOARD — ALL LEADERS RANKED
+            var leaderboard = allLeaders.Select(l =>
+            {
+                var lGroup = allGroups.FirstOrDefault(g => g.LeaderId == l.Id);
+                var lPoints = lGroup?.GroupMembers.Sum(m => m.TotalEarnedPoints) ?? 0;
+                var lMembers = lGroup?.GroupMembers.Count ?? 0;
+                var lEvents = lGroup?.Events.Count(e => e.EventDate.Year == filterYear) ?? 0;
+                var lRate = lMembers > 0 && lEvents > 0
+                    ? Math.Round((double)lEvents / (lMembers * Math.Max(lEvents, 1)) * 100, 1) : 0;
+
+                return new LeaderLeaderboardRow
+                {
+                    LeaderId = l.Id,
+                    LeaderName = l.FullName ?? "—",
+                    GroupName = lGroup?.Name ?? "Unassigned",
+                    TotalMembers = lMembers,
+                    TotalPoints = lPoints,
+                    TotalEvents = lEvents,
+                    AttendanceRate = lRate,
+                    IsCurrentLeader = l.Id == leaderId
+                };
+            })
+            .OrderByDescending(l => l.TotalPoints)
+            .ToList();
+
+            var vm = new LeaderReportViewModel
+            {
+                LeaderId = leader.Id,
+                LeaderName = leader.FullName ?? "—",
+                LeaderEmail = leader.Email ?? "—",
+                LeaderStatus = leader.Status ?? "—",
+                GroupId = group?.GroupId,
+                GroupName = group?.Name ?? "Unassigned",
+                Region = group?.Region ?? "—",
+                SubRegion = group?.SubRegion ?? "—",
+                GroupStatus = group?.Status ?? "No Group",
+                TotalMembers = totalMembers,
+                TotalEvents = totalEvents,
+                CompletedEvents = completedEvents,
+                TotalPoints = totalPoints,
+                AttendanceRate = attendanceRate,
+                LeaderRank = rank,
+                TotalLeadersCount = allLeaders.Count,
+                NoAttendanceCount = noAttendance.Count,
+                MonthlyEventsAttended = monthlyEvents,
+                MonthlyPointsEarned = monthlyPoints,
+                TopMembers = topMembers,
+                LeastActive = leastActive,
+                NoAttendance = noAttendance,
+                EventBreakdown = eventBreakdown,
+                Leaderboard = leaderboard,
+                SelectedYear = year
+            };
+
+            ViewBag.AllLeaders = allLeaders;
+            ViewBag.SelectedYear = filterYear;
+
+            return View("LeaderReports", vm);
+        }
 
     }
 }

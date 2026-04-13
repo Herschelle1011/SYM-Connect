@@ -32,6 +32,8 @@
 
         public List<SYM_CONNECT.Models.Event> RecentEvents { get; set; } = new();
         //RECENT EVENTS — USED FOR ACTIVITY FEED / LATEST EVENTS SECTION
+        public List<SYM_CONNECT.Models.Event> GetAllEvents { get; set; } = new();
+
 
         public List<int> EventsPerMonth { get; set; } = new();
     }

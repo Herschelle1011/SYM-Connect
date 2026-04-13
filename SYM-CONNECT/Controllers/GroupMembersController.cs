@@ -35,9 +35,12 @@ namespace SYM_CONNECT.Controllers
                 return NotFound(); //IF USERS ID DOESNT EXISTS
             }
 
-            var groupMember = await _context.GroupMembers //GET GROUPS AND USER  FROM THE USERS MODEL
+            var groupMember = await _context.GroupMembers 
                 .Include(g => g.Group)
+                .ThenInclude(g => g.Leader)
                 .Include(g => g.User)
+                .ThenInclude(u => u.Attendances)
+                 .ThenInclude(a => a.Event)
                 .FirstOrDefaultAsync(m => m.GroupMemberId == id);
             if (groupMember == null)
             {

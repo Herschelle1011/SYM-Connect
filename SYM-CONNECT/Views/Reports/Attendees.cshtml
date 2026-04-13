@@ -1,0 +1,529 @@
+﻿@model SYM_CONNECT.ViewModels.AttendanceViewModel
+@{
+    ViewData["Title"] = "Attendees";
+    Layout = "_Layout";
+
+    var now = DateTime.Now;
+    var monthNames = new[] {
+        "January","February","March","April","May","June",
+        "July","August","September","October","November","December"
+    };
+}
+
+<!-- Page Header -->
+<div class="mb-2">
+    <h1 class="page-title">
+        <i class="bi bi-people-fill me-2" style="color:#0ab5c4;"></i>
+        Attendees
+    </h1>
+    <p class="page-subtitle">
+        View all members who attended <strong>@Model.EventTitle</strong> — their group, check-in time, and punctuality status.
+    </p>
+</div>
+
+<!-- Event Info Strip -->
+<div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;
+            background:#e8fafb;border:1px solid #b2e9ef;border-radius:12px;
+            padding:12px 18px;margin-bottom:1.25rem;">
+    <div style="display:flex;align-items:center;gap:7px;">
+        <i class="bi bi-calendar-event-fill" style="color:#0ab5c4;font-size:14px;"></i>
+        <span style="font-size:0.82rem;font-weight:700;color:#07869b;">@Model.EventTitle</span>
+    </div>
+    <div style="width:1px;height:18px;background:#b2e9ef;"></div>
+    <div style="display:flex;align-items:center;gap:5px;">
+        <i class="bi bi-clock" style="color:#07869b;font-size:12px;"></i>
+        <span style="font-size:0.78rem;color:#374151;">
+            Start: <strong>@Model.EventStartTime.ToString("MMM d, yyyy h:mm tt")</strong>
+        </span>
+    </div>
+    <div style="width:1px;height:18px;background:#b2e9ef;"></div>
+    <div style="display:flex;align-items:center;gap:5px;">
+        <i class="bi bi-diagram-3-fill" style="color:#07869b;font-size:12px;"></i>
+        <span style="font-size:0.78rem;color:#374151;">
+            Groups:
+            @foreach (var g in Model.AssignedGroups)
+            {
+                <span style="background:#fff;border:1px solid #b2e9ef;color:#07869b;
+                                 border-radius:20px;padding:1px 10px;font-size:0.72rem;
+                                 font-weight:600;margin-left:4px;">@g</span>
+            }
+        </span>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <span style="background:#e1f5ee;color:#0f6e56;border-radius:20px;
+                     padding:3px 12px;font-size:0.72rem;font-weight:700;">
+            <i class="bi bi-check-circle-fill me-1"></i>@Model.OnTimeCount On Time
+        </span>
+        <span style="background:#fef9e7;color:#b7800a;border-radius:20px;
+                     padding:3px 12px;font-size:0.72rem;font-weight:700;">
+            <i class="bi bi-clock-history me-1"></i>@Model.LateCount Late
+        </span>
+        <span style="background:#fde8e8;color:#b91c1c;border-radius:20px;
+                     padding:3px 12px;font-size:0.72rem;font-weight:700;">
+            <i class="bi bi-x-circle-fill me-1"></i>@Model.AbsentCount Absent
+        </span>
+    </div>
+</div>
+
+<!-- Filter Bar -->
+<form method="get" asp-action="Attendees"
+      style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:1.25rem;">
+
+    <input type="hidden" name="eventId" value="@Model.EventId" />
+
+    <select name="month"
+            style="font-size:0.82rem;padding:5px 10px;border-radius:8px;
+                   border:1px solid #dee2e6;background:#fff;color:#344;">
+        <option value="">-- Month --</option>
+        @for (int m = 1; m <= 12; m++)
+        {
+            if (Model.SelectedMonth == m)
+            {
+                <option value="@m" selected>@monthNames[m - 1]</option>
+            }
+            else
+            {
+                <option value="@m">@monthNames[m - 1]</option>
+            }
+        }
+    </select>
+
+    <select name="year"
+            style="font-size:0.82rem;padding:5px 10px;border-radius:8px;
+                   border:1px solid #dee2e6;background:#fff;color:#344;">
+        <option value="">-- Year --</option>
+        @for (int y = now.Year; y >= 2000; y--)
+        {
+            if (Model.SelectedYear == y)
+            {
+                <option value="@y" selected>@y</option>
+            }
+            else
+            {
+                <option value="@y">@y</option>
+            }
+        }
+    </select>
+
+    <button type="submit"
+            style="background:#0ab5c4;color:#fff;border:none;
+                   border-radius:8px;padding:6px 16px;
+                   font-size:0.82rem;font-weight:600;cursor:pointer;">
+        <i class="bi bi-funnel-fill"></i> Filter
+    </button>
+
+    @if (Model.SelectedMonth.HasValue || Model.SelectedYear.HasValue)
+    {
+        <a asp-action="Attendees" asp-route-eventId="@Model.EventId"
+           style="background:transparent;color:#6c757d;
+                      border:1px solid #dee2e6;border-radius:8px;
+                      padding:5px 14px;font-size:0.82rem;
+                      cursor:pointer;text-decoration:none;">
+            <i class="bi bi-x-circle"></i> Clear
+        </a>
+    }
+</form>
+
+<!-- Card / Table -->
+<div class="card-table">
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+
+        <!-- Punctuality Filter Dropdown -->
+        <div style="position:relative;display:inline-block;">
+            <button class="btn-role-filter"
+                    id="punctualityFilterBtn"
+                    onclick="togglePunctualityDropdown()"
+                    type="button">
+                <i class="bi bi-funnel-fill"></i>
+                <span id="punctualityFilterLabel">Punctuality</span>
+                <i class="bi bi-chevron-down" style="font-size:.65rem;opacity:.6;"></i>
+            </button>
+            <div id="punctualityDropdown"
+                 style="display:none;position:absolute;top:calc(100% + 6px);left:0;
+                        background:#fff;border:1px solid #d1f0e8;border-radius:10px;
+                        box-shadow:0 4px 16px rgba(10,181,196,.12);
+                        min-width:150px;z-index:999;overflow:hidden;">
+                <div onclick="applyPunctualityFilter('All')" class="status-option"
+                     style="padding:9px 16px;cursor:pointer;font-size:13px;color:#085041;
+                            display:flex;align-items:center;gap:8px;border-bottom:1px solid #f0fbf7;">
+                    <i class="bi bi-people"></i> All
+                </div>
+                <div onclick="applyPunctualityFilter('On Time')" class="status-option"
+                     style="padding:9px 16px;cursor:pointer;font-size:13px;color:#085041;
+                            display:flex;align-items:center;gap:8px;border-bottom:1px solid #f0fbf7;">
+                    <i class="bi bi-check-circle"></i> On Time
+                </div>
+                <div onclick="applyPunctualityFilter('Late')" class="status-option"
+                     style="padding:9px 16px;cursor:pointer;font-size:13px;color:#085041;
+                            display:flex;align-items:center;gap:8px;border-bottom:1px solid #f0fbf7;">
+                    <i class="bi bi-clock-history"></i> Late
+                </div>
+                <div onclick="applyPunctualityFilter('Absent')" class="status-option"
+                     style="padding:9px 16px;cursor:pointer;font-size:13px;color:#085041;
+                            display:flex;align-items:center;gap:8px;">
+                    <i class="bi bi-x-circle"></i> Absent
+                </div>
+            </div>
+        </div>
+
+        <!-- Group Filter Dropdown -->
+        <div style="position:relative;display:inline-block;">
+            <button class="btn-role-filter"
+                    id="groupFilterBtn"
+                    onclick="toggleGroupDropdown()"
+                    type="button">
+                <i class="bi bi-diagram-3-fill"></i>
+                <span id="groupFilterLabel">Group</span>
+                <i class="bi bi-chevron-down" style="font-size:.65rem;opacity:.6;"></i>
+            </button>
+            <div id="groupDropdown"
+                 style="display:none;position:absolute;top:calc(100% + 6px);left:0;
+                        background:#fff;border:1px solid #d1f0e8;border-radius:10px;
+                        box-shadow:0 4px 16px rgba(10,181,196,.12);
+                        min-width:160px;z-index:999;overflow:hidden;">
+                <div onclick="applyGroupFilter('All')" class="group-option"
+                     style="padding:9px 16px;cursor:pointer;font-size:13px;color:#085041;
+                            display:flex;align-items:center;gap:8px;border-bottom:1px solid #f0fbf7;">
+                    <i class="bi bi-people"></i> All Groups
+                </div>
+                @foreach (var g in Model.AssignedGroups)
+                {
+                    <div onclick="applyGroupFilter('@g')" class="group-option"
+                         style="padding:9px 16px;cursor:pointer;font-size:13px;color:#085041;
+                                    display:flex;align-items:center;gap:8px;border-bottom:1px solid #f0fbf7;">
+                        <i class="bi bi-diagram-3"></i> @g
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Search -->
+        <div class="search-wrap">
+            <i class="bi bi-search"></i>
+            <input type="text" placeholder="Search member..." id="searchInput" oninput="filterTable()" />
+        </div>
+
+        <!-- Export -->
+        <a asp-action="ExportPDF" asp-controller="Reports" class="btn-export">
+            <i class="bi bi-file-earmark-pdf-fill"></i> Export PDF
+        </a>
+
+        <!-- Back to Event -->
+        <a asp-action="EventsReport" asp-controller="Reports" 
+           class="btn-action btn-arc" style="text-decoration:none;">
+            <i class="bi bi-arrow-left"></i> Back to Event
+        </a>
+    </div>
+
+    <!-- Table -->
+    <div style="overflow-x:auto;">
+        <table class="user-table" id="attendeeTable">
+            <thead>
+                <tr>
+                    <th><i class="bi bi-hash"></i> #</th>
+                    <th><i class="bi bi-person-fill"></i> Member</th>
+                    <th><i class="bi bi-diagram-3-fill"></i> Group</th>
+                    <th><i class="bi bi-calendar3"></i> Check-in Date</th>
+                    <th><i class="bi bi-clock"></i> Check-in Time</th>
+                    <th><i class="bi bi-hourglass-split"></i> Minutes Late</th>
+                    <th><i class="bi bi-star-fill"></i> Points</th>
+                    <th><i class="bi bi-patch-check-fill"></i> Punctuality</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                @if (!Model.Attendances.Any())
+                {
+                    <tr>
+                        <td colspan="7"
+                            style="text-align:center;padding:28px;color:#888;font-size:13px;">
+                            <i class="bi bi-people me-2"></i>
+                            No attendees recorded for this event yet.
+                        </td>
+                    </tr>
+                }
+                @{
+                    int rowNum = 1;
+                }
+                @foreach (var att in Model.Attendances)
+                {
+                    int minutesLate = 0;
+                    bool isLate = false;
+                    bool isAbsent = att.CheckInTime == null;
+
+                    if (!isAbsent && att.CheckInTime.HasValue)
+                    {
+                        var diff = att.CheckInTime.Value - Model.EventStartTime;
+                        minutesLate = (int)Math.Max(0, Math.Floor(diff.TotalMinutes));
+                        isLate = minutesLate > 0;
+                    }
+
+                    string punctuality = isAbsent ? "Absent" : isLate ? "Late" : "On Time";
+                    string rowGroup = att.GroupName ?? "—";
+
+                    <tr data-punctuality="@punctuality" data-group="@rowGroup">
+                        <td style="color:#6c757d;font-size:0.78rem;">@rowNum</td>
+                        <td>
+                            <span class="user-name-cell">
+                                <div style="width:30px;height:30px;border-radius:8px;
+                                                background:#e8fafb;color:#0ab5c4;
+                                                display:flex;align-items:center;justify-content:center;
+                                                font-size:0.72rem;font-weight:700;flex-shrink:0;">
+                                    @(att.FullName?.Length > 0 ? att.FullName[0].ToString().ToUpper() : "?")
+                                </div>
+                                <div>
+                                    <div style="font-weight:600;color:#1a1a2e;font-size:0.82rem;">
+                                        @att.FullName
+                                    </div>
+                                    <div style="font-size:0.7rem;color:#9ca3af;">
+                                        @att.Email
+                                    </div>
+                                </div>
+                            </span>
+                        </td>
+                        <td>
+                            <span style="background:#e8fafb;color:#07869b;border:1px solid #b2e9ef;
+                                             border-radius:20px;padding:2px 10px;
+                                             font-size:0.72rem;font-weight:600;">
+                                <i class="bi bi-diagram-3 me-1"></i>@rowGroup
+                            </span>
+                        </td>
+                        <td style="font-size:0.82rem;color:#374151;">
+                            @if (att.CheckInTime.HasValue)
+                            {
+                                @att.CheckInTime.Value.ToString("MMM d, yyyy")
+                            }
+                            else
+                            {
+                                <span style="color:#9ca3af;">—</span>
+                            }
+                        </td>
+                        <td style="font-size:0.82rem;color:#374151;">
+                            @if (att.CheckInTime.HasValue)
+                            {
+                                @att.CheckInTime.Value.ToString("h:mm tt")
+                            }
+                            else
+                            {
+                                <span style="color:#9ca3af;">—</span>
+                            }
+                        </td>
+                        <td style="font-size:0.82rem;">
+                            @if (isAbsent)
+                            {
+                                <span style="color:#9ca3af;">—</span>
+                            }
+                            else if (isLate)
+                            {
+                                <span style="color:#b7800a;font-weight:700;">
+                                    +@minutesLate min
+                                </span>
+                            }
+                            else
+                            {
+                                <span style="color:#0f6e56;font-weight:600;">0 min</span>
+                            }
+                        </td>
+
+                        <td style="font-size:0.82rem;">
+                            @if (isAbsent)
+                            {
+                                <span style="color:#9ca3af;">—</span>
+                            }
+                            else
+                            {
+                                <span style="background:#fef9e7;color:#b7800a;border:1px solid #fde68a;
+                             border-radius:20px;padding:2px 10px;
+                             font-size:0.72rem;font-weight:700;">
+                                    <i class="bi bi-star-fill me-1"></i>@att.PointsEarned pts
+                                </span>
+                            }
+                        </td>
+
+                        <td>
+                            @if (isAbsent)
+                            {
+                                <span class="badge-inactive">
+                                    <i class="bi bi-x-circle-fill me-1"></i>Absent
+                                </span>
+                            }
+                            else if (isLate)
+                            {
+                                <span class="badge-pending">
+                                    <i class="bi bi-clock-history me-1"></i>Late
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge-active">
+                                    <i class="bi bi-check-circle-fill me-1"></i>On Time
+                                </span>
+                            }
+                        </td>
+                    </tr>
+                    rowNum++;
+                }
+
+                <tr id="noSearchResults" style="display:none;">
+                    <td colspan="7"
+                        style="text-align:center;padding:20px;color:#888;font-size:13px;">
+                        <i class="bi bi-search me-1"></i>
+                        No members found matching your search.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer / Pagination -->
+    <div class="table-footer">
+        <div class="rows-info">
+            Rows per page
+            <select id="rowsPerPage" onchange="changeRowsPerPage()">
+                <option>05</option>
+                <option>10</option>
+                <option>25</option>
+                <option>50</option>
+            </select>
+            &nbsp; Showing <span id="rowInfo">1–@Math.Min(5, Model.Attendances.Count)</span>
+            of @Model.Attendances.Count rows
+        </div>
+        <div class="pagination-btns">
+            <button class="pg-btn" title="First" onclick="goToPage(1)"><i class="bi bi-chevron-double-left"></i></button>
+            <button class="pg-btn" title="Prev" onclick="prevPage()"><i class="bi bi-chevron-left"></i></button>
+            <span id="pageButtons"></span>
+            <button class="pg-btn" title="Next" onclick="nextPage()"><i class="bi bi-chevron-right"></i></button>
+            <button class="pg-btn" title="Last" onclick="goToPage(totalPages())"><i class="bi bi-chevron-double-right"></i></button>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        // ── Dropdown toggles ──────────────────────────────────────────
+        function togglePunctualityDropdown() {
+            const d = document.getElementById('punctualityDropdown');
+            d.style.display = d.style.display === 'none' ? 'block' : 'none';
+            document.getElementById('groupDropdown').style.display = 'none';
+        }
+        function toggleGroupDropdown() {
+            const d = document.getElementById('groupDropdown');
+            d.style.display = d.style.display === 'none' ? 'block' : 'none';
+            document.getElementById('punctualityDropdown').style.display = 'none';
+        }
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('#punctualityFilterBtn') && !e.target.closest('#punctualityDropdown'))
+                document.getElementById('punctualityDropdown').style.display = 'none';
+            if (!e.target.closest('#groupFilterBtn') && !e.target.closest('#groupDropdown'))
+                document.getElementById('groupDropdown').style.display = 'none';
+        });
+
+        // ── Active filters ────────────────────────────────────────────
+        let activePunctuality = 'All';
+        let activeGroup = 'All';
+
+        function applyPunctualityFilter(val) {
+            activePunctuality = val;
+            document.getElementById('punctualityFilterLabel').textContent = val === 'All' ? 'Punctuality' : val;
+            document.getElementById('punctualityDropdown').style.display = 'none';
+            currentPage = 1;
+            applyFilters();
+        }
+        function applyGroupFilter(val) {
+            activeGroup = val;
+            document.getElementById('groupFilterLabel').textContent = val === 'All' ? 'Group' : val;
+            document.getElementById('groupDropdown').style.display = 'none';
+            currentPage = 1;
+            applyFilters();
+        }
+
+        // ── Search ────────────────────────────────────────────────────
+        function filterTable() {
+            currentPage = 1;
+            applyFilters();
+        }
+
+        // ── Combined filter + pagination ──────────────────────────────
+        let currentPage = 1;
+
+        function totalPages() {
+            const rp = parseInt(document.getElementById('rowsPerPage').value) || 5;
+            const vis = visibleRows();
+            return Math.max(1, Math.ceil(vis.length / rp));
+        }
+
+        function visibleRows() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            return Array.from(document.querySelectorAll('#tableBody tr[data-punctuality]'))
+                .filter(row => {
+                    const punct  = row.dataset.punctuality || '';
+                    const group  = row.dataset.group || '';
+                    const text   = row.innerText.toLowerCase();
+                    const matchP = activePunctuality === 'All' || punct === activePunctuality;
+                    const matchG = activeGroup === 'All' || group === activeGroup;
+                    const matchS = !search || text.includes(search);
+                    return matchP && matchG && matchS;
+                });
+        }
+
+        function applyFilters() {
+            const rp   = parseInt(document.getElementById('rowsPerPage').value) || 5;
+            const rows = visibleRows();
+            const allRows = Array.from(document.querySelectorAll('#tableBody tr[data-punctuality]'));
+
+            // hide all first
+            allRows.forEach(r => r.style.display = 'none');
+
+            const start = (currentPage - 1) * rp;
+            const end   = start + rp;
+            const pageRows = rows.slice(start, end);
+            pageRows.forEach(r => r.style.display = '');
+
+            // no results row
+            const noRes = document.getElementById('noSearchResults');
+            noRes.style.display = rows.length === 0 ? '' : 'none';
+
+            // row info
+            const from = rows.length === 0 ? 0 : start + 1;
+            const to   = Math.min(end, rows.length);
+            document.getElementById('rowInfo').textContent = `${from}–${to}`;
+
+            renderPageButtons(rows.length);
+        }
+
+        function renderPageButtons(total) {
+            const rp    = parseInt(document.getElementById('rowsPerPage').value) || 5;
+            const pages = Math.max(1, Math.ceil(total / rp));
+            const wrap  = document.getElementById('pageButtons');
+            wrap.innerHTML = '';
+            for (let i = 1; i <= pages; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'pg-btn' + (i === currentPage ? ' active' : '');
+                btn.textContent = i;
+                btn.onclick = () => goToPage(i);
+                wrap.appendChild(btn);
+                if (pages > 5 && i === 2 && currentPage > 3) {
+                    const dots = document.createElement('span');
+                    dots.style = 'font-size:.78rem;color:#90adb8;padding:0 4px;';
+                    dots.textContent = '…';
+                    wrap.appendChild(dots);
+                    i = Math.max(i, currentPage - 1);
+                }
+            }
+        }
+
+        function goToPage(p) {
+            const pages = totalPages();
+            currentPage = Math.min(Math.max(1, p), pages);
+            applyFilters();
+        }
+        function prevPage() { goToPage(currentPage - 1); }
+        function nextPage() { goToPage(currentPage + 1); }
+        function changeRowsPerPage() { currentPage = 1; applyFilters(); }
+
+        // init
+        document.addEventListener('DOMContentLoaded', () => applyFilters());
+    </script>
+}

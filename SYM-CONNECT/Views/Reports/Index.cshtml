@@ -160,6 +160,9 @@
                 <div class="icon-sm"><i class="bi bi-table"></i></div>
                 <div>
                     <h6>Members per Group</h6>
+                
+
+
                     <small>Distribution across all groups</small>
                 </div>
             </div>
@@ -237,6 +240,9 @@
                     <h6>Leaders Overview</h6>
                     <small>Leaders and their assigned groups</small>
                 </div>
+                <a asp-action="LeaderReport" asp-controller="Reports" class="btn-export">
+                    <i class="bi bi-person-badge-fill"></i> View Leaders Report
+                </a>
             </div>
             <div style="overflow-x:auto;">
                 <table class="user-table">
@@ -304,6 +310,9 @@
                     <h6>Members per Group</h6>
                     <small>Bar chart comparison</small>
                 </div>
+                <a asp-action="GroupReport" asp-controller="Reports" class="btn-add-user" style="text-decoration:none;">
+                    <i class="bi bi-diagram-3-fill"></i> View Group Reports
+                </a>
             </div>
             <div class="chart-body">
                 <div class="chart-wrap">
@@ -348,6 +357,9 @@
                            onchange="filterDoneByDate()"
                            style="max-width:200px;">
                 </div>
+                <a asp-action="EventsReport" asp-controller="Reports" class="btn-add-user" style="text-decoration:none;">
+                    <i class="bi bi-people"></i> View Events Reports
+                </a>
             </div>
             <div style="overflow-x:auto;">
 

@@ -28,6 +28,8 @@ namespace SYM_CONNECT.Models
 
         //if set to  inactive
         public DateTime? InactiveAt { get; set; } //default to false if not inactive
+                                                  // In Users.cs — add this:
+        public ICollection<Attendance>? Attendances { get; set; } //for history attendances
 
     }
 }

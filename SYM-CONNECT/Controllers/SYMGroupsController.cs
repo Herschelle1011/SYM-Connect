@@ -106,33 +106,51 @@ namespace SYM_CONNECT.Controllers
             return View(sYMGroup); //RETURN VIEW
         }
 
-        // POST: SYMGroups/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id,
-            [Bind("GroupId,Name,Region,SubRegion,Status,LeaderId")] SYMGroup sYMGroup)
+       [Bind("GroupId,Name,Region,SubRegion,Status,LeaderId")] SYMGroup sYMGroup)
         {
-            var ifLeader = _context.Users.Where(u => u.Role == "Leader"); //GET LEADERS
+            var ifLeader = _context.Users.Where(u => u.Role == "Leader");
 
             if (id != sYMGroup.GroupId)
-                return NotFound(); //ID MISMATCH
+                return NotFound();
 
-            if (ModelState.IsValid) //CHECK VALIDATION
+            if (ModelState.IsValid)
             {
                 try
                 {
-                    var existing = await _context.SYMGroup.FindAsync(id); //GET EXISTING GROUP
+                    var existing = await _context.SYMGroup
+                        .Include(g => g.GroupMembers)  // INCLUDE MEMBERS
+                        .FirstOrDefaultAsync(g => g.GroupId == id);
 
                     if (existing == null) return NotFound();
 
-                    //UPDATE FIELDS
+                    // IF BEING SET TO INACTIVE — REMOVE ALL MEMBERS FIRST
+                    if (sYMGroup.Status == "Inactive" && existing.Status == "Active")
+                    {
+                        var members = existing.GroupMembers.ToList();
+
+                        if (members.Any())
+                        {
+                            _context.GroupMembers.RemoveRange(members);  // UNASSIGN ALL MEMBERS
+                            await _context.SaveChangesAsync();           // SAVE REMOVAL FIRST
+                        }
+
+                        TempData["Success"] = $"'{existing.Name}' set to Inactive and {members.Count} member(s) unassigned.";
+                    }
+                    else
+                    {
+                        TempData["Success"] = $"'{existing.Name}' updated successfully.";
+                    }
+
+                    // UPDATE FIELDS
                     existing.Name = sYMGroup.Name;
                     existing.Region = sYMGroup.Region;
                     existing.SubRegion = sYMGroup.SubRegion;
                     existing.Status = sYMGroup.Status;
                     existing.LeaderId = sYMGroup.LeaderId;
 
-                    //SAVE CHANGES
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -143,12 +161,10 @@ namespace SYM_CONNECT.Controllers
                         throw;
                 }
 
-                return RedirectToAction(nameof(Index)); //GO BACK
+                return RedirectToAction(nameof(Index));
             }
 
-            //IF ERROR RELOAD DROPDOWN
             ViewData["LeaderId"] = new SelectList(ifLeader, "Id", "FullName");
-
             return View(sYMGroup);
         }
 

@@ -114,6 +114,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxVc2VyTWFuYWdlbWVudC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Reports/Attendees.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0c1xBdHRlbmRlZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Reports/EventsReports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0c1xFdmVudHNSZXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Reports/ExportPDF.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0c1xFeHBvcnRQREYuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -124,6 +132,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Reports/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0c1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Reports/LeaderReports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0c1xMZWFkZXJSZXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Herschelle/Downloads/SYM-Connect/SYM-Connect/SYM-CONNECT/Views/Shared/Error.cshtml]

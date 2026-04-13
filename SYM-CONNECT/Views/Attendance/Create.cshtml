@@ -45,8 +45,8 @@
                         </label>
 
                         <!-- DROPDOWN FROM ViewBag.MemberId -->
-                        <select asp-for="UserId" class="form-select themed-input" asp-items="ViewBag.MemberId">
-                            <option value="" disabled>-- Select User --</option>
+                        <select id="UserId" class="form-select themed-input" name="UserId" asp-for="UserId" asp-items="@(ViewData["MemberId"] as SelectList)">
+                            <option value="">-- Select Member --</option>
                         </select>
 
                         <span asp-validation-for="UserId" class="text-danger small"></span>
@@ -59,9 +59,11 @@
                         </label>
 
                         <!-- DROPDOWN FROM ViewBag.EventList -->
-                        <select asp-for="EventId" class="form-select themed-input" asp-items="@ViewBag.EventList">
-                            <option value="" disabled>-- Select Event --</option>
+                        <select id="EventId" asp-for="EventId" name="EventId" class="form-select themed-input" asp-items="@(ViewData["EventList"] as SelectList)"
+                                onchange="loadMembers(this.value)">
+                            <option value="">-- Select Event --</option>
                         </select>
+
 
                         <span asp-validation-for="EventId" class="text-danger small"></span>
                     </div>
@@ -158,5 +160,40 @@
         //RUN IMMEDIATELY + LOOP
         updateClock();
         setInterval(updateClock, 1); //REALTIME UPDATE
+
+
+        function loadMembers(eventId) {
+    if (!eventId) {
+        // CLEAR DROPDOWN IF NO EVENT SELECTED
+        const select = document.getElementById('UserId');
+        select.innerHTML = '<option value="">-- Select Member --</option>';
+        return;
+    }
+
+    fetch(`/Attendance/GetMembersByEvent?eventId=${eventId}`)
+        .then(res => res.json())
+        .then(members => {
+            const select = document.getElementById('UserId');
+            select.innerHTML = '<option value="">-- Select Member --</option>';
+
+            if (members.length === 0) {
+                select.innerHTML += '<option disabled>No members found for this event</option>';
+                return;
+            }
+
+            members.forEach(m => {
+                select.innerHTML += `<option value="${m.id}">${m.display}</option>`;
+            });
+        })
+        .catch(() => {
+            console.error('Failed to load members');
+        });
+}
+
+// ON PAGE LOAD — if event is already selected (e.g. after validation fail), reload members
+document.addEventListener('DOMContentLoaded', () => {
+    const eventId = document.getElementById('EventId').value;
+    if (eventId) loadMembers(eventId);
+});
     </script>
 }
