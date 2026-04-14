@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SYM-CONNECT")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cb0a95cdea904a673ef6f17c39b12f9b3cfb6f54")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+94ceb02790a565306d3cb5a63206eceed6a1df71")]
 [assembly: System.Reflection.AssemblyProductAttribute("SYM-CONNECT")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SYM-CONNECT")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

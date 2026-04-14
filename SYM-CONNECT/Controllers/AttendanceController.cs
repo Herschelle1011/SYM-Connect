@@ -24,10 +24,26 @@ namespace SYM_CONNECT.Controllers
         }
 
         // GET: Attendance
-        public async Task<IActionResult> Index()
-        { 
-            var appDbContext = _context.Attendances.Include(a => a.Event).Include(a => a.User);  //get attendace and include  events and user
-            return View(await appDbContext.ToListAsync()); //using await async to load attendance   
+        public async Task<IActionResult> Index(int? day, int? month, int? year)
+        {
+            var query = _context.Attendances
+       .Include(a => a.User)
+       .Include(a => a.Event)
+       .AsQueryable();
+
+            if (day.HasValue) query = query.Where(a => a.AttendanceDate.Day == day.Value);
+            if (month.HasValue) query = query.Where(a => a.AttendanceDate.Month == month.Value);
+            if (year.HasValue) query = query.Where(a => a.AttendanceDate.Year == year.Value);
+
+            // Store selected filters for the view
+            ViewBag.SelectedDay = day;
+            ViewBag.SelectedMonth = month;
+            ViewBag.SelectedYear = year;
+
+
+           
+            return View(await query.ToListAsync());
+
         }
 
         // GET: Attendance/Details/5

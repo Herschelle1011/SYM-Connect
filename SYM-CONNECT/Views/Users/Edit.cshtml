@@ -37,12 +37,22 @@
                 <div class="row g-3">
 
                     <!-- Full Name -->
+                    <!-- First Name -->
                     <div class="col-md-6">
-                        <label asp-for="FullName" class="form-label field-label">
-                            <i class="bi bi-person me-1 text-muted"></i>Full Name <span class="text-danger">*</span>
+                        <label asp-for="FirstName" class="form-label field-label">
+                            <i class="bi bi-person me-1 text-muted"></i>First Name <span class="text-danger">*</span>
                         </label>
-                        <input asp-for="FullName" class="form-control themed-input" placeholder="Enter full name" />
-                        <span asp-validation-for="FullName" class="text-danger small"></span>
+                        <input asp-for="FirstName" class="form-control themed-input" placeholder="Enter first name" />
+                        <span asp-validation-for="FirstName" class="text-danger small"></span>
+                    </div>
+
+                    <!-- Last Name -->
+                    <div class="col-md-6">
+                        <label asp-for="LastName" class="form-label field-label">
+                            <i class="bi bi-person me-1 text-muted"></i>Last Name <span class="text-danger">*</span>
+                        </label>
+                        <input asp-for="LastName" class="form-control themed-input" placeholder="Enter last name" />
+                        <span asp-validation-for="LastName" class="text-danger small"></span>
                     </div>
 
                     <!-- Email -->

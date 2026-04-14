@@ -612,7 +612,29 @@
                 <option value="@g.GroupId" selected="@(g.GroupId == Model.GroupId)">@g.Name</option>
             }
         </select>
+
+        <select name="day" style="width:80px;">
+            <option value="">-- Day --</option>
+            @for (int d = 1; d <= 31; d++)
+            {
+                <option value="@d" selected="@(Model.SelectedYear == d)">@d</option>
+            }
+        </select>
+
+        <select name="month" style="width:110px;">
+            <option value="">-- Month --</option>
+            @{
+                var monthNames = new[] { "January","February","March","April","May","June",
+                                                                          "July","August","September","October","November","December" };
+            }
+            @for (int m = 1; m <= 12; m++)
+            {
+                <option value="@m" selected="@(Model.SelectedMonth == m)">@monthNames[m - 1]</option>
+            }
+        </select>
+
         <input type="number" name="year" value="@filterYear" min="2000" max="@DateTime.Now.Year" style="width:90px;" />
+
         <button type="submit" class="btn-go"><i class="bi bi-funnel-fill"></i> View</button>
     </form>
 

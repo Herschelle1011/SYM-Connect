@@ -65,7 +65,7 @@ namespace SYM_CONNECT.Controllers
             // Recent events for the table GET RECENT EVENTS
             var recentEventsQuery = _db.Events
                 .Include(e => e.AssignedGroups) //INCLUDE ASSIGNEDGROUPS
-                .Where(e => e.IsCancelled == false);
+    .Where(e => e.IsCancelled == false && e.EventDate < DateTime.Now);
             if (year.HasValue) recentEventsQuery = recentEventsQuery.Where(e => e.EventDate.Year == year.Value);
             if (month.HasValue) recentEventsQuery = recentEventsQuery.Where(e => e.EventDate.Month == month.Value);
             var recentEvents = await recentEventsQuery
@@ -221,7 +221,8 @@ namespace SYM_CONNECT.Controllers
  
             var user = new Users
             {
-                FullName = $"{model.FirstName} {model.LastName}",
+                FirstName = model.FirstName,
+                LastName = model.LastName,
                 Email = model.Email,
                 PasswordHash = model.Password,
                 Role = model.Role,

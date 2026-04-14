@@ -9,6 +9,7 @@ using SYM_CONNECT.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -28,32 +29,43 @@ namespace SYM_CONNECT.Controllers
 
         // GET: Events
         [HttpGet]
-        public async Task<IActionResult> Index(int? month, int? year) //SELECTED MONTH OR YEAR  CAN BE NULL
+        public async Task<IActionResult> Index(int? month, int? year, int? cancelDay, int? cancelMonth, int? cancelYear, int? day)
         {
+            //get events include 
             var eventsQuery = _context.Events
                 .Where(u => u.IsCancelled == false)
                 .Include(e => e.CreatedByUser)
                 .Include(e => e.ApprovedByUser)
-                .AsQueryable(); //GET EVENTS
+                .AsQueryable();
 
-            // Apply filters  IF  USER   SELECTED A MONTH OR A YEAR
-            if (month.HasValue)
-                eventsQuery = eventsQuery.Where(e => e.EventDate.Month == month.Value);
+            if (month.HasValue) eventsQuery = eventsQuery.Where(e => e.EventDate.Month == month.Value);
+            if (year.HasValue) eventsQuery = eventsQuery.Where(e => e.EventDate.Year == year.Value);
+            if (day.HasValue) eventsQuery = eventsQuery.Where(e => e.EventDate.Day == day.Value);
 
-            if (year.HasValue)
-                eventsQuery = eventsQuery.Where(e => e.EventDate.Year == year.Value); //SHOWS VALUE
+
+            // ── Cancelled events with their own filter ────────────────────────
+            var cancelledQuery = _context.Events
+                .Where(u => u.IsCancelled == true)
+                .AsQueryable();
+
+            //for filter month and year day purposes
+            if (cancelYear.HasValue) cancelledQuery = cancelledQuery.Where(e => e.CancelledAt.HasValue && e.CancelledAt.Value.Year == cancelYear.Value);
+            if (cancelMonth.HasValue) cancelledQuery = cancelledQuery.Where(e => e.CancelledAt.HasValue && e.CancelledAt.Value.Month == cancelMonth.Value);
+            if (cancelDay.HasValue) cancelledQuery = cancelledQuery.Where(e => e.CancelledAt.HasValue && e.CancelledAt.Value.Day == cancelDay.Value);
 
             var vm = new EventViewModel
             {
-                Events = await eventsQuery.ToListAsync(), //GET EVENT LISTS FROM THE VIEW MODEL
-                CancelledEvents = await _context.Events
-                    .Where(u => u.IsCancelled == true)
-                    .ToListAsync(),
-                SelectedMonth = month, //SELECTED MONTH 
-                SelectedYear = year //SELECTED YEAR
+                Events = await eventsQuery.ToListAsync(),
+                CancelledEvents = await cancelledQuery.ToListAsync(),
+                SelectedMonth = month,
+                SelectedYear = year,
+                SelectedDay = day,
+                CancelDay = cancelDay, //get day
+                CancelMonth = cancelMonth, //get month
+                CancelYear = cancelYear //get year
             };
 
-            return View(vm); //UPDATES VIEW FROM THE SELECTED MONTH/YEAR
+            return View(vm);
         }
 
         // GET: Events/Details/5
@@ -502,7 +514,7 @@ namespace SYM_CONNECT.Controllers
             getid.ApprovalStatus = "Pending";  //default  to pending 
 
             await _context.SaveChangesAsync();
-            TempData["Success"] = "Reactivated Successfully!";
+            TempData["Success"] = "Account Restored Successfully!";
             return RedirectToAction(nameof(Index));
 
         }

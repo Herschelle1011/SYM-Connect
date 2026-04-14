@@ -1,8 +1,17 @@
 @model IEnumerable<SYM_CONNECT.Models.Attendance>
 
 @{
-    ViewData["Title"] = "Attendance Management"; //PAGE TITLE
-    Layout = "_Layout"; //MAIN LAYOUT
+    ViewData["Title"] = "Attendance Management";
+    Layout = "_Layout";
+
+    int? selDay = ViewBag.SelectedDay;
+    int? selMonth = ViewBag.SelectedMonth;
+    int? selYear = ViewBag.SelectedYear;
+
+    var monthNames = new[] {
+        "January","February","March","April","May","June",
+        "July","August","September","October","November","December"
+    };
 }
 
 <!-- HEADER -->
@@ -15,30 +24,103 @@
 <div class="card-table">
 
     <!-- TOOLBAR -->
-    <div class="toolbar">
+    <div class="toolbar" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:12px 16px;">
 
-        <!-- SEARCH INPUT -->
-        <div class="search-wrap">
-            <i class="bi bi-search"></i>
-            <input type="text"
-                   placeholder="Search"
-                   id="searchInput"
-                   oninput="filterTable()" /> <!--CALL JS FILTER-->
+        <!-- ── LEFT: Day / Month / Year Filter ───────────────────────── -->
+        <form method="get" asp-action="Index"
+              style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;flex:1;">
+
+            <select name="day"
+                    style="font-size:0.82rem;padding:5px 10px;border-radius:8px;
+                           border:1px solid #dee2e6;background:#fff;color:#344;min-width:75px;">
+                <option value="">-- Day --</option>
+                @for (int d = 1; d <= 31; d++)
+                {
+                    <option value="@d" selected="@(selDay == d)">@d</option>
+                }
+            </select>
+
+            <select name="month"
+                    style="font-size:0.82rem;padding:5px 10px;border-radius:8px;
+                           border:1px solid #dee2e6;background:#fff;color:#344;min-width:120px;">
+                <option value="">-- Month --</option>
+                @for (int m = 1; m <= 12; m++)
+                {
+                    <option value="@m" selected="@(selMonth == m)">@monthNames[m - 1]</option>
+                }
+            </select>
+
+            <select name="year"
+                    style="font-size:0.82rem;padding:5px 10px;border-radius:8px;
+                           border:1px solid #dee2e6;background:#fff;color:#344;min-width:85px;">
+                <option value="">-- Year --</option>
+                @for (int y = DateTime.Now.Year; y >= 2000; y--)
+                {
+                    <option value="@y" selected="@(selYear == y)">@y</option>
+                }
+            </select>
+
+            <button type="submit"
+                    style="background:#0ab5c4;color:#fff;border:none;
+                           border-radius:8px;padding:6px 16px;
+                           font-size:0.82rem;font-weight:600;cursor:pointer;">
+                <i class="bi bi-funnel-fill"></i> Filter
+            </button>
+
+            @if (selDay.HasValue || selMonth.HasValue || selYear.HasValue)
+            {
+                <a asp-action="Index"
+                   style="background:transparent;color:#6c757d;
+                              border:1px solid #dee2e6;border-radius:8px;
+                              padding:5px 14px;font-size:0.82rem;
+                              cursor:pointer;text-decoration:none;
+                              display:inline-flex;align-items:center;gap:4px;">
+                    <i class="bi bi-x-circle"></i> Clear
+                </a>
+
+                <!-- Active filter pill -->
+                <span style="background:#e8fafb;border:1px solid #0ab5c4;
+                                 color:#07869b;border-radius:20px;
+                                 padding:3px 12px;font-size:0.75rem;font-weight:600;
+                                 display:inline-flex;align-items:center;gap:5px;">
+                    <i class="bi bi-calendar3" style="font-size:0.7rem;"></i>
+                    @{
+                        var parts = new List<string>();
+                        if (selDay.HasValue) parts.Add($"Day {selDay}");
+                        if (selMonth.HasValue) parts.Add(monthNames[selMonth.Value - 1]);
+                        if (selYear.HasValue) parts.Add(selYear.ToString());
+                    }
+                    @string.Join(", ", parts)
+                </span>
+            }
+        </form>
+
+        <!-- ── RIGHT: Search + Export + Add ─────────────────────────── -->
+        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+
+            <!-- SEARCH -->
+            <div class="search-wrap">
+                <i class="bi bi-search"></i>
+                <input type="text"
+                       placeholder="Search"
+                       id="searchInput"
+                       oninput="filterTable()" />
+            </div>
+
+            <!-- EXPORT PDF -->
+            <a asp-action="ExportPDF"
+               asp-controller="Attendance"
+               class="btn-export">
+                <i class="bi bi-upload"></i> Export as PDF
+            </a>
+
+            <!-- ADD NEW -->
+            <a asp-action="Create"
+               class="btn-add-user"
+               style="text-decoration:none;">
+                <i class="bi bi-plus-circle-fill"></i> Add Attendance
+            </a>
         </div>
-
-        <!-- EXPORT PDF -->
-        <a asp-action="ExportPDF"
-           asp-controller="Attendance"
-           class="btn-export">
-            <i class="bi bi-upload"></i> Export as PDF
-        </a>
-
-        <!-- ADD NEW -->
-        <a asp-action="Create"
-           class="btn-add-user"
-           style="text-decoration:none;">
-            <i class="bi bi-plus-circle-fill"></i> Add Attendance
-        </a>
 
     </div>
 
@@ -46,7 +128,6 @@
     <div style="overflow-x:auto;">
         <table class="user-table" id="attendanceTable">
 
-            <!-- TABLE HEADER -->
             <thead>
                 <tr>
                     <th><i class="bi bi-calendar3"></i> Attendance Date</th>
@@ -57,88 +138,80 @@
                 </tr>
             </thead>
 
-            <!-- TABLE BODY -->
             <tbody id="tableBody">
 
-                @foreach (var item in Model)
+                @if (!Model.Any())
                 {
                     <tr>
-
-                        <!-- DATE -->
-                        <td>@Html.DisplayFor(modelItem => item.AttendanceDate)</td>
-
-                        <!-- POINTS -->
-                        <td>
-                            <span style="
-                                    background:#e8f4ff;
-                                    color:#3a7bd5;
-                                    border:1px solid #b8d4f8;
-                                    border-radius:20px;
-                                    padding:4px 14px;
-                                    font-size:.74rem;
-                                    font-weight:600;">
-                                <i class="bi bi-star-fill" style="font-size:.65rem;"></i>
-                                @Html.DisplayFor(modelItem => item.PointsEarned)
-                            </span>
-                        </td>
-
-                        <!-- USER -->
-                        <td>
-                            <span class="user-name-cell" style="gap:8px;">
-                                <img src="https://i.pravatar.cc/40"
-                                     alt=""
-                                     class="user-avatar" /> <!--STATIC AVATAR-->
-                                @Html.DisplayFor(modelItem => item.User.Email)
-                            </span>
-                        </td>
-
-                        <!-- EVENT -->
-                        <td style="max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
-                            @Html.DisplayFor(modelItem => item.Event.Title)
-                        </td>
-
-                        <!-- ACTIONS -->
-                        <td>
-
-                            <!-- EDIT -->
-                            <a asp-action="Edit"
-                               asp-route-id="@item.AttendanceId"
-                               asp-controller="Attendance"
-                               class="btn-action btn-edit"
-                               style="text-decoration:none;">
-                                <i class="bi bi-pencil"></i> Edit
-                            </a>
-
-                            <!-- DETAILS -->
-                            <a asp-action="Details"
-                               asp-route-id="@item.AttendanceId"
-                               class="btn-action btn-arc ms-1"
-                               style="text-decoration:none;">
-                                <i class="bi bi-eye"></i> Details
-                            </a>
-
-                            <!-- DELETE BUTTON (OPENS MODAL) -->
-                            <button type="button"
-                                    onclick="openDeleteArchiveModal(@item.AttendanceId, '@item.User?.FullName', '@item.Event?.Title', @item.PointsEarned)"
-                                    class="btn-action ms-1"
-                                    style="text-decoration:none;color:#e74c3c;border-color:#f5c0b8;
-                                               background:#fff5f5;border-radius:7px;padding:5px 12px;
-                                               font-size:.75rem;font-weight:500;display:inline-flex;
-                                               align-items:center;gap:4px;border:1px solid #f5c0b8;cursor:pointer;">
-                                <i class="bi bi-archive"></i> Delete
-                            </button>
-
+                        <td colspan="5"
+                            style="text-align:center;padding:28px;
+                                       color:#9ca3af;font-size:13px;font-style:italic;">
+                            <i class="bi bi-calendar-x me-2"></i>
+                            No attendance records found
+                            @if (selDay.HasValue || selMonth.HasValue || selYear.HasValue)
+                            {
+                                <span>for the selected period.</span>
+                            }
                         </td>
                     </tr>
                 }
+                else
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.AttendanceDate)</td>
+                            <td>
+                                <span style="background:#e8f4ff;color:#3a7bd5;
+                                                     border:1px solid #b8d4f8;border-radius:20px;
+                                                     padding:4px 14px;font-size:.74rem;font-weight:600;">
+                                    <i class="bi bi-star-fill" style="font-size:.65rem;"></i>
+                                    @Html.DisplayFor(modelItem => item.PointsEarned)
+                                </span>
+                            </td>
+                            <td>
+                                <span class="user-name-cell" style="gap:8px;">
+                                    <img src="https://i.pravatar.cc/40" alt="" class="user-avatar" />
+                                    @Html.DisplayFor(modelItem => item.User.Email)
+                                </span>
+                            </td>
+                            <td style="max-width:200px;white-space:nowrap;
+                                               overflow:hidden;text-overflow:ellipsis;">
+                                @Html.DisplayFor(modelItem => item.Event.Title)
+                            </td>
+                            <td>
+                                <a asp-action="Edit"
+                                   asp-route-id="@item.AttendanceId"
+                                   asp-controller="Attendance"
+                                   class="btn-action btn-edit"
+                                   style="text-decoration:none;">
+                                    <i class="bi bi-pencil"></i> Edit
+                                </a>
+                                <a asp-action="Details"
+                                   asp-route-id="@item.AttendanceId"
+                                   class="btn-action btn-arc ms-1"
+                                   style="text-decoration:none;">
+                                    <i class="bi bi-eye"></i> Details
+                                </a>
+                                <button type="button"
+                                        onclick="openDeleteArchiveModal(@item.AttendanceId, '@item.User?.FullName', '@item.Event?.Title', @item.PointsEarned)"
+                                        class="btn-action ms-1"
+                                        style="text-decoration:none;color:#e74c3c;border-color:#f5c0b8;
+                                                       background:#fff5f5;border-radius:7px;padding:5px 12px;
+                                                       font-size:.75rem;font-weight:500;display:inline-flex;
+                                                       align-items:center;gap:4px;border:1px solid #f5c0b8;cursor:pointer;">
+                                    <i class="bi bi-archive"></i> Delete
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
 
-                <!-- NO RESULTS ROW -->
                 <tr id="noSearchResults" style="display:none;">
-                    <td colspan="6"
-                        style="text-align:center;padding:20px;
-                               color:#888;font-size:13px;">
+                    <td colspan="5"
+                        style="text-align:center;padding:20px;color:#888;font-size:13px;">
                         <i class="bi bi-search me-1"></i>
-                        No users found matching your search.
+                        No attendance records found matching your search.
                     </td>
                 </tr>
 
@@ -148,8 +221,6 @@
 
     <!-- FOOTER / PAGINATION -->
     <div class="table-footer">
-
-        <!-- ROW COUNT -->
         <div class="rows-info">
             Rows per page
             <select>
@@ -158,10 +229,8 @@
                 <option>25</option>
                 <option>50</option>
             </select>
-            &nbsp; 1–5 of @Model.Count() rows
+            &nbsp; 1–@Model.Count() of @Model.Count() rows
         </div>
-
-        <!-- PAGINATION BUTTONS (UI ONLY) -->
         <div class="pagination-btns">
             <button class="pg-btn" title="First"><i class="bi bi-chevron-double-left"></i></button>
             <button class="pg-btn" title="Prev"><i class="bi bi-chevron-left"></i></button>
@@ -173,12 +242,10 @@
         </div>
     </div>
 
-    <!-- DELETE MODAL -->
+    <!-- DELETE MODAL (unchanged) -->
     <div class="modal fade" id="archiveDeleteModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow">
-
-                <!-- MODAL HEADER -->
                 <div class="modal-header bg-danger text-white">
                     <h5 class="modal-title">
                         <i class="bi bi-archive me-2"></i>Delete Attendance Record
@@ -186,45 +253,30 @@
                     <button type="button" class="btn-close btn-close-white"
                             data-bs-dismiss="modal"></button>
                 </div>
-
-                <!-- MODAL BODY -->
                 <div class="modal-body">
-
-                    <!-- USER -->
                     <p class="mb-1">You are about to delete the attendance of:</p>
                     <h6 class="fw-bold" id="modalUserName">—</h6>
-
-                    <!-- EVENT -->
                     <p class="mb-1 mt-2">Event:</p>
                     <h6 class="fw-bold" id="modalEventTitle">—</h6>
-
-                    <!-- POINT WARNING -->
                     <div class="alert alert-warning mt-3 mb-0 d-flex align-items-center gap-2">
                         <i class="bi bi-exclamation-triangle-fill"></i>
-                        <span>
-                            <strong id="modalPoints">0</strong> points will be deducted.
-                        </span>
+                        <span><strong id="modalPoints">0</strong> points will be deducted.</span>
                     </div>
                 </div>
-
-                <!-- MODAL FOOTER -->
                 <div class="modal-footer">
-
-                    <!-- CANCEL -->
                     <button type="button" class="btn btn-secondary"
                             data-bs-dismiss="modal">
                         Cancel
                     </button>
-
-                    <!-- DELETE FORM -->
                     <form id="archiveDeleteForm" method="post">
-                        @Html.AntiForgeryToken() <!--SECURITY-->
+                        @Html.AntiForgeryToken()
                         <button type="submit" class="btn btn-danger">
                             <i class="bi bi-trash me-1"></i>Confirm Delete
                         </button>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>
+
+</div>

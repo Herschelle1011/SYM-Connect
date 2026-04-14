@@ -21,6 +21,17 @@
 
 <form method="get" asp-action="Index" class="filter-bar" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:1.25rem;">
 
+    <select name="day"
+            style="font-size:0.78rem;padding:4px 8px;border-radius:7px;
+                       border:1px solid var(--teal-mid);background:#fff;
+                       color:var(--teal-dark);min-width:70px;">
+        <option value="">-- Day --</option>
+        @for (int d = 1; d <= 31; d++)
+        {
+            <option value="@d">@d</option>
+        }
+    </select>
+
     <select name="month"
             style="font-size:0.82rem;padding:5px 10px;border-radius:8px;
                border:1px solid #dee2e6;background:#fff;color:#344;">
@@ -429,32 +440,77 @@
             <!-- HEADER -->
             <div class="modal-header"
                  style="background:var(--teal-light);
-                        border-bottom:1px solid var(--teal-mid);
-                        padding:14px 20px;flex-direction:column;
-                        align-items:stretch;gap:10px;">
+            border-bottom:1px solid var(--teal-mid);
+            padding:14px 20px;flex-direction:column;
+            align-items:stretch;gap:10px;">
 
                 <!-- Title row -->
-                <div class="d-flex align-items-center
-                            justify-content-between">
+                <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex align-items-center gap-2">
-                        <i class="bi bi-archive"
-                           style="color:var(--teal-dark);
-                                  font-size:15px;"></i>
+                        <i class="bi bi-archive" style="color:var(--teal-dark);font-size:15px;"></i>
                         <h5 class="modal-title mb-0"
-                            style="font-size:15px;font-weight:700;
-                                   color:var(--teal-dark);">
-                            Cancelled events
+                            style="font-size:15px;font-weight:700;color:var(--teal-dark);">
+                            Cancelled Events
                         </h5>
-                        <span style="background:#e53e3e;color:#fff;
-                                     font-size:11px;font-weight:700;
-                                     padding:2px 8px;
-                                     border-radius:12px;">
+                        <span id="cancelledCount"
+                              style="background:#e53e3e;color:#fff;font-size:11px;
+                         font-weight:700;padding:2px 8px;border-radius:12px;">
                             @(Model.CancelledEvents?.Count() ?? 0)
                         </span>
                     </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Day / Month / Year CLIENT-SIDE filter -->
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+
+                    <select id="cancelDayFilter"
+                            onchange="filterCancelledRows()"
+                            style="font-size:0.78rem;padding:4px 8px;border-radius:7px;
+                       border:1px solid var(--teal-mid);background:#fff;
+                       color:var(--teal-dark);min-width:70px;">
+                        <option value="">-- Day --</option>
+                        @for (int d = 1; d <= 31; d++)
+                        {
+                            <option value="@d">@d</option>
+                        }
+                    </select>
+
+                    <select id="cancelMonthFilter"
+                            onchange="filterCancelledRows()"
+                            style="font-size:0.78rem;padding:4px 8px;border-radius:7px;
+                       border:1px solid var(--teal-mid);background:#fff;
+                       color:var(--teal-dark);min-width:110px;">
+                        <option value="">-- Month --</option>
+                        @{
+                            var cMonths = new[] { "January","February","March","April","May","June",
+                                                                            "July","August","September","October","November","December" };
+                        }
+                        @for (int m = 1; m <= 12; m++)
+                        {
+                            <option value="@m">@cMonths[m - 1]</option>
+                        }
+                    </select>
+
+                    <select id="cancelYearFilter"
+                            onchange="filterCancelledRows()"
+                            style="font-size:0.78rem;padding:4px 8px;border-radius:7px;
+                       border:1px solid var(--teal-mid);background:#fff;
+                       color:var(--teal-dark);min-width:80px;">
+                        <option value="">-- Year --</option>
+                        @for (int y = DateTime.Now.Year; y >= 2000; y--)
+                        {
+                            <option value="@y">@y</option>
+                        }
+                    </select>
+
                     <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal">
+                            onclick="clearCancelFilter()"
+                            style="background:transparent;color:#6c757d;
+                       border:1px solid #dee2e6;border-radius:7px;
+                       padding:4px 12px;font-size:0.78rem;
+                       cursor:pointer;">
+                        <i class="bi bi-x-circle"></i> Clear
                     </button>
                 </div>
 
@@ -462,19 +518,18 @@
                 <div style="position:relative;">
                     <i class="bi bi-search"
                        style="position:absolute;left:10px;top:50%;
-                              transform:translateY(-50%);
-                              color:var(--teal-dark);
-                              font-size:12px;"></i>
+                  transform:translateY(-50%);
+                  color:var(--teal-dark);font-size:12px;"></i>
                     <input type="text"
                            id="cancelSearch"
                            placeholder="Search cancelled events..."
-                           oninput="filterCancelledRows(this.value)"
+                           oninput="filterCancelledRows()"
                            style="width:100%;box-sizing:border-box;
-                                  padding:7px 12px 7px 30px;
-                                  border:1px solid var(--teal-mid);
-                                  border-radius:8px;font-size:13px;
-                                  background:#f0fbf7;
-                                  color:var(--teal-dark);outline:none;">
+                      padding:7px 12px 7px 30px;
+                      border:1px solid var(--teal-mid);
+                      border-radius:8px;font-size:13px;
+                      background:#f0fbf7;
+                      color:var(--teal-dark);outline:none;">
                 </div>
             </div>
 
@@ -484,17 +539,14 @@
                         background:#f5fbfd;">
                 <div class="d-flex align-items-center gap-2">
                     <div style="width:9px;height:9px;border-radius:50%;
-                                background:#22c55e;flex-shrink:0;">
-                    </div>
+                                background:#22c55e;flex-shrink:0;"></div>
                     <small style="color:var(--text-muted);font-weight:500;">
                         Reactivate — soft delete restore
-
                     </small>
                 </div>
                 <div class="d-flex align-items-center gap-2">
                     <div style="width:9px;height:9px;border-radius:50%;
-                                background:#ef4444;flex-shrink:0;">
-                    </div>
+                                background:#ef4444;flex-shrink:0;"></div>
                     <small style="color:var(--text-muted);font-weight:500;">
                         Delete — permanent hard delete
                     </small>
@@ -504,22 +556,28 @@
             <!-- BODY -->
             <div class="modal-body" style="padding:12px 16px;">
 
-                @if (Model.CancelledEvents == null
-                                || !Model.CancelledEvents.Any())
+                @if (Model.CancelledEvents == null || !Model.CancelledEvents.Any())
                 {
                     <p class="text-muted text-center py-3">
-                        No cancelled events found.
+                        @if (Model.CancelDay.HasValue || Model.CancelMonth.HasValue || Model.CancelYear.HasValue)
+                        {
+                            <span>No cancelled events found for the selected period.</span>
+                        }
+                        else
+                        {
+                            <span>No cancelled events found.</span>
+                        }
                     </p>
                 }
                 else
                 {
-                    <div class="d-flex flex-column gap-2"
-                         id="cancelledEventList">
+                    <div class="d-flex flex-column gap-2" id="cancelledEventList">
 
                         @foreach (var ev in Model.CancelledEvents)
                         {
                             <div class="cancelled-row"
                                  data-title="@ev.Title.ToLower()"
+                                 data-cancelled-at="@(ev.CancelledAt.HasValue? ev.CancelledAt.Value.ToString("yyyy-MM-dd") : "")"
                                  style="display:flex;align-items:center;
                                                 justify-content:space-between;
                                                 padding:11px 14px;
@@ -530,105 +588,54 @@
 
                                 <!-- Left: info -->
                                 <div style="flex:1;min-width:0;">
-                                    <div style="font-size:13.5px;
-                                                        font-weight:700;
-                                                        color:var(--teal-dark);
-                                                        white-space:nowrap;
-                                                        overflow:hidden;
-                                                        text-overflow:ellipsis;">
+                                    <div style="font-size:13.5px;font-weight:700;
+                                                        color:var(--teal-dark);white-space:nowrap;
+                                                        overflow:hidden;text-overflow:ellipsis;">
                                         @ev.Title
                                     </div>
-
-                                    <!-- Event date -->
-                                    <div class="d-flex align-items-center
-                                                        gap-1 mt-1">
-                                        <i class="bi bi-calendar3"
-                                           style="font-size:10px;
-                                                          color:var(--teal-dark);">
-                                        </i>
-                                        <span style="font-size:11px;
-                                                             color:var(--teal-dark);
-                                                             font-weight:500;">
-                                            Event:
-                                            @ev.EventDate.ToString("M/d/yyyy h:mm:ss tt")
+                                    <div class="d-flex align-items-center gap-1 mt-1">
+                                        <i class="bi bi-calendar3" style="font-size:10px;color:var(--teal-dark);"></i>
+                                        <span style="font-size:11px;color:var(--teal-dark);font-weight:500;">
+                                            Event: @ev.EventDate.ToString("M/d/yyyy h:mm:ss tt")
                                         </span>
                                     </div>
-
-                                    <!-- Cancelled date -->
-                                    <div class="d-flex align-items-center
-                                                        gap-1 mt-1">
-                                        <i class="bi bi-clock-history"
-                                           style="font-size:10px;
-                                                          color:#e53e3e;">
-                                        </i>
-                                        <span style="font-size:11px;
-                                                             color:#e53e3e;
-                                                             font-weight:500;">
-                                            Cancelled:
-                                            @(ev.CancelledAt.HasValue
-                                         ? ev.CancelledAt.Value
-                                        .ToString("MMM dd, yyyy h:mm tt")
-                                      : "Date not recorded")
-
+                                    <div class="d-flex align-items-center gap-1 mt-1">
+                                        <i class="bi bi-clock-history" style="font-size:10px;color:#e53e3e;"></i>
+                                        <span style="font-size:11px;color:#e53e3e;font-weight:500;">
+                                            Cancelled: @(ev.CancelledAt.HasValue
+                                                                                ? ev.CancelledAt.Value.ToString("MMM dd, yyyy h:mm tt")
+                                                                        : "Date not recorded")
                                         </span>
                                     </div>
                                 </div>
 
                                 <!-- Right: buttons -->
-                                <div class="d-flex align-items-center
-                                                    gap-2 flex-shrink-0">
-
-                                    <!-- Reactivate -->
-                                    <form asp-action="Reactivate"
-                                          asp-route-id="@ev.EventId"
-                                          method="post"
-                                          style="display:inline;">
+                                <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                                    <form asp-action="Reactivate" asp-route-id="@ev.EventId"
+                                          method="post" style="display:inline;">
                                         @Html.AntiForgeryToken()
-                                        <button type="submit"
-                                                title="Reactivate"
-                                                style="width:33px;height:33px;
-                                                               border-radius:8px;
-                                                               background:#16a34a;
-                                                               border:none;
-                                                               cursor:pointer;
-                                                               display:flex;
-                                                               align-items:center;
-                                                               justify-content:center;">
-                                            <i class="bi bi-arrow-counterclockwise"
-                                               style="color:#fff;
-                                                              font-size:14px;">
-                                            </i>
+                                        <button type="submit" title="Reactivate"
+                                                style="width:33px;height:33px;border-radius:8px;
+                                                               background:#16a34a;border:none;cursor:pointer;
+                                                               display:flex;align-items:center;justify-content:center;">
+                                            <i class="bi bi-arrow-counterclockwise" style="color:#fff;font-size:14px;"></i>
                                         </button>
                                     </form>
 
-                                    <!-- Delete -->
-                                    <button onclick="openDeleteModal(
-                                                        @ev.EventId,
-                                                        '@Html.Raw(ev.Title
-                                                                                                .Replace("'", "\\'"))')"
-                                    style="display:flex;
-                                                   align-items:center;
-                                                   gap:5px;
-                                                   padding:7px 13px;
-                                                   background:#ef4444;
-                                                   color:#fff;border:none;
-                                                   border-radius:8px;
-                                                   font-size:12px;
-                                                   font-weight:600;
-                                                   cursor:pointer;">
-                                <i class="bi bi-trash"
-                                   style="font-size:12px;"></i>
-                                Delete
-                            </button>
-                        </div>
-                    </div>
-                                        }
+                                    <button onclick="openDeleteModal(@ev.EventId, '@Html.Raw(ev.Title.Replace("'", "\\'"))')"
+                                            style="display:flex;align-items:center;gap:5px;
+                                                           padding:7px 13px;background:#ef4444;color:#fff;
+                                                           border:none;border-radius:8px;font-size:12px;
+                                                           font-weight:600;cursor:pointer;">
+                                        <i class="bi bi-trash" style="font-size:12px;"></i> Delete
+                                    </button>
+                                </div>
+                            </div>
+                        }
 
-                        <!-- No search results -->
                         <p id="noCancelResults"
-                           style="display:none;text-align:center;
-                                      font-size:13px;color:#888;
-                                      padding:16px 0;margin:0;">
+                           style="display:none;text-align:center;font-size:13px;
+                                      color:#888;padding:16px 0;margin:0;">
                             No cancelled events match your search.
                         </p>
                     </div>
@@ -639,12 +646,10 @@
             <div class="modal-footer"
                  style="border-top:1px solid var(--teal-light);
                         padding:11px 20px;background:#fafeff;">
-                <button type="button"
-                        data-bs-dismiss="modal"
-                        style="background:#5f6b7a;color:#fff;
-                               border:none;padding:7px 20px;
-                               border-radius:8px;font-size:13px;
-                               font-weight:600;cursor:pointer;">
+                <button type="button" data-bs-dismiss="modal"
+                        style="background:#5f6b7a;color:#fff;border:none;
+                               padding:7px 20px;border-radius:8px;
+                               font-size:13px;font-weight:600;cursor:pointer;">
                     Close
                 </button>
             </div>
@@ -652,7 +657,6 @@
         </div>
     </div>
 </div>
-
 
 
 <!-- Delete Confirmation Modal -->

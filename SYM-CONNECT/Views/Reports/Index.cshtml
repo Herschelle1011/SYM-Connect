@@ -6,7 +6,82 @@
     var groupLabels = string.Join(",", Model.Groups.Select(g => $"'{g.Name}'"));
     var groupCounts = string.Join(",", Model.Groups.Select(g => g.GroupMembers.Count));
     var monthlyData = string.Join(",", Model.EventsPerMonth);
+
+    var monthNames = new[] {
+        "January","February","March","April","May","June",
+        "July","August","September","October","November","December"
+    };
+
+    string timeframeLabel = (Model.SelectedDay.HasValue && Model.SelectedMonth.HasValue && Model.SelectedYear.HasValue)
+        ? $"{monthNames[Model.SelectedMonth.Value - 1]} {Model.SelectedDay.Value}, {Model.SelectedYear.Value}"
+        : (Model.SelectedMonth.HasValue && Model.SelectedYear.HasValue)
+            ? $"{monthNames[Model.SelectedMonth.Value - 1]} {Model.SelectedYear.Value}"
+            : Model.SelectedYear.HasValue ? $"All of {Model.SelectedYear.Value}"
+            : Model.SelectedMonth.HasValue ? $"{monthNames[Model.SelectedMonth.Value - 1]} (all years)"
+            : "All time";
 }
+
+<style>
+    .filter-bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 1.25rem;
+    }
+
+        .filter-bar select {
+            font-size: 0.82rem;
+            padding: 5px 10px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            background: #fff;
+            color: #344;
+        }
+
+    .btn-filter {
+        background: #0ab5c4;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 6px 16px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+        .btn-filter:hover {
+            background: #07869b;
+        }
+
+    .btn-clear {
+        background: transparent;
+        color: #6c757d;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 5px 14px;
+        font-size: 0.82rem;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+        .btn-clear:hover {
+            background: #f8f9fa;
+        }
+
+    .timeframe-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #e8fafb;
+        border: 1px solid #0ab5c4;
+        color: #07869b;
+        border-radius: 20px;
+        padding: 4px 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+</style>
 
 <div class="container-fluid px-4 py-4">
 
@@ -15,55 +90,56 @@
         <div>
             <h1 class="page-title">
                 <i class="bi bi-bar-chart-line-fill me-2"></i>Reports
+                &nbsp;<span class="timeframe-pill">
+                    <i class="bi bi-calendar3"></i> @timeframeLabel
+                </span>
             </h1>
             <p class="page-subtitle">Overview of members, leaders, groups, and events.</p>
         </div>
 
-
-        <!-- Export -->
-        <a asp-action="ExportPDF"
-           asp-controller="Reports"
-           class="btn-export">
+        <a asp-action="ExportPDF" asp-controller="Reports" class="btn-export">
             <i class="bi bi-upload"></i> Export as PDF
         </a>
-
-
-
-        <!-- Month + Year Filter -->
-<form method="get" asp-action="Index" class="d-flex align-items-center gap-2 flex-wrap">
-    <select name="month" class="form-select form-select-sm" style="width:auto;">
-        <option value="">-- Month --</option>
-        @{
-            var months = new[] { "January","February","March","April","May","June",
-                                 "July","August","September","October","November","December" };
-            for (int m = 1; m <= 12; m++)
-            {
-                        <option value="@m" selected="@(Model.SelectedMonth == m)">@months[m - 1]</option>
-            }
-        }
-    </select>
-
-    <select name="year" class="form-select form-select-sm" style="width:auto;">
-        <option value="">-- Year --</option>
-        @for (int y = DateTime.Now.Year; y >= 2000; y--)
-        {
-                    <option value="@y" selected="@(Model.SelectedYear == y)">@y</option>
-                }
-    </select>
-
-    <button type="submit" class="btn btn-sm btn-primary">
-        <i class="bi bi-funnel-fill"></i> Filter
-    </button>
-
-    @if (Model.SelectedMonth.HasValue || Model.SelectedYear.HasValue)
-    {
-        <a asp-action="Index" class="btn btn-sm btn-outline-secondary">
-            <i class="bi bi-x-circle"></i> Clear
-        </a>
-    }
-</form>
     </div>
 
+    <!-- Day + Month + Year Filter -->
+    <form method="get" asp-action="Index" class="filter-bar">
+
+        <select name="day">
+            <option value="">-- Day --</option>
+            @for (int d = 1; d <= 31; d++)
+            {
+                <option value="@d" selected="@(Model.SelectedDay == d)">@d</option>
+            }
+        </select>
+
+        <select name="month">
+            <option value="">-- Month --</option>
+            @for (int m = 1; m <= 12; m++)
+            {
+                <option value="@m" selected="@(Model.SelectedMonth == m)">@monthNames[m - 1]</option>
+            }
+        </select>
+
+        <select name="year">
+            <option value="">-- Year --</option>
+            @for (int y = DateTime.Now.Year; y >= 2000; y--)
+            {
+                <option value="@y" selected="@(Model.SelectedYear == y)">@y</option>
+            }
+        </select>
+
+        <button type="submit" class="btn-filter">
+            <i class="bi bi-funnel-fill"></i> Filter
+        </button>
+
+        @if (Model.SelectedDay.HasValue || Model.SelectedMonth.HasValue || Model.SelectedYear.HasValue)
+        {
+            <a asp-action="Index" class="btn-clear">
+                <i class="bi bi-x-circle"></i> Clear
+            </a>
+        }
+    </form>
 
 </div>
 
@@ -136,8 +212,7 @@
             </div>
             <div class="chart-body">
                 <div class="donut-row">
-                    <canvas id="memberDonut"
-                            style="max-width:150px;max-height:150px;"></canvas>
+                    <canvas id="memberDonut" style="max-width:150px;max-height:150px;"></canvas>
                     <ul class="legend-list">
                         <li>
                             <span class="legend-dot" style="background:#0ab5c4;"></span>
@@ -160,9 +235,6 @@
                 <div class="icon-sm"><i class="bi bi-table"></i></div>
                 <div>
                     <h6>Members per Group</h6>
-                
-
-
                     <small>Distribution across all groups</small>
                 </div>
             </div>
@@ -182,7 +254,6 @@
                         {
                             var initials = string.Concat(g.Name.Split(' ')
                             .Where(w => !string.IsNullOrEmpty(w))
-
                             .Take(2).Select(w => w[0]));
                             var count = g.GroupMembers.Count;
                             var fillPct = Model.MaxMembers > 0
@@ -200,8 +271,7 @@
                                     <div class="progress-wrap">
                                         <small class="text-muted">@fillPct%</small>
                                         <div class="progress-track">
-                                            <div class="progress-fill"
-                                                 style="width:@fillPct%"></div>
+                                            <div class="progress-fill" style="width:@fillPct%"></div>
                                         </div>
                                     </div>
                                 </td>
@@ -260,8 +330,7 @@
                             <tr>
                                 <td>
                                     <span class="user-name-cell">
-                                        <img src="https://i.pravatar.cc/40?u=@ld.Leader.Id"
-                                             class="user-avatar" />
+                                        <img src="https://i.pravatar.cc/40?u=@ld.Leader.Id" class="user-avatar" />
                                         @ld.Leader.FullName
                                     </span>
                                 </td>
@@ -350,7 +419,7 @@
                 <div class="icon-sm"><i class="bi bi-list-check"></i></div>
                 <div>
                     <h6>Recent Events</h6>
-                    <small>Latest event records</small>     
+                    <small>Latest event records</small>
                     <input type="date"
                            id="doneDateFilter"
                            class="form-control"
@@ -362,9 +431,6 @@
                 </a>
             </div>
             <div style="overflow-x:auto;">
-
-               
-
                 <table class="user-table">
                     <thead>
                         <tr>
@@ -377,19 +443,19 @@
                     <tbody id="doneTableBody">
                         @foreach (var ev in Model.RecentEvents)
                         {
-                            {
                             var groupName = ev.AssignedGroups.Any()
                             ? string.Join(", ", ev.AssignedGroups.Select(g => g.Name))
                             : "All Groups";
-                                var isDone = ev.EventDate < DateTime.Now;
-
+                            var isDone = ev.EventDate < DateTime.Now;
+                            if (isDone)
+                            {
                             <tr>
                                 <td>@ev.Title</td>
                                 <td>@groupName</td>
-                                    <td data-date="@ev.EventDate.ToString("yyyy-MM-dd")">
-                                        @ev.EventDate.ToString("MMM d")
-                                    </td>
-                                    <td>
+                                <td data-date="@ev.EventDate.ToString("yyyy-MM-dd")">
+                                    @ev.EventDate.ToString("MMM d")
+                                </td>
+                                <td>
                                     @if (isDone)
                                     {
                                         <span class="badge-done">Done</span>
@@ -399,6 +465,7 @@
                                         <span class="badge-upcoming">Upcoming</span>
                                     }
                                 </td>
+                                
                             </tr>
                             }
                         }
@@ -412,46 +479,25 @@
     </div>
 </div>
 
-
-
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-
-
-                function filterDoneByDate() {
-
+        function filterDoneByDate() {
             var selectedDate = document.getElementById('doneDateFilter').value;
-
             var rows = document.querySelectorAll('#doneTableBody tr');
-
             rows.forEach(function (row) {
-
-        var dateText = row.cells[2]?.dataset.date;
-        var rowDate = new Date(dateText);
-
-                // Convert table date to Date object
+                var dateText = row.cells[2]?.dataset.date;
                 var rowDate = new Date(dateText);
                 var selected = selectedDate ? new Date(selectedDate) : null;
-
-                // Check if DONE (past event)
                 var isDone = rowDate < new Date();
-
                 if (!selectedDate) {
-                    // If no date selected → show all DONE events
                     row.style.display = isDone ? '' : 'none';
                 } else {
-                    // Match selected date + DONE only
-                    var sameDate =
-                        rowDate.toDateString() === selected.toDateString();
-
-                    row.style.display =
-                        (sameDate && isDone) ? '' : 'none';
+                    var sameDate = rowDate.toDateString() === selected.toDateString();
+                    row.style.display = (sameDate && isDone) ? '' : 'none';
                 }
             });
         }
-
-
 
         const teal = '#0ab5c4', tealDark = '#07869b',
               tealMid = '#55d0db', tealPale = '#c2edf1', red = '#ef4444';

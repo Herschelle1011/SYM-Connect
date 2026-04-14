@@ -66,8 +66,8 @@ namespace SYM_CONNECT.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-        [Bind("Id,FullName,Email,PasswordHash,Role,Status,CreatedAt")]
-        Users users, bool generate = false)
+[Bind("Id,FirstName,LastName,Email,PasswordHash,Role,Status,CreatedAt")]
+Users users, bool generate = false)
         {
             //GENERATE PASSWORD BUTTON CLICKED
             if (generate)
@@ -163,7 +163,7 @@ namespace SYM_CONNECT.Controllers
         // POST: Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,Email,Role,Status,CreatedAt")] Users users)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Email,Role,Status,CreatedAt")] Users users)
         {
             if (id != users.Id)
             {
@@ -179,7 +179,8 @@ namespace SYM_CONNECT.Controllers
                     if (existing == null) return NotFound();
 
                     //UPDATE FIELDS
-                    existing.FullName = users.FullName;
+                    existing.FirstName = users.FirstName;
+                    existing.LastName = users.LastName;
                     existing.Email = users.Email;
                     existing.Status = users.Status;
                     existing.Role = users.Role;

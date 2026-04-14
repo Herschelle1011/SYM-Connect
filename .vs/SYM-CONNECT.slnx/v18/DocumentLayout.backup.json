@@ -3,28 +3,96 @@
   "WorkspaceRootPath": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\reports\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\reports\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\controllers\\eventscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\controllers\\eventscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\controllers\\attendancecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\controllers\\attendancecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\users\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\users\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\users\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\users\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\attendance\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\attendance\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\viewmodels\\attendanceviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\viewmodels\\attendanceviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\viewmodels\\eventviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\viewmodels\\eventviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\events\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\events\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\users\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\users\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\wwwroot\\js\\site-modals.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\wwwroot\\js\\site-modals.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\controllers\\reportscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\controllers\\reportscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\viewmodels\\reportviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\viewmodels\\reportviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\home\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\home\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\reports\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\reports\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\viewmodels\\leaderreportviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\viewmodels\\leaderreportviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\reports\\leaderreports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\reports\\leaderreports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\viewmodels\\groupreportviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\viewmodels\\groupreportviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\reports\\eventsreports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\reports\\eventsreports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\viewmodels\\reportviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\viewmodels\\reportviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\reports\\groupreports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\reports\\groupreports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\controllers\\groupmemberscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\controllers\\groupmemberscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\reports\\leaderreports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\reports\\leaderreports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\controllers\\symgroupscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -43,20 +111,8 @@
       "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\groupmembers\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\controllers\\groupmemberscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\controllers\\groupmemberscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\events\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\events\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\events\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\events\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\models\\attendance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -71,24 +127,8 @@
       "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\models\\symgroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\controllers\\attendancecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\controllers\\attendancecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\symgroups\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\symgroups\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\wwwroot\\js\\site-modals.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\wwwroot\\js\\site-modals.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\users\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\users\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\attendance\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -99,32 +139,12 @@
       "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\attendance\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\controllers\\eventscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\controllers\\eventscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\events\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\events\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\viewmodels\\attendanceviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\viewmodels\\attendanceviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\models\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\models\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\viewmodels\\groupreportviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\viewmodels\\groupreportviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\viewmodels\\eventviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\viewmodels\\eventviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\reports\\groupreports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\reports\\groupreports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\viewmodels\\registerviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -137,10 +157,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\symgroups\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\symgroups\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\attendance\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\attendance\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\attendance\\exportpdf.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -175,10 +191,6 @@
       "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -189,14 +201,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\symgroups\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\symgroups\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\home\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\home\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\users\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\users\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -253,10 +257,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\groupmembers\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\groupmembers\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\users\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\views\\users\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\views\\symgroups\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -379,6 +379,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\migrations\\20260409112443_symgroupmodelupdated.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\migrations\\20260409112443_symgroupmodelupdated.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|c:\\users\\herschelle\\downloads\\sym-connect\\sym-connect\\sym-connect\\migrations\\20260414001010_fullnameupdated.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D726904-0B3A-037D-A84A-AD6F9E429A66}|SYM-CONNECT\\SYM-CONNECT.csproj|solutionrelative:sym-connect\\migrations\\20260414001010_fullnameupdated.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -388,15 +392,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 232,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{004be353-6879-467c-9d1e-9ac23cdf6d49}"
             },
             {
               "$type": "Bookmark",
@@ -408,111 +408,212 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "LeaderReportViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\ViewModels\\LeaderReportViewModel.cs",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\ViewModels\\LeaderReportViewModel.cs",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\ViewModels\\LeaderReportViewModel.cs",
-              "RelativeToolTip": "SYM-CONNECT\\ViewModels\\LeaderReportViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD0AAAABAAAAAAAAAA==",
+              "DocumentIndex": 95,
+              "Title": "20260414001010_FullNameUpdated.cs",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Migrations\\20260414001010_FullNameUpdated.cs",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\Migrations\\20260414001010_FullNameUpdated.cs",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Migrations\\20260414001010_FullNameUpdated.cs",
+              "RelativeToolTip": "SYM-CONNECT\\Migrations\\20260414001010_FullNameUpdated.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-13T01:36:19.761Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "LeaderReports.cshtml",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Reports\\LeaderReports.cshtml",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Reports\\LeaderReports.cshtml",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Reports\\LeaderReports.cshtml",
-              "RelativeToolTip": "SYM-CONNECT\\Views\\Reports\\LeaderReports.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAB1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-13T01:35:47.983Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "SYMGroupsController.cs",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\SYMGroupsController.cs",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\Controllers\\SYMGroupsController.cs",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\SYMGroupsController.cs",
-              "RelativeToolTip": "SYM-CONNECT\\Controllers\\SYMGroupsController.cs",
-              "ViewState": "AgIAAEwBAAAAAAAAAAAkwFwBAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-17T19:21:51.969Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Reports\\Index.cshtml",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Reports\\Index.cshtml",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Reports\\Index.cshtml",
-              "RelativeToolTip": "SYM-CONNECT\\Views\\Reports\\Index.cshtml",
-              "ViewState": "AgIAAOYAAAAAAAAAAAAWwPMAAABPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-09T09:31:20.605Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-14T00:10:10.633Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "ReportsController.cs",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\ReportsController.cs",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\Controllers\\ReportsController.cs",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\ReportsController.cs",
-              "RelativeToolTip": "SYM-CONNECT\\Controllers\\ReportsController.cs",
-              "ViewState": "AgIAAAACAAAAAAAAAAAmwHEBAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-09T04:25:55.728Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
               "Title": "AttendanceController.cs",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\AttendanceController.cs",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Controllers\\AttendanceController.cs",
               "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\AttendanceController.cs",
               "RelativeToolTip": "SYM-CONNECT\\Controllers\\AttendanceController.cs",
-              "ViewState": "AgIAAJ8BAAAAAAAAAAAqwKUBAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAANQBAAAAAAAAAAAmwN8BAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-15T10:35:38.561Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-15T10:35:38.561Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Attendance.cs",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Models\\Attendance.cs",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\Models\\Attendance.cs",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Models\\Attendance.cs",
-              "RelativeToolTip": "SYM-CONNECT\\Models\\Attendance.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAA8wBEAAAApAAAAAAAAAA==",
+              "DocumentIndex": 10,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Events\\Index.cshtml",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Events\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Events\\Index.cshtml",
+              "RelativeToolTip": "SYM-CONNECT\\Views\\Events\\Index.cshtml",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAABcAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-15T04:49:12.739Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "EventViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\ViewModels\\EventViewModel.cs",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\ViewModels\\EventViewModel.cs",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\ViewModels\\EventViewModel.cs",
+              "RelativeToolTip": "SYM-CONNECT\\ViewModels\\EventViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAQAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-15T10:15:36.407Z",
+              "WhenOpened": "2026-04-03T14:54:55.702Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Models\\User.cs",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\Models\\User.cs",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Models\\User.cs",
+              "RelativeToolTip": "SYM-CONNECT\\Models\\User.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAswBYAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-04T19:12:05.23Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Users\\Create.cshtml",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Users\\Create.cshtml",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Users\\Create.cshtml",
+              "RelativeToolTip": "SYM-CONNECT\\Views\\Users\\Create.cshtml",
+              "ViewState": "AgIAACMAAAAAAAAAAAAAwDQAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-17T13:30:11.832Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Users\\Edit.cshtml",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Users\\Edit.cshtml",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Users\\Edit.cshtml",
+              "RelativeToolTip": "SYM-CONNECT\\Views\\Users\\Edit.cshtml",
+              "ViewState": "AgIAACMAAAAAAAAAAAAAwC8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-17T13:55:29.953Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "EventsController.cs",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\EventsController.cs",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\Controllers\\EventsController.cs",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\EventsController.cs",
+              "RelativeToolTip": "SYM-CONNECT\\Controllers\\EventsController.cs",
+              "ViewState": "AgIAAKgAAAAAAAAAAAAmwLMAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-15T04:41:35.071Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "Dashboard.css",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\wwwroot\\css\\Dashboard.css",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\wwwroot\\css\\Dashboard.css",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\wwwroot\\css\\Dashboard.css",
-              "RelativeToolTip": "SYM-CONNECT\\wwwroot\\css\\Dashboard.css",
-              "ViewState": "AgIAAKQBAAAAAAAAAAAmwLMBAAAaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2026-03-15T11:13:29.864Z",
-              "EditorCaption": ""
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Attendance\\Index.cshtml",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Attendance\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Attendance\\Index.cshtml",
+              "RelativeToolTip": "SYM-CONNECT\\Views\\Attendance\\Index.cshtml",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABkBAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-15T11:00:21.132Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\Controllers\\UsersController.cs",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "SYM-CONNECT\\Controllers\\UsersController.cs",
+              "ViewState": "AgIAAJkAAAAAAAAAAAAqwKYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-17T13:30:00.806Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "SYM-CONNECT\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAANQAAAAAAAAAAAAjwOAAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-14T14:26:20.604Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Users\\Index.cshtml",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Users\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Users\\Index.cshtml",
+              "RelativeToolTip": "SYM-CONNECT\\Views\\Users\\Index.cshtml",
+              "ViewState": "AgIAAFoBAAAAAAAAAAAAAGMBAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-17T13:31:56.579Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Reports\\Index.cshtml",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Reports\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Reports\\Index.cshtml",
+              "RelativeToolTip": "SYM-CONNECT\\Views\\Reports\\Index.cshtml",
+              "ViewState": "AgIAALsBAAAAAAAAAAAswMIBAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-09T09:31:20.605Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "ReportViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\ViewModels\\ReportViewModel.cs",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\ViewModels\\ReportViewModel.cs",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\ViewModels\\ReportViewModel.cs",
+              "RelativeToolTip": "SYM-CONNECT\\ViewModels\\ReportViewModel.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAuwBgAAABUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T09:15:46.234Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AttendanceViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\ViewModels\\AttendanceViewModel.cs",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\ViewModels\\AttendanceViewModel.cs",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\ViewModels\\AttendanceViewModel.cs",
+              "RelativeToolTip": "SYM-CONNECT\\ViewModels\\AttendanceViewModel.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAwwA0AAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-11T13:01:24.658Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "site-modals.js",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\wwwroot\\js\\site-modals.js",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\wwwroot\\js\\site-modals.js",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\wwwroot\\js\\site-modals.js",
+              "RelativeToolTip": "SYM-CONNECT\\wwwroot\\js\\site-modals.js",
+              "ViewState": "AgIAAH4AAAAAAAAAAAAjwIoAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-04-04T12:38:25.21Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 15,
+              "Title": "Dashboard.cshtml",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Home\\Dashboard.cshtml",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Home\\Dashboard.cshtml",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Home\\Dashboard.cshtml",
+              "RelativeToolTip": "SYM-CONNECT\\Views\\Home\\Dashboard.cshtml",
+              "ViewState": "AgIAAB4DAAAAAAAAAADwvywDAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-14T14:26:20.658Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
               "Title": "GroupMember.cs",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Models\\GroupMember.cs",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Models\\GroupMember.cs",
@@ -520,51 +621,83 @@
               "RelativeToolTip": "SYM-CONNECT\\Models\\GroupMember.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAuwBEAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-17T18:54:39.541Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-17T18:54:39.541Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 22,
+              "Title": "LeaderReports.cshtml",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Reports\\LeaderReports.cshtml",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Reports\\LeaderReports.cshtml",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Reports\\LeaderReports.cshtml",
+              "RelativeToolTip": "SYM-CONNECT\\Views\\Reports\\LeaderReports.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAB1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-13T01:35:47.983Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "GroupReportViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\ViewModels\\GroupReportViewModel.cs",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\ViewModels\\GroupReportViewModel.cs",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\ViewModels\\GroupReportViewModel.cs",
+              "RelativeToolTip": "SYM-CONNECT\\ViewModels\\GroupReportViewModel.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAIwDIAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T16:43:59.415Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
               "Title": "EventsReports.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Reports\\EventsReports.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Reports\\EventsReports.cshtml",
               "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Reports\\EventsReports.cshtml",
               "RelativeToolTip": "SYM-CONNECT\\Views\\Reports\\EventsReports.cshtml",
-              "ViewState": "AgIAAJIDAAAAAAAAAAAswKcDAAANAAAAAAAAAA==",
+              "ViewState": "AgIAABwCAAAAAAAAAAAUwCgCAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-11T12:22:43.341Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-11T12:22:43.341Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Attendees.cshtml",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Reports\\Attendees.cshtml",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Reports\\Attendees.cshtml",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Reports\\Attendees.cshtml",
-              "RelativeToolTip": "SYM-CONNECT\\Views\\Reports\\Attendees.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAANAAAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-11T13:00:53.135Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ReportViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\ViewModels\\ReportViewModel.cs",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\ViewModels\\ReportViewModel.cs",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\ViewModels\\ReportViewModel.cs",
-              "RelativeToolTip": "SYM-CONNECT\\ViewModels\\ReportViewModel.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAcwDIAAAAFAAAAAAAAAA==",
+              "DocumentIndex": 17,
+              "Title": "LeaderReportViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\ViewModels\\LeaderReportViewModel.cs",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\ViewModels\\LeaderReportViewModel.cs",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\ViewModels\\LeaderReportViewModel.cs",
+              "RelativeToolTip": "SYM-CONNECT\\ViewModels\\LeaderReportViewModel.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAcwDMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-09T09:15:46.234Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-13T01:36:19.761Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
+              "Title": "ReportsController.cs",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\ReportsController.cs",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\Controllers\\ReportsController.cs",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\ReportsController.cs",
+              "RelativeToolTip": "SYM-CONNECT\\Controllers\\ReportsController.cs",
+              "ViewState": "AgIAACwAAAAAAAAAAADgvzoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T04:25:55.728Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "GroupReports.cshtml",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Reports\\GroupReports.cshtml",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Reports\\GroupReports.cshtml",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Reports\\GroupReports.cshtml",
+              "RelativeToolTip": "SYM-CONNECT\\Views\\Reports\\GroupReports.cshtml",
+              "ViewState": "AgIAAFYCAAAAAAAAAAAUwH4CAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-09T16:36:17.717Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
               "Title": "GroupMembersController.cs",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\GroupMembersController.cs",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Controllers\\GroupMembersController.cs",
@@ -572,12 +705,59 @@
               "RelativeToolTip": "SYM-CONNECT\\Controllers\\GroupMembersController.cs",
               "ViewState": "AgIAAB0AAAAAAAAAAAAMwCYAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-18T21:07:16.28Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-18T21:07:16.28Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 24,
+              "Title": "Dashboard.css",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\wwwroot\\css\\Dashboard.css",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\wwwroot\\css\\Dashboard.css",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\wwwroot\\css\\Dashboard.css",
+              "RelativeToolTip": "SYM-CONNECT\\wwwroot\\css\\Dashboard.css",
+              "ViewState": "AgIAAKQBAAAAAAAAAAAmwLMBAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-03-15T11:13:29.864Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "Attendance.cs",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Models\\Attendance.cs",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\Models\\Attendance.cs",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Models\\Attendance.cs",
+              "RelativeToolTip": "SYM-CONNECT\\Models\\Attendance.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAA8wBEAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-15T10:15:36.407Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "SYMGroupsController.cs",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\SYMGroupsController.cs",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\Controllers\\SYMGroupsController.cs",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\SYMGroupsController.cs",
+              "RelativeToolTip": "SYM-CONNECT\\Controllers\\SYMGroupsController.cs",
+              "ViewState": "AgIAAEwBAAAAAAAAAAAkwFwBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-17T19:21:51.969Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Attendees.cshtml",
+              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Reports\\Attendees.cshtml",
+              "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Reports\\Attendees.cshtml",
+              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Reports\\Attendees.cshtml",
+              "RelativeToolTip": "SYM-CONNECT\\Views\\Reports\\Attendees.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAANAAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-11T13:00:53.135Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
               "Title": "Details.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\GroupMembers\\Details.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\GroupMembers\\Details.cshtml",
@@ -585,12 +765,11 @@
               "RelativeToolTip": "SYM-CONNECT\\Views\\GroupMembers\\Details.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-09T12:23:38.157Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-09T12:23:38.157Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 30,
               "Title": "SYMGroup.cs",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Models\\SYMGroup.cs",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Models\\SYMGroup.cs",
@@ -598,51 +777,11 @@
               "RelativeToolTip": "SYM-CONNECT\\Models\\SYMGroup.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAAmwBgAAABoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-17T19:00:51.857Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-17T19:00:51.857Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Models\\User.cs",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\Models\\User.cs",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Models\\User.cs",
-              "RelativeToolTip": "SYM-CONNECT\\Models\\User.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAAwB8AAABbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-04T19:12:05.23Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "UsersController.cs",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\UsersController.cs",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\Controllers\\UsersController.cs",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\UsersController.cs",
-              "RelativeToolTip": "SYM-CONNECT\\Controllers\\UsersController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEEBAABZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-17T13:30:00.806Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Events\\Index.cshtml",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Events\\Index.cshtml",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Events\\Index.cshtml",
-              "RelativeToolTip": "SYM-CONNECT\\Views\\Events\\Index.cshtml",
-              "ViewState": "AgIAAAgDAAAAAAAAAAAiwB0DAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-15T04:49:12.739Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 27,
               "Title": "Details.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Events\\Details.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Events\\Details.cshtml",
@@ -650,12 +789,11 @@
               "RelativeToolTip": "SYM-CONNECT\\Views\\Events\\Details.cshtml",
               "ViewState": "AgIAAKwAAAAAAAAAAAAYwLYAAABrAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-15T04:48:59.26Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-15T04:48:59.26Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 31,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\SYMGroups\\Edit.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\SYMGroups\\Edit.cshtml",
@@ -663,38 +801,11 @@
               "RelativeToolTip": "SYM-CONNECT\\Views\\SYMGroups\\Edit.cshtml",
               "ViewState": "AgIAAF0AAAAAAAAAAAAiwGsAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-18T16:14:41.626Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-18T16:14:41.626Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "site-modals.js",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\wwwroot\\js\\site-modals.js",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\wwwroot\\js\\site-modals.js",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\wwwroot\\js\\site-modals.js",
-              "RelativeToolTip": "SYM-CONNECT\\wwwroot\\js\\site-modals.js",
-              "ViewState": "AgIAACQAAAAAAAAAAAAgwDsAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2026-04-04T12:38:25.21Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "Edit.cshtml",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Users\\Edit.cshtml",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Users\\Edit.cshtml",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Users\\Edit.cshtml",
-              "RelativeToolTip": "SYM-CONNECT\\Views\\Users\\Edit.cshtml",
-              "ViewState": "AgIAAIUAAAAAAAAAAAAswMkAAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-17T13:55:29.953Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 32,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Attendance\\Edit.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Attendance\\Edit.cshtml",
@@ -702,36 +813,11 @@
               "RelativeToolTip": "SYM-CONNECT\\Views\\Attendance\\Edit.cshtml",
               "ViewState": "AgIAAC0AAAAAAAAAAAAwwDAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-16T07:33:57.601Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-16T07:33:57.601Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "EventViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\ViewModels\\EventViewModel.cs",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\ViewModels\\EventViewModel.cs",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\ViewModels\\EventViewModel.cs",
-              "RelativeToolTip": "SYM-CONNECT\\ViewModels\\EventViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABQAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-03T14:54:55.702Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "AttendanceViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\ViewModels\\AttendanceViewModel.cs",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\ViewModels\\AttendanceViewModel.cs",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\ViewModels\\AttendanceViewModel.cs",
-              "RelativeToolTip": "SYM-CONNECT\\ViewModels\\AttendanceViewModel.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAxwA0AAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-11T13:01:24.658Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 33,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Attendance\\Create.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Attendance\\Create.cshtml",
@@ -739,25 +825,11 @@
               "RelativeToolTip": "SYM-CONNECT\\Views\\Attendance\\Create.cshtml",
               "ViewState": "AgIAACwAAAAAAAAAAAASwDwAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-15T11:08:10.345Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-15T11:08:10.345Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "EventsController.cs",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\EventsController.cs",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\Controllers\\EventsController.cs",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\EventsController.cs",
-              "RelativeToolTip": "SYM-CONNECT\\Controllers\\EventsController.cs",
-              "ViewState": "AgIAADwCAAAAAAAAAAAAAFgCAABMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-15T04:41:35.071Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 34,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Events\\Create.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Events\\Create.cshtml",
@@ -769,7 +841,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 35,
               "Title": "Event.cs",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Models\\Event.cs",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Models\\Event.cs",
@@ -781,19 +853,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "GroupReportViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\ViewModels\\GroupReportViewModel.cs",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\ViewModels\\GroupReportViewModel.cs",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\ViewModels\\GroupReportViewModel.cs",
-              "RelativeToolTip": "SYM-CONNECT\\ViewModels\\GroupReportViewModel.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAA5wC0AAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-09T16:43:59.415Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 37,
               "Title": "LoginViewModel.cs",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\ViewModels\\LoginViewModel.cs",
               "RelativeDocumentMoniker": "SYM-CONNECT\\ViewModels\\LoginViewModel.cs",
@@ -805,19 +865,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "GroupReports.cshtml",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Reports\\GroupReports.cshtml",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Reports\\GroupReports.cshtml",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Reports\\GroupReports.cshtml",
-              "RelativeToolTip": "SYM-CONNECT\\Views\\Reports\\GroupReports.cshtml",
-              "ViewState": "AgIAADcEAAAAAAAAAAAmwEkEAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-09T16:36:17.717Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 41,
               "Title": "Delete.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Attendance\\Delete.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Attendance\\Delete.cshtml",
@@ -829,7 +877,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 42,
               "Title": "Register.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Account\\Register.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Account\\Register.cshtml",
@@ -841,7 +889,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 36,
               "Title": "RegisterViewModel.cs",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\ViewModels\\RegisterViewModel.cs",
               "RelativeDocumentMoniker": "SYM-CONNECT\\ViewModels\\RegisterViewModel.cs",
@@ -853,19 +901,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Attendance\\Index.cshtml",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Attendance\\Index.cshtml",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Attendance\\Index.cshtml",
-              "RelativeToolTip": "SYM-CONNECT\\Views\\Attendance\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAOYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-15T11:00:21.132Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 39,
               "Title": "ExportPDF.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Attendance\\ExportPDF.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Attendance\\ExportPDF.cshtml",
@@ -877,7 +913,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 40,
               "Title": "Details.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Attendance\\Details.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Attendance\\Details.cshtml",
@@ -889,7 +925,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 43,
               "Title": "Login.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Account\\Login.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Account\\Login.cshtml",
@@ -901,7 +937,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 38,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\SYMGroups\\Index.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\SYMGroups\\Index.cshtml",
@@ -913,7 +949,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 44,
               "Title": "UserManagementViewModel.cs",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\ViewModels\\UserManagementViewModel.cs",
               "RelativeDocumentMoniker": "SYM-CONNECT\\ViewModels\\UserManagementViewModel.cs",
@@ -925,7 +961,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 45,
               "Title": "ErrorViewModel.cs.cs",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Models\\ErrorViewModel.cs.cs",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Models\\ErrorViewModel.cs.cs",
@@ -937,7 +973,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 46,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Data\\AppDbContext.cs",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Data\\AppDbContext.cs",
@@ -949,19 +985,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\Controllers\\HomeController.cs",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "SYM-CONNECT\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAAOQAAAAAAAAAAAAqwOgAAAA2AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-14T14:26:20.604Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 47,
               "Title": "AccountController.cs",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Controllers\\AccountController.cs",
@@ -973,7 +997,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 48,
               "Title": "Details.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\SYMGroups\\Details.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\SYMGroups\\Details.cshtml",
@@ -985,7 +1009,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 49,
               "Title": "Delete.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\SYMGroups\\Delete.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\SYMGroups\\Delete.cshtml",
@@ -997,31 +1021,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
-              "Title": "Dashboard.cshtml",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Home\\Dashboard.cshtml",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Home\\Dashboard.cshtml",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Home\\Dashboard.cshtml",
-              "RelativeToolTip": "SYM-CONNECT\\Views\\Home\\Dashboard.cshtml",
-              "ViewState": "AgIAAHADAAAAAAAAAAAgwHsDAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-14T14:26:20.658Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 48,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Users\\Index.cshtml",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Users\\Index.cshtml",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Users\\Index.cshtml",
-              "RelativeToolTip": "SYM-CONNECT\\Views\\Users\\Index.cshtml",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAgwB8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-17T13:31:56.579Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 50,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Shared\\_Layout.cshtml",
@@ -1057,7 +1057,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 52,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\GroupMembers\\Create.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\GroupMembers\\Create.cshtml",
@@ -1069,7 +1069,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 51,
               "Title": "Delete.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\GroupMembers\\Delete.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\GroupMembers\\Delete.cshtml",
@@ -1081,7 +1081,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 53,
               "Title": "ExportPDF.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Events\\ExportPDF.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Events\\ExportPDF.cshtml",
@@ -1093,7 +1093,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 56,
               "Title": "ExportPDF.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Home\\ExportPDF.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Home\\ExportPDF.cshtml",
@@ -1117,7 +1117,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 57,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Events\\Edit.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Events\\Edit.cshtml",
@@ -1129,7 +1129,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 55,
               "Title": "ExportPDF.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Reports\\ExportPDF.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Reports\\ExportPDF.cshtml",
@@ -1141,7 +1141,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 54,
               "Title": "UserManagement.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Home\\UserManagement.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Home\\UserManagement.cshtml",
@@ -1165,7 +1165,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 58,
               "Title": "20260409051143_updatedModelAddEventHandler.cs",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Migrations\\20260409051143_updatedModelAddEventHandler.cs",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Migrations\\20260409051143_updatedModelAddEventHandler.cs",
@@ -1177,7 +1177,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 60,
+              "DocumentIndex": 61,
               "Title": "20260317191328_AddGroupAndMembers.cs",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Migrations\\20260317191328_AddGroupAndMembers.cs",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Migrations\\20260317191328_AddGroupAndMembers.cs",
@@ -1189,7 +1189,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 59,
+              "DocumentIndex": 60,
               "Title": "SYM-CONNECT.csproj",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\SYM-CONNECT.csproj",
               "RelativeDocumentMoniker": "SYM-CONNECT\\SYM-CONNECT.csproj",
@@ -1201,7 +1201,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
+              "DocumentIndex": 59,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\appsettings.json",
               "RelativeDocumentMoniker": "SYM-CONNECT\\appsettings.json",
@@ -1213,7 +1213,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 62,
+              "DocumentIndex": 63,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\GroupMembers\\Index.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\GroupMembers\\Index.cshtml",
@@ -1225,7 +1225,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 61,
+              "DocumentIndex": 62,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\GroupMembers\\Edit.cshtml",
               "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\GroupMembers\\Edit.cshtml",
@@ -1258,18 +1258,6 @@
               "ViewState": "AgIAACUAAAAAAAAAAAAWwCwAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-03-17T19:21:58.222Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 63,
-              "Title": "Create.cshtml",
-              "DocumentMoniker": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Users\\Create.cshtml",
-              "RelativeDocumentMoniker": "SYM-CONNECT\\Views\\Users\\Create.cshtml",
-              "ToolTip": "C:\\Users\\Herschelle\\Downloads\\SYM-Connect\\SYM-Connect\\SYM-CONNECT\\Views\\Users\\Create.cshtml",
-              "RelativeToolTip": "SYM-CONNECT\\Views\\Users\\Create.cshtml",
-              "ViewState": "AgIAAIYAAAAAAAAAAAAuwIgAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-17T13:30:11.832Z"
             },
             {
               "$type": "Document",

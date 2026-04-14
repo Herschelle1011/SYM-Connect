@@ -549,6 +549,15 @@
 
     <!-- ── Filter Bar ──────────────────────────────────────────── -->
     <form method="get" asp-action="EventsReport" class="filter-bar">
+
+        <select name="day">
+            <option value="">-- Day --</option>
+            @for (int d = 1; d <= 31; d++)
+            {
+                <option value="@d" selected="@(Model.SelectedDay == d)">@d</option>
+            }
+        </select>
+
         <select name="month">
             <option value="">All Months</option>
             @for (int m = 1; m <= 12; m++)
@@ -558,8 +567,17 @@
                 </option>
             }
         </select>
+
         <input type="number" name="year" value="@filterYear" min="2000" max="@DateTime.Now.Year" style="width:90px;" />
+
         <button type="submit" class="btn-go"><i class="bi bi-funnel-fill"></i> Filter</button>
+
+        @if (Model.SelectedDay.HasValue || filterMonth > 0 || Model.SelectedYear.HasValue)
+        {
+            <a asp-action="EventsReport" class="btn btn-sm btn-outline-secondary">
+                <i class="bi bi-x-circle"></i> Clear
+            </a>
+        }
     </form>
 
     <!-- ── Overview Stats ──────────────────────────────────────── -->

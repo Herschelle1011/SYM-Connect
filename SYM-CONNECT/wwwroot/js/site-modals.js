@@ -136,31 +136,53 @@ function togglePassword() {
 }
 
 
-function filterCancelledRows(val) {
+function filterCancelledRows() {
+    var search = (document.getElementById('cancelSearch')?.value || '').toLowerCase().trim();
+    var day = document.getElementById('cancelDayFilter').value;
+    var month = document.getElementById('cancelMonthFilter').value;
+    var year = document.getElementById('cancelYearFilter').value;
+
     var rows = document.querySelectorAll('.cancelled-row');
-    var anyVisible = false;
+    var visible = 0;
 
     rows.forEach(function (row) {
-        var match = row.dataset.title
-            .includes(val.toLowerCase());
-        row.style.display = match ? 'flex' : 'none';
-        if (match) anyVisible = true;
+        var title = (row.dataset.title || '').toLowerCase();
+        var cancelledAt = row.dataset.cancelledAt || ''; // e.g. "2025-04-14"
+
+        // Parse the cancelled date
+        var parts = cancelledAt.split('-'); // ["2025","04","14"]
+        var rYear = parts[0] || '';
+        var rMonth = parts[1] ? String(parseInt(parts[1])) : '';
+        var rDay = parts[2] ? String(parseInt(parts[2])) : '';
+
+        var matchSearch = !search || title.includes(search);
+        var matchDay = !day || rDay === day;
+        var matchMonth = !month || rMonth === month;
+        var matchYear = !year || rYear === year;
+
+        if (matchSearch && matchDay && matchMonth && matchYear) {
+            row.style.display = '';
+            visible++;
+        } else {
+            row.style.display = 'none';
+        }
     });
 
-    // Show/hide empty message
-    var noMsg = document.getElementById('noCancelResults');
-    if (noMsg) {
-        noMsg.style.display = anyVisible ? 'none' : 'block';
-    }
+    // Update count badge
+    document.getElementById('cancelledCount').textContent = visible;
 
-    // Clear search when modal closes
-    var modal = document.getElementById('cancelledModal');
-    modal.addEventListener('hidden.bs.modal', function () {
-        document.getElementById('cancelSearch').value = '';
-        filterCancelledRows('');
-    });
+    // Show/hide no results message
+    var noResults = document.getElementById('noCancelResults');
+    if (noResults) noResults.style.display = visible === 0 ? '' : 'none';
 }
 
+function clearCancelFilter() {
+    document.getElementById('cancelDayFilter').value = '';
+    document.getElementById('cancelMonthFilter').value = '';
+    document.getElementById('cancelYearFilter').value = '';
+    document.getElementById('cancelSearch').value = '';
+    filterCancelledRows();
+}
 
 function filterTable() {
     var input = document.getElementById('searchInput')

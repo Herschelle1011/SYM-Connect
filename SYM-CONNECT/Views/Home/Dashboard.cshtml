@@ -788,10 +788,13 @@
                         <tbody>
                             @foreach (var ev in Model.RecentEvents)
                             {
+
                                 var groupName = ev.AssignedGroups.Any()
                                 ? string.Join(", ", ev.AssignedGroups.Select(g => g.Name))
                                 : "All Groups";
                                 var isDone = ev.EventDate < DateTime.Now;
+                                if(isDone)
+                                {
                                 <tr>
                                     <td>@ev.Title</td>
                                     <td>@groupName</td>
@@ -801,12 +804,10 @@
                                         {
                                             <span class="badge-done">Done</span>
                                         }
-                                        else
-                                        {
-                                            <span class="badge-upcoming">Upcoming</span>
-                                        }
+                                    
                                     </td>
                                 </tr>
+                                }
                             }
                             @if (!Model.RecentEvents.Any())
                             {

@@ -45,6 +45,11 @@
 
         //  FILTER SECTION (FOR DROPDOWN / YEAR FILTER) ─────────────────────────
         public int? SelectedYear { get; set; } //USED TO FILTER REPORT BY YEAR
+
+        // In GroupReportViewModel and LeaderReportViewModel:
+        public int? SelectedDay { get; set; }
+        public int? SelectedMonth { get; set; }
+ 
     }
 
     //MEMBER SUMMARY ROW — USED IN MULTIPLE SECTIONS (TOP / LOW / ZERO MEMBERS)

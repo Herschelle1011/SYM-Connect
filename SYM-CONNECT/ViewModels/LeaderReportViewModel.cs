@@ -45,6 +45,11 @@ namespace SYM_CONNECT.ViewModels
 
         // ── FILTER ───────────────────────────────────────────────────────────
         public int? SelectedYear { get; set; }
+
+        // In GroupReportViewModel and LeaderReportViewModel:
+        public int? SelectedDay { get; set; }
+        public int? SelectedMonth { get; set; }
+
     }
 
     // ROW FOR LEADER LEADERBOARD TABLE

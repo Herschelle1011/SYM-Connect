@@ -15,8 +15,9 @@
         public int DoneEvents { get; set; } //COMPLETED / FINISHED EVENTS
 
         public int MaxMembers { get; set; } //MAX MEMBERS IN GROUP S
+        public int? SelectedDay { get; set; }
 
-    
+
         public int MemberDelta { get; set; } //DIFFERENCE BETWEEN CURRENT AND PREVIOUS MONTH
         public int PrevMonthMembers { get; set; } //MEMBER COUNT LAST MONTH 
 
@@ -48,5 +49,9 @@
 
         public int? Members { get; set; }
         //NUMBER OF MEMBERS IN THAT LEADERS GROUP (NULL IF NO GROUP)
+
+        public int? SelectedDay { get; set; }
+        public int? SelectedMonth { get; set; }
+        public int? SelectedYear { get; set; }
     }
 }
